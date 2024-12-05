@@ -1,0 +1,20 @@
+﻿<Page x:Class="Magic_Redone.SavePage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:Magic_Redone"
+      mc:Ignorable="d" 
+      d:DesignHeight="866" d:DesignWidth="1466"
+      Title="SavePage"
+      Background="{DynamicResource CommonBackground}">
+
+    <DataGrid ItemsSource="{Binding SavesView}" AutoGenerateColumns="False">
+        <DataGrid.Columns>
+            <DataGridTextColumn Header="Save Name" Binding="{Binding SaveName}" />
+            <DataGridTextColumn Header="Component 1 Name" Binding="{Binding LoadedComponents[0].Name}" />
+            <DataGridTextColumn Header="Component 2 Name" Binding="{Binding LoadedComponents[0].ValueExt}" />
+        </DataGrid.Columns>
+    </DataGrid>
+
+</Page>

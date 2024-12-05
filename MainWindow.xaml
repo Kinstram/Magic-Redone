@@ -1,0 +1,299 @@
+﻿<Window x:Class="Magic_Redone.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:navigationWindow="clr-namespace:System.Windows.Controls;assembly=PresentationFramework"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Magic_Redone"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="866" Width="1466"
+        Background="{DynamicResource CommonBackground}">
+    <Grid Margin="5">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition Width="0.3*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="0.2*"/>
+            <RowDefinition Height="0.5*"/>
+            <RowDefinition Height="0.3*"/>
+        </Grid.RowDefinitions>
+        <!-- Первый список -->
+        <!--Margin="5,100,5,100"-->
+        <ComboBox x:Name="ElementsListBox" 
+                 ItemsSource="{Binding Collections.Elements}"
+                 DisplayMemberPath="Name" 
+                 SelectedItem="{Binding Getter.SelectedElement, Mode=TwoWay}" 
+                 IsEditable="True"
+                 StaysOpenOnEdit="True" 
+                 MinWidth="100" MinHeight="25" MaxWidth="200" MaxHeight="30"
+                 BorderThickness="2,2,2,2"
+                 HorizontalContentAlignment="Center"
+                 VerticalContentAlignment="Center"
+                 Background="Transparent" Foreground="Black" HorizontalAlignment="Center"/>
+
+        <!-- Второй список -->
+        <ComboBox x:Name="MethodsListBox" 
+                 ItemsSource="{Binding Collections.Methods}" 
+                 DisplayMemberPath="Name" 
+                 SelectedItem="{Binding Getter.SelectedMethod, Mode=TwoWay}" 
+                 d:ItemsSource="{d:SampleData ItemCount=5}"
+                 IsEditable="True"
+                 StaysOpenOnEdit="True"
+                 MinWidth="100" MinHeight="25" MaxWidth="200" MaxHeight="30"
+                 BorderThickness="2,2,2,2"
+                 Grid.Column="1"
+                 HorizontalAlignment="Center"
+                 Background="Transparent" Foreground="Black" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+
+        <ComboBox x:Name="FormsListBox" 
+                 ItemsSource="{Binding Collections.Forms}" 
+                 DisplayMemberPath="Name" 
+                 SelectedItem="{Binding Getter.SelectedForm, Mode=TwoWay}" 
+                 d:ItemsSource="{d:SampleData ItemCount=5}"
+                 IsEditable="True"
+                 StaysOpenOnEdit="True"
+                 MinWidth="100" MinHeight="25" MaxWidth="200" MaxHeight="30"
+                 BorderThickness="2,2,2,2"
+                 Grid.Column="2"
+                 HorizontalAlignment="Center"
+                 Background="Transparent" Foreground="Black" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+
+        <ListBox x:Name="Scalation1"
+            ItemsSource="{Binding Collections.Scalations}"
+            SelectedItem="{Binding Getter.SelectedScalation1, Mode=TwoWay}"
+            Grid.Column="4"
+            Grid.Row="0"
+            MinWidth="25" MinHeight="25" MaxWidth="80" MaxHeight="30"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Center"
+            Background="White" Foreground="Black" IsSynchronizedWithCurrentItem="False">
+        </ListBox>
+
+        <ComboBox x:Name="ComponentsListBox1" 
+                ItemsSource="{Binding Collections.Components}" 
+                DisplayMemberPath="Name" 
+                SelectedItem="{Binding Getter.SelectedComponent1, Mode=TwoWay}" 
+                d:ItemsSource="{d:SampleData ItemCount=5}"
+                IsEditable="True"
+                StaysOpenOnEdit="True"
+                MinWidth="100" MinHeight="25" MaxWidth="200" MaxHeight="30"
+                BorderThickness="2,2,2,2"
+                Grid.Column="3"
+                HorizontalAlignment="Right"
+                Background="Transparent" Foreground="Black" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+
+        <ListBox x:Name="Scalation2"
+            ItemsSource="{Binding Collections.Scalations}"     
+            SelectedItem="{Binding Getter.SelectedScalation2, Mode=TwoWay}"
+            Grid.Column="5"
+            Grid.Row="0"
+            MinWidth="25" MinHeight="25" MaxWidth="80" MaxHeight="30"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Center"
+            Background="White" Foreground="Black" IsSynchronizedWithCurrentItem="False">
+        </ListBox>
+
+        <ComboBox x:Name="ComponentsListBox2" 
+                ItemsSource="{Binding Collections.Components}" 
+                DisplayMemberPath="Name" 
+                SelectedItem="{Binding Getter.SelectedComponent2, Mode=TwoWay}" 
+                d:ItemsSource="{d:SampleData ItemCount=5}"
+                IsEditable="True"
+                StaysOpenOnEdit="True"
+                MinWidth="100" MinHeight="25" MaxWidth="200" MaxHeight="30"
+                BorderThickness="2,2,2,2"
+                Grid.Column="4"
+                HorizontalAlignment="Right"
+                Background="Transparent" Foreground="Black" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+
+        <ListBox x:Name="Scalation3"
+            ItemsSource="{Binding Collections.Scalations}"     
+            SelectedItem="{Binding Getter.SelectedScalation3, Mode=TwoWay}"
+            Grid.Column="6"
+            Grid.Row="0"
+            MinWidth="25" MinHeight="25" MaxWidth="80" MaxHeight="30"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Center"
+            Background="White" Foreground="Black" IsSynchronizedWithCurrentItem="False">
+        </ListBox>
+
+        <ComboBox x:Name="ComponentsListBox3" 
+                ItemsSource="{Binding Collections.Components}" 
+                DisplayMemberPath="Name" 
+                SelectedItem="{Binding Getter.SelectedComponent3, Mode=TwoWay}" 
+                d:ItemsSource="{d:SampleData ItemCount=5}"
+                IsEditable="True"
+                StaysOpenOnEdit="True"
+                MinWidth="100" MinHeight="25" MaxWidth="200" MaxHeight="30"
+                BorderThickness="2,2,2,2"
+                Grid.Column="5"
+                HorizontalAlignment="Right"
+                Background="Transparent" Foreground="Black" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+
+        <ListBox x:Name="Scalation4"
+            ItemsSource="{Binding Collections.Scalations}"     
+            SelectedItem="{Binding Getter.SelectedScalation4, Mode=TwoWay}"
+            Grid.Column="7"
+            Grid.Row="0"
+            MinWidth="25" MinHeight="25" MaxWidth="80" MaxHeight="30"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Center"
+            Background="White" Foreground="Black" IsSynchronizedWithCurrentItem="False">
+        </ListBox>
+
+        <ComboBox x:Name="ComponentsListBox4" 
+                ItemsSource="{Binding Collections.Components}" 
+                DisplayMemberPath="Name" 
+                SelectedItem="{Binding Getter.SelectedComponent4, Mode=TwoWay}" 
+                d:ItemsSource="{d:SampleData ItemCount=5}"
+                IsEditable="True"
+                StaysOpenOnEdit="True"
+                MinWidth="100" MinHeight="25" MaxWidth="200" MaxHeight="30"
+                BorderThickness="2,2,2,2"
+                Grid.Column="6"
+                HorizontalAlignment="Right"
+                Background="Transparent" Foreground="Black" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+
+        <ListBox x:Name="Scalation5"
+            ItemsSource="{Binding Collections.Scalations}"     
+            SelectedItem="{Binding Getter.SelectedScalation5, Mode=TwoWay}"
+            Grid.Column="8"
+            Grid.Row="0"
+            MinWidth="25" MinHeight="25" MaxWidth="80" MaxHeight="30"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Center"
+            Background="White" Foreground="Black" IsSynchronizedWithCurrentItem="False">
+        </ListBox>
+
+        <ComboBox x:Name="ComponentsListBox5" 
+                ItemsSource="{Binding Collections.Components}" 
+                DisplayMemberPath="Name" 
+                SelectedItem="{Binding Getter.SelectedComponent5, Mode=TwoWay}" 
+                d:ItemsSource="{d:SampleData ItemCount=5}"
+                IsEditable="True"
+                StaysOpenOnEdit="True"
+                MinWidth="100" MinHeight="25" MaxWidth="200" MaxHeight="30"
+                BorderThickness="2,2,2,2"
+                Grid.Column="7"
+                HorizontalAlignment="Right"
+                Background="Transparent" Foreground="Black" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+
+        <ListBox x:Name="Scalation6"
+            ItemsSource="{Binding Collections.Scalations}"     
+            SelectedItem="{Binding Getter.SelectedScalation6, Mode=TwoWay}"
+            Grid.Column="9"
+            Grid.Row="0"
+            MinWidth="25" MinHeight="25" MaxWidth="80" MaxHeight="30"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Center"
+            Background="White" Foreground="Black" IsSynchronizedWithCurrentItem="False">
+        </ListBox>
+
+        <ComboBox x:Name="ComponentsListBox6" 
+                ItemsSource="{Binding Collections.Components}" 
+                DisplayMemberPath="Name" 
+                SelectedItem="{Binding Getter.SelectedComponent6, Mode=TwoWay}" 
+                d:ItemsSource="{d:SampleData ItemCount=5}"
+                IsEditable="True"
+                StaysOpenOnEdit="True"
+                MinWidth="100" MinHeight="25" MaxWidth="200" MaxHeight="30"
+                BorderThickness="2,2,2,2"
+                Grid.Column="8"
+                HorizontalAlignment="Right"
+                Background="Transparent" Foreground="Black" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+
+        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Bottom" Grid.Column="0" Grid.Row="1">
+            <TextBlock Text="Выбранная стихия" Background="Wheat" Foreground="Black" Padding="4, 2, 4, 2"/>
+            <TextBlock Text="{Binding Getter.SelectedElement.ValueExt, StringFormat=† {0}}" Background="Wheat" Foreground="Black" FontSize="16"/>
+            <TextBlock Text="{Binding Getter.SelectedElement.ValueInt, StringFormat=‡ {0}}" Background="Wheat" Foreground="Black" FontSize="16"/>
+            <TextBlock Text="{Binding Getter.SelectedElement.ValueMP, StringFormat=Ћ {0}}" Background="Wheat" Foreground="Black" FontSize="16"/>
+        </StackPanel>
+
+        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Bottom" Grid.Column="1" Grid.Row="1">
+            <TextBlock Text="Выбранный способ" Background="Wheat" Foreground="Black" Padding="4, 2, 4, 2" />
+            <TextBlock Text="{Binding Getter.SelectedMethod.ValueExt, StringFormat=† {0}}" Background="Wheat" Foreground="Black" FontSize="16"/>
+            <TextBlock Text="{Binding Getter.SelectedMethod.ValueInt, StringFormat=‡ {0}}" Background="Wheat" Foreground="Black" FontSize="16"/>
+            <TextBlock Text="{Binding Getter.SelectedMethod.ValueMP, StringFormat=Ћ {0}}" Background="Wheat" Foreground="Black" FontSize="16"/>
+        </StackPanel>
+
+        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Bottom" Grid.Column="2" Grid.Row="1">
+            <TextBlock Text="Выбранная форма" Background="Wheat" Foreground="Black" Padding="4, 2, 4, 2" />
+            <TextBlock Text="{Binding Getter.SelectedForm.ValueExt, StringFormat=† {0}}" Background="Wheat" Foreground="Black" FontSize="16"/>
+            <TextBlock Text="{Binding Getter.SelectedForm.ValueInt, StringFormat=‡ {0}}" Background="Wheat" Foreground="Black" FontSize="16"/>
+            <TextBlock Text="{Binding Getter.SelectedForm.ValueMP, StringFormat=Ћ {0}}" Background="Wheat" Foreground="Black" FontSize="16"/>
+        </StackPanel>
+
+        <StackPanel HorizontalAlignment="Right" VerticalAlignment="Bottom" Grid.Column="3" Grid.Row="1">
+            <TextBlock Text="Первый компонент" Background="Wheat" Foreground="Black" Padding="4, 2, 4, 2" />
+            <TextBlock Text="{Binding Getter.SelectedComponents[0].ValueExt, StringFormat=† {0}}" Background="Wheat" Foreground="Black" FontSize="16"/>
+            <TextBlock Text="{Binding Getter.SelectedComponents[0].ValueInt, StringFormat=‡ {0}}" Background="Wheat" Foreground="Black" FontSize="16"/>
+            <TextBlock Text="{Binding Getter.SelectedComponents[0].ValueMP, StringFormat=Ћ {0}}" Background="Wheat" Foreground="Black" FontSize="16"/>
+            <TextBlock Text="{Binding Getter.Component1PWR}" Background="Wheat" Foreground="Black" FontSize="16"/>
+        </StackPanel>
+
+        <StackPanel HorizontalAlignment="Right" VerticalAlignment="Bottom" Grid.Column="4" Grid.Row="1">
+            <TextBlock Text="Второй компонент" Background="Wheat" Foreground="Black" Padding="4, 2, 4, 2" />
+            <TextBlock Text="{Binding Getter.SelectedComponents[1].ValueExt, StringFormat=† {0}}" Background="Wheat" Foreground="Black" FontSize="16"/>
+            <TextBlock Text="{Binding Getter.SelectedComponents[1].ValueInt, StringFormat=‡ {0}}" Background="Wheat" Foreground="Black" FontSize="16"/>
+            <TextBlock Text="{Binding Getter.SelectedComponents[1].ValueMP, StringFormat=Ћ {0}}" Background="Wheat" Foreground="Black" FontSize="16"/>
+            <TextBlock Text="{Binding Getter.Component2PWR}" Background="Wheat" Foreground="Black" FontSize="16"/>
+        </StackPanel>
+
+        <StackPanel HorizontalAlignment="Right" VerticalAlignment="Bottom" Grid.Column="5" Grid.Row="1">
+            <TextBlock Text="Третий компонент" Background="Wheat" Foreground="Black" Padding="4, 2, 4, 2" />
+            <TextBlock Text="{Binding Getter.SelectedComponents[2].ValueExt, StringFormat=† {0}}" Background="Wheat" Foreground="Black" FontSize="16"/>
+            <TextBlock Text="{Binding Getter.SelectedComponents[2].ValueInt, StringFormat=‡ {0}}" Background="Wheat" Foreground="Black" FontSize="16"/>
+            <TextBlock Text="{Binding Getter.SelectedComponents[2].ValueMP, StringFormat=Ћ {0}}" Background="Wheat" Foreground="Black" FontSize="16"/>
+            <TextBlock Text="{Binding Getter.Component3PWR}" Background="Wheat" Foreground="Black" FontSize="16"/>
+        </StackPanel>
+
+        <StackPanel HorizontalAlignment="Right" VerticalAlignment="Bottom" Grid.Column="6" Grid.Row="1">
+            <TextBlock Text="Четвёртый компонент" Background="Wheat" Foreground="Black" Padding="4, 2, 4, 2" />
+            <TextBlock Text="{Binding Getter.SelectedComponents[3].ValueExt, StringFormat=† {0}}" Background="Wheat" Foreground="Black" FontSize="16"/>
+            <TextBlock Text="{Binding Getter.SelectedComponents[3].ValueInt, StringFormat=‡ {0}}" Background="Wheat" Foreground="Black" FontSize="16"/>
+            <TextBlock Text="{Binding Getter.SelectedComponents[3].ValueMP, StringFormat=Ћ {0}}" Background="Wheat" Foreground="Black" FontSize="16"/>
+            <TextBlock Text="{Binding Getter.Component4PWR}" Background="Wheat" Foreground="Black" FontSize="16"/>
+        </StackPanel>
+
+        <StackPanel HorizontalAlignment="Right" VerticalAlignment="Bottom" Grid.Column="7" Grid.Row="1">
+            <TextBlock Text="Пятый компонент" Background="Wheat" Foreground="Black" Padding="4, 2, 4, 2" />
+            <TextBlock Text="{Binding Getter.SelectedComponents[4].ValueExt, StringFormat=† {0}}" Background="Wheat" Foreground="Black" FontSize="16"/>
+            <TextBlock Text="{Binding Getter.SelectedComponents[4].ValueInt, StringFormat=‡ {0}}" Background="Wheat" Foreground="Black" FontSize="16"/>
+            <TextBlock Text="{Binding Getter.SelectedComponents[4].ValueMP, StringFormat=Ћ {0}}" Background="Wheat" Foreground="Black" FontSize="16"/>
+            <TextBlock Text="{Binding Getter.Component5PWR}" Background="Wheat" Foreground="Black" FontSize="16"/>
+        </StackPanel>
+
+        <StackPanel HorizontalAlignment="Right" VerticalAlignment="Bottom" Grid.Column="8" Grid.Row="1">
+            <TextBlock Text="Шестой компонент" Background="Wheat" Foreground="Black" Padding="4, 2, 4, 2" />
+            <TextBlock Text="{Binding Getter.SelectedComponents[5].ValueExt, StringFormat=† {0}}" Background="Wheat" Foreground="Black" FontSize="16"/>
+            <TextBlock Text="{Binding Getter.SelectedComponents[5].ValueInt, StringFormat=‡ {0}}" Background="Wheat" Foreground="Black" FontSize="16"/>
+            <TextBlock Text="{Binding Getter.SelectedComponents[5].ValueMP, StringFormat=Ћ {0}}" Background="Wheat" Foreground="Black" FontSize="16"/>
+            <TextBlock Text="{Binding Getter.Component6PWR}" Background="Wheat" Foreground="Black" FontSize="16"/>
+        </StackPanel>
+
+        <!-- Отображение результата -->
+        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Bottom" Grid.Column="0" Grid.Row="2">
+            <TextBlock Text="Результат" Background="Wheat" Foreground="Black" Padding="4, 2, 4, 2"/>
+            <TextBlock Text="{Binding Getter.CountedExt, StringFormat=† {0}}" Background="Wheat" Foreground="Black" FontSize="16"/>
+            <TextBlock Text="{Binding Getter.CountedInt, StringFormat=‡ {0}}" Background="Wheat" Foreground="Black" FontSize="16"/>
+            <TextBlock Text="{Binding Getter.CountedMP, StringFormat=Ћ {0}}" Background="Wheat" Foreground="Black" FontSize="16"/>
+            <TextBlock Text="{Binding ComponentPWRF}" Background="Wheat" Foreground="Black" FontSize="16"/>
+        </StackPanel>
+
+        <!-- Кнопка сохранения -->
+        <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="2" Grid.Column="8" >
+            <TextBox x:Name="txtSave" Height="30" Text="Введите название сохранения"/>
+            <Button x:Name="btnSave" Content="Сохранить" Height="30" Click="btnSave_Click"/>
+        </StackPanel>
+        <Button Content="Просмотр сохранённых заклинаний" Width="250" Height="60"  Grid.Column="5" Grid.ColumnSpan="2" Grid.Row ="2" Click="Button_Click"/>
+    </Grid>
+</Window>
