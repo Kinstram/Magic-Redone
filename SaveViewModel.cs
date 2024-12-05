@@ -28,17 +28,6 @@ namespace Magic_Redone
                 OnPropertyChanged();
             }
         }
-        public ObservableCollection<Construct> LoadedComponents { get; set; } = new ObservableCollection<Construct>();
-        private Construct _construct1;
-        public Construct Construct1
-        {
-            get => _construct1 ?? (_construct1 = new Construct());
-            set
-            {
-                _construct1 = value;
-                OnPropertyChanged();
-            }
-        }
 
         public SaveViewModel()
         {
@@ -50,7 +39,10 @@ namespace Magic_Redone
             try
             {
 
-                var saves = await _context.Saves.ToListAsync();
+                var saves = await _context.Saves
+                    .AsNoTracking()
+                    .Include(s => s.SavedComponents)
+                    .ToListAsync();
                 Saves = new ObservableCollection<SaveEntity>(saves);
                 SavesView = CollectionViewSource.GetDefaultView(Saves);
             }
@@ -58,8 +50,7 @@ namespace Magic_Redone
             {
                 MessageBox.Show($"Ошибка загрузки данных: {ex.Message}", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
             }
-            Construct1 = GetConstructById(Saves[0].SelectedComponent1Id);
-            LoadedComponents.Add(Construct1);
+            //MessageBox.Show($"{Saves,}");
         }
         private Construct GetConstructById(Int16? id)
         {

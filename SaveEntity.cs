@@ -14,7 +14,9 @@ namespace Magic_Redone
         [Key]
         public int Id { get; set; }
         public string SaveName { get; set; }
-        public ICollection<Construct> Constructs { get; set; } = [];
+        public ICollection<Construct> SavedComponents { get; set; } = []; // Components
+        public ICollection<Construct> SavedTrio { get; set; } = []; // 0 - Element, 1 - Method, 3 - Form 
+        public ICollection<Int16> SavedScalations { get; set; } = [];
         public Int16 SelectedElementId { get; set; }
         public Int16 SelectedMethodId{ get; set; }
         public Int16 SelectedFormId { get; set; }

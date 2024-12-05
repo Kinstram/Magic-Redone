@@ -76,20 +76,19 @@ namespace Magic_Redone
                     new Construct { Id = 49, Kind = 3, Name = "Дождь", ValueExt = -0.2m, ValueInt = 0m, ValueMP = 2m },
                     new Construct { Id = 50, Kind = 3, Name = "Анализ", ValueExt = 0m, ValueInt = 0m, ValueMP = 3m },
                     new Construct { Id = 51, Kind = 3, Name = "Познание", ValueExt = 0m, ValueInt = 0m, ValueMP = 10m },
-                    new Construct { Id = 52, Kind = 3, Name = "Концетрация", ValueExt = 0m, ValueInt = 0.5m, ValueMP = 0.5m },
-                    new Construct { Id = 53, Kind = 3, Name = "Обертка", ValueExt = 0m, ValueInt = 0m, ValueMP = 2m },
-                    new Construct { Id = 54, Kind = 3, Name = "Проклятье", ValueExt = -0.2m, ValueInt = 0m, ValueMP = 2m },
-                    new Construct { Id = 55, Kind = 3, Name = "Усиление", ValueExt = 0m, ValueInt = 0m, ValueMP = 2m },
-                    new Construct { Id = 56, Kind = 3, Name = "Преодоление", ValueExt = 0m, ValueInt = 0m, ValueMP = 6m },
-                    new Construct { Id = 57, Kind = 3, Name = "Кин’a’дхаз", ValueExt = 0m, ValueInt = 0m, ValueMP = 2m },
-                    new Construct { Id = 58, Kind = 3, Name = "Дестабилизация", ValueExt = 0.2m, ValueInt = -0.4m, ValueMP = 4m },
-                    new Construct { Id = 59, Kind = 3, Name = "Линза", ValueExt = 0m, ValueInt = 0m, ValueMP = 1m },
-                    new Construct { Id = 60, Kind = 3, Name = "Чувство", ValueExt = 0m, ValueInt = 0m, ValueMP = 2m },
-                    new Construct { Id = 61, Kind = 3, Name = "Экран", ValueExt = 0m, ValueInt = 0.2m, ValueMP = 2m },
-                    new Construct { Id = 62, Kind = 3, Name = "Мышца", ValueExt = -0.1m, ValueInt = -0.1m, ValueMP = 1m },
-                    new Construct { Id = 63, Kind = 3, Name = "Спокойствие", ValueExt = 0m, ValueInt = 0m, ValueMP = 1m },
-                    new Construct { Id = 64, Kind = 3, Name = "Поиск", ValueExt = 0m, ValueInt = 0m, ValueMP = 1m },
-                    new Construct { Id = 65, Kind = 3, Name = "Область", ValueExt = -0.95m, ValueInt = 0m, ValueMP = 3m }
+                    new Construct { Id = 52, Kind = 3, Name = "Обертка", ValueExt = 0m, ValueInt = 0m, ValueMP = 2m },
+                    new Construct { Id = 53, Kind = 3, Name = "Проклятье", ValueExt = -0.2m, ValueInt = 0m, ValueMP = 2m },
+                    new Construct { Id = 54, Kind = 3, Name = "Усиление", ValueExt = 0m, ValueInt = 0m, ValueMP = 2m },
+                    new Construct { Id = 55, Kind = 3, Name = "Преодоление", ValueExt = 0m, ValueInt = 0m, ValueMP = 6m },
+                    new Construct { Id = 56, Kind = 3, Name = "Кин’a’дхаз", ValueExt = 0m, ValueInt = 0m, ValueMP = 2m },
+                    new Construct { Id = 57, Kind = 3, Name = "Дестабилизация", ValueExt = 0.2m, ValueInt = -0.4m, ValueMP = 4m },
+                    new Construct { Id = 58, Kind = 3, Name = "Линза", ValueExt = 0m, ValueInt = 0m, ValueMP = 1m },
+                    new Construct { Id = 59, Kind = 3, Name = "Чувство", ValueExt = 0m, ValueInt = 0m, ValueMP = 2m },
+                    new Construct { Id = 60, Kind = 3, Name = "Экран", ValueExt = 0m, ValueInt = 0.2m, ValueMP = 2m },
+                    new Construct { Id = 61, Kind = 3, Name = "Мышца", ValueExt = -0.1m, ValueInt = -0.1m, ValueMP = 1m },
+                    new Construct { Id = 62, Kind = 3, Name = "Спокойствие", ValueExt = 0m, ValueInt = 0m, ValueMP = 1m },
+                    new Construct { Id = 63, Kind = 3, Name = "Поиск", ValueExt = 0m, ValueInt = 0m, ValueMP = 1m },
+                    new Construct { Id = 64, Kind = 3, Name = "Область", ValueExt = -0.95m, ValueInt = 0m, ValueMP = 3m }
             );
         }
     }

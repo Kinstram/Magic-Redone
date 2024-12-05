@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
+using System.Windows;
 
 namespace Magic_Redone
 {
@@ -12,19 +13,19 @@ namespace Magic_Redone
             {
 
                 Int16 requiredKind = 0; //стихии
-                var elementsLoad = await context.Constructs.OrderBy(p => p.Name).Where(c => c.Kind == requiredKind).ToListAsync();
+                var elementsLoad = await context.Constructs.AsNoTracking().OrderBy(p => p.Name).Where(c => c.Kind == requiredKind).ToListAsync();
                 Collections.Elements = new ObservableCollection<Construct>(elementsLoad);
 
                 requiredKind = 1; //способы
-                var methodsLoad = await context.Constructs.OrderBy(p => p.Name).Where(c => c.Kind == requiredKind).ToListAsync();
+                var methodsLoad = await context.Constructs.AsNoTracking().OrderBy(p => p.Name).Where(c => c.Kind == requiredKind).ToListAsync();
                 Collections.Methods = new ObservableCollection<Construct>(methodsLoad);
 
                 requiredKind = 2; //формы
-                var formsLoad = await context.Constructs.OrderBy(p => p.Name).Where(c => c.Kind == requiredKind).ToListAsync();
+                var formsLoad = await context.Constructs.AsNoTracking().OrderBy(p => p.Name).Where(c => c.Kind == requiredKind).ToListAsync();
                 Collections.Forms = new ObservableCollection<Construct>(formsLoad);
 
                 requiredKind = 3; //компоненты
-                var componentsLoad = await context.Constructs.OrderBy(p => p.Name).Where(c => c.Kind == requiredKind).ToListAsync();
+                var componentsLoad = await context.Constructs.AsNoTracking().OrderBy(p => p.Name).Where(c => c.Kind == requiredKind).ToListAsync();
                 Collections.Components = new ObservableCollection<Construct>(componentsLoad);
             }
 
@@ -80,6 +81,69 @@ namespace Magic_Redone
                     Getter.SelectedComponents[i].ValueMP = data.ValueMP;
                 }
             }
+        }
+        public static void SaveToLists (MainWindow main)
+        {
+            var Results = (Results)main.DataContext;
+            var Getter = Results.Getter;
+            List<Construct> trioToSave = new List<Construct>();
+            List<Construct> constructsToSave = new List<Construct>(6);
+            List<Int16> scalationsToSave = new List<Int16>();
+
+            trioToSave.Clear();
+            constructsToSave.Clear();
+            scalationsToSave.Clear();
+
+            constructsToSave.Add(Getter.SelectedComponent1);
+            constructsToSave.Add(Getter.SelectedComponent2);
+            constructsToSave.Add(Getter.SelectedComponent3);
+            constructsToSave.Add(Getter.SelectedComponent4); 
+            constructsToSave.Add(Getter.SelectedComponent5); 
+            constructsToSave.Add(Getter.SelectedComponent6);
+
+            scalationsToSave.Add(Getter.SelectedScalation1);
+            scalationsToSave.Add(Getter.SelectedScalation2);
+            scalationsToSave.Add(Getter.SelectedScalation3);
+            scalationsToSave.Add(Getter.SelectedScalation4);
+            scalationsToSave.Add(Getter.SelectedScalation5);
+            scalationsToSave.Add(Getter.SelectedScalation6);
+
+            trioToSave.Add(Getter.SelectedElement);
+            trioToSave.Add(Getter.SelectedMethod);
+            trioToSave.Add(Getter.SelectedForm);
+
+            if (string.IsNullOrEmpty(main.txtSave.Text))
+            {
+                MessageBox.Show("Введите название сохранения!");
+                return;
+            }
+
+            var saveData = new SaveEntity
+            {
+                Id = Guid.NewGuid().GetHashCode(),
+                SaveName = main.txtSave.Text,
+
+                SavedTrio = trioToSave,
+                SavedComponents = constructsToSave,
+                SavedScalations = scalationsToSave,
+
+                CountedExt = Getter.CountedExt,
+                CountedInt = Getter.CountedInt,
+                CountedMP = Getter.CountedMP
+            };
+
+            using (var context = new SaveContext())
+            {
+                try
+                {
+                context.Saves.Add(saveData);
+                context.SaveChanges();
+                }
+                catch (Exception ex) { MessageBox.Show(ex.ToString()); }
+            }
+
+            MessageBox.Show("Успешно сохранено");
+            main.txtSave.Clear(); // Очищаем поле ввода
         }
     }
 }

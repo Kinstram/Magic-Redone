@@ -11,10 +11,18 @@
 
     <DataGrid ItemsSource="{Binding SavesView}" AutoGenerateColumns="False">
         <DataGrid.Columns>
-            <DataGridTextColumn Header="Save Name" Binding="{Binding SaveName}" />
-            <DataGridTextColumn Header="Component 1 Name" Binding="{Binding LoadedComponents[0].Name}" />
-            <DataGridTextColumn Header="Component 2 Name" Binding="{Binding LoadedComponents[0].ValueExt}" />
+            <DataGridTextColumn Header="Название" Binding="{Binding SaveName}" />
+            <DataGridTextColumn Header="Стихия" Binding="{Binding SavedTrio[0].Name}" />
+            <DataGridTextColumn Header="Метод" Binding="{Binding SavedTrio[1].Name}" />
+            <DataGridTextColumn Header="Форма" Binding="{Binding SavedTrio[2].Name}" />
+            <DataGridTextColumn Header="Первый компонент" Binding="{Binding SavedComponents[0].Name}" />
+            <DataGridTextColumn Header="СК" Binding="{Binding SavedScalations[0]}" />
+            <DataGridTextColumn Header="Второй компонент" Binding="{Binding SavedComponents[1].Name}" />
+            <DataGridTextColumn Header="СК" Binding="{Binding SavedScalations[1]}" />
+            <DataGridTextColumn Header="Третий компонент" Binding="{Binding SavedComponents[2].Name}" />
+            <DataGridTextColumn Header="Четвёртый компонент" Binding="{Binding SavedComponents[3].Name}" />
+            <DataGridTextColumn Header="Пятый компонент" Binding="{Binding SavedComponents[4].Name}" />
+            <DataGridTextColumn Header="Шестой компонент" Binding="{Binding SavedComponents[5].Name}" />
         </DataGrid.Columns>
     </DataGrid>
-
 </Page>
