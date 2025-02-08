@@ -1,28 +1,30 @@
 ﻿<Page x:Class="Magic_Redone.SavePage"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:local="clr-namespace:Magic_Redone"
-      mc:Ignorable="d" 
+      mc:Ignorable="d"
       d:DesignHeight="866" d:DesignWidth="1466"
       Title="SavePage"
       Background="{DynamicResource CommonBackground}">
 
-    <DataGrid ItemsSource="{Binding SavesView}" AutoGenerateColumns="False">
-        <DataGrid.Columns>
-            <DataGridTextColumn Header="Название" Binding="{Binding SaveName}" />
-            <DataGridTextColumn Header="Стихия" Binding="{Binding SavedTrio[0].Name}" />
-            <DataGridTextColumn Header="Метод" Binding="{Binding SavedTrio[1].Name}" />
-            <DataGridTextColumn Header="Форма" Binding="{Binding SavedTrio[2].Name}" />
-            <DataGridTextColumn Header="Первый компонент" Binding="{Binding SavedComponents[0].Name}" />
-            <DataGridTextColumn Header="СК" Binding="{Binding SavedScalations[0]}" />
-            <DataGridTextColumn Header="Второй компонент" Binding="{Binding SavedComponents[1].Name}" />
-            <DataGridTextColumn Header="СК" Binding="{Binding SavedScalations[1]}" />
-            <DataGridTextColumn Header="Третий компонент" Binding="{Binding SavedComponents[2].Name}" />
-            <DataGridTextColumn Header="Четвёртый компонент" Binding="{Binding SavedComponents[3].Name}" />
-            <DataGridTextColumn Header="Пятый компонент" Binding="{Binding SavedComponents[4].Name}" />
-            <DataGridTextColumn Header="Шестой компонент" Binding="{Binding SavedComponents[5].Name}" />
-        </DataGrid.Columns>
-    </DataGrid>
+    <Grid>
+        <DataGrid ItemsSource="{Binding SavesView}" AutoGenerateColumns="False">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Название" Binding="{Binding SaveName}" />
+                <DataGridTextColumn Header="Стихия" Binding="{Binding ElementName}" />
+                <DataGridTextColumn Header="Метод" Binding="{Binding MethodName}" />
+                <DataGridTextColumn Header="Форма" Binding="{Binding FormName}" />
+                <DataGridTextColumn Header="Первый компонент" Binding="{Binding Component1Name}" />
+                <DataGridTextColumn Header="СК" Binding="{Binding Scalation1}" />
+                <DataGridTextColumn Header="Второй компонент" Binding="{Binding Component2Name}" />
+                <DataGridTextColumn Header="СК" Binding="{Binding Scalation2}" />
+                <DataGridTextColumn Header="Третий компонент" Binding="{Binding Component3Name}" />
+                <DataGridTextColumn Header="Четвёртый компонент" Binding="{Binding Component4Name}" />
+                <DataGridTextColumn Header="Пятый компонент" Binding="{Binding Component5Name}" />
+                <DataGridTextColumn Header="Шестой компонент" Binding="{Binding Component6Name}" />
+            </DataGrid.Columns>
+        </DataGrid>
+    </Grid>
 </Page>
