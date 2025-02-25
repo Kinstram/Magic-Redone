@@ -30,7 +30,7 @@ namespace Magic_Redone
             for (int i = 0; i < 6; i++)
             {
                 SelectedComponents.Add(ZeroDefaultConstruct());
-                SelectedScalations.Add(1);
+                SelectedScalations.Add(1); //изначально все скаляции устанавливаются на 1
             }//запись пустых ячеек в коллекции
 
             SelectedTrio = new ObservableCollection<Construct>();
@@ -41,14 +41,14 @@ namespace Magic_Redone
         }
         public static Construct DefaultConstruct()
         {
-            return new Construct { ValueExt = 1m, ValueInt = 1m, ValueMP = 1m };
-        } //"пустой" конструкт для стихии, метода, формы
+            return new Construct { Name = " ", ValueExt = 1m, ValueInt = 1m, ValueMP = 1m };
+        } //"пустой" конструкт для стихии, метода, формы. Используется при умножении, поэтому 1
         public static Construct ZeroDefaultConstruct()
         {
             return new Construct { Name = " ", ValueExt = 0m, ValueInt = 0m, ValueMP = 0m };
-        } //"пустой" конструкт для компонентов
+        } //"пустой" конструкт для компонентов. Используется при сложении, поэтому 0
 
-        //магическая хуета, благодаря которой работает скаляция. Иначе при выборе двух компонентов с одним именем приводит к одинаковым данных в обоих.
+        //магическая хуета, благодаря которой работает скаляция. Иначе при выборе двух компонентов с одним именем приводит к одинаковым данным в обоих.
         //по идее создаёт копию данных. Зачем? Видимо чтобы они не переписывали друг-друга. Как это происходит? Я бы хотел знать.
         private Construct CreateConstructCopy(Construct original)
         {

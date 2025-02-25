@@ -5,7 +5,7 @@ using System.Windows;
 
 namespace Magic_Redone
 {
-    internal class Back //обработка
+    public class Back //обработка
     {
         internal static async void LoadElements(Collections Collections)
         {
@@ -82,24 +82,22 @@ namespace Magic_Redone
                 }
             }
         }
-        public static void SaveToLists (MainWindow main)
+        public static void SaveToLists(MainWindow main)
         {
             var Results = (Results)main.DataContext;
             var Getter = Results.Getter;
+
+            List<Construct> componentsToSave = new List<Construct>();
             List<Construct> trioToSave = new List<Construct>();
-            List<Construct> constructsToSave = new List<Construct>(6);
             List<Int16> scalationsToSave = new List<Int16>();
 
-            trioToSave.Clear();
-            constructsToSave.Clear();
-            scalationsToSave.Clear();
+            componentsToSave.Add(Getter.SelectedComponent1);
+            componentsToSave.Add(Getter.SelectedComponent2);
+            componentsToSave.Add(Getter.SelectedComponent3);
+            componentsToSave.Add(Getter.SelectedComponent4);
+            componentsToSave.Add(Getter.SelectedComponent5);
+            componentsToSave.Add(Getter.SelectedComponent6);
 
-            constructsToSave.Add(Getter.SelectedComponent1);
-            constructsToSave.Add(Getter.SelectedComponent2);
-            constructsToSave.Add(Getter.SelectedComponent3);
-            constructsToSave.Add(Getter.SelectedComponent4); 
-            constructsToSave.Add(Getter.SelectedComponent5); 
-            constructsToSave.Add(Getter.SelectedComponent6);
 
             scalationsToSave.Add(Getter.SelectedScalation1);
             scalationsToSave.Add(Getter.SelectedScalation2);
@@ -108,42 +106,83 @@ namespace Magic_Redone
             scalationsToSave.Add(Getter.SelectedScalation5);
             scalationsToSave.Add(Getter.SelectedScalation6);
 
+
             trioToSave.Add(Getter.SelectedElement);
             trioToSave.Add(Getter.SelectedMethod);
             trioToSave.Add(Getter.SelectedForm);
-
             if (string.IsNullOrEmpty(main.txtSave.Text))
             {
                 MessageBox.Show("Введите название сохранения!");
                 return;
             }
 
-            var saveData = new SaveEntity
-            {
-                Id = Guid.NewGuid().GetHashCode(),
-                SaveName = main.txtSave.Text,
-
-                SavedTrio = trioToSave,
-                SavedComponents = constructsToSave,
-                SavedScalations = scalationsToSave,
-
-                CountedExt = Getter.CountedExt,
-                CountedInt = Getter.CountedInt,
-                CountedMP = Getter.CountedMP
-            };
 
             using (var context = new SaveContext())
             {
                 try
                 {
-                context.Saves.Add(saveData);
-                context.SaveChanges();
+
+                    var saveData = new SaveEntity
+                    {
+                        SaveName = main.txtSave.Text,
+                        CountedExt = Getter.CountedExt,
+                        CountedInt = Getter.CountedInt,
+                        CountedMP = Getter.CountedMP,
+                    };
+
+                    context.Saves.Add(saveData);
+                    context.SaveChanges();
+
+                    // Сохраняем трио
+                    foreach (var element in trioToSave.Where(c => c != null))
+                    {
+                        context.ConstructsToSave.Add(new ConstructToSave
+                        {
+                            OriginalId = element.Id,
+                            Name = element.Name,
+                            ValueExt = element.ValueExt,
+                            ValueInt = element.ValueInt,
+                            ValueMP = element.ValueMP,
+                            SaveEntityId = saveData.Id
+                        });
+                    }
+
+                    // Сохраняем компоненты
+                    foreach (var component in componentsToSave.Where(c => c != null))
+                    {
+                        context.ConstructsToSave.Add(new ConstructToSave
+                        {
+                            OriginalId = component.Id,
+                            Name = component.Name,
+                            ValueExt = component.ValueExt,
+                            ValueInt = component.ValueInt,
+                            ValueMP = component.ValueMP,
+                            SaveEntityId = saveData.Id
+                        });
+                    }
+
+                    // Сохраняем скаляции
+                    foreach (var scalation in scalationsToSave)
+                    {
+                        context.ScalationsToSave.Add(new ScalationToSave
+                        {
+                            Value = scalation,
+                            SaveEntityId = saveData.Id
+                        });
+                    }
+
+                    context.SaveChanges();
                 }
-                catch (Exception ex) { MessageBox.Show(ex.ToString()); }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.ToString());
+                    return;
+                }
             }
 
             MessageBox.Show("Успешно сохранено");
-            main.txtSave.Clear(); // Очищаем поле ввода
+            main.txtSave.Clear();
         }
     }
 }
+

@@ -3,18 +3,18 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Reflection;
 
 namespace Magic_Redone
 {
-    public class Construct
+    public class ConstructToSave
     {
-        public Int16 Id { get; set; }
-        public Int16 Kind { get; set; }
+        public int Id { get; set; }
+        public Int16 OriginalId { get; set; } // ID из основной базы (только для справки)
         public string Name { get; set; }
         public decimal ValueExt { get; set; }
         public decimal ValueInt { get; set; }
         public decimal ValueMP { get; set; }
-        public Construct() { }
+        public int SaveEntityId { get; set; }
+        public SaveEntity SaveEntity { get; set; }
     }
 }

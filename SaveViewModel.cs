@@ -3,20 +3,15 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Linq;
 using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Data;
 using System.Windows;
-using SQLitePCL;
 
 namespace Magic_Redone
 {
     public class SaveViewModel : INotifyPropertyChanged
     {
         private readonly SaveContext _context;
-        private SaveContext context = new(); 
         public ObservableCollection<SaveEntity> Saves { get; set; }
         private ICollectionView _savesView;
         public ICollectionView SavesView
@@ -31,34 +26,23 @@ namespace Magic_Redone
 
         public SaveViewModel()
         {
-            _context = context;
+            _context = new SaveContext();
             LoadSavesAsync();
         }
+
         private async void LoadSavesAsync()
         {
-            try
-            {
+            var saves = await _context.Saves
+                .Include(s => s.SavedComponents)
+                .Include(s => s.SavedScalations
+                    .OrderBy(sc => sc.Id)) // Сортировка по Id
+                .AsNoTracking()
+                .ToListAsync();
 
-                var saves = await _context.Saves
-                    .AsNoTracking()
-                    .Include(s => s.SavedComponents)
-                    .ToListAsync();
-                Saves = new ObservableCollection<SaveEntity>(saves);
-                SavesView = CollectionViewSource.GetDefaultView(Saves);
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Ошибка загрузки данных: {ex.Message}", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
-            }
-            //MessageBox.Show($"{Saves,}");
+            Saves = new ObservableCollection<SaveEntity>(saves);
+            SavesView = CollectionViewSource.GetDefaultView(Saves);
         }
-        private Construct GetConstructById(Int16? id)
-        {
-                using (var context = new ApplicationContext()) // Ваш DbContext для Construct
-                {
-                    return context.Constructs.Find(id.Value);
-                }
-        }
+
         public event PropertyChangedEventHandler PropertyChanged;
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {

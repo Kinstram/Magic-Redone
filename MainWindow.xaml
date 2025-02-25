@@ -6,9 +6,14 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Magic_Redone"
         mc:Ignorable="d"
-        Title="MainWindow" Height="866" Width="1466"
-        Background="{DynamicResource CommonBackground}">
+        Title="MainWindow" Height="866" Width="1466">
+    <!-->
+    Background="{DynamicResource CommonBackground}">
+    <!-->
     <Grid Margin="5">
+        <Grid.Background>
+            <ImageBrush ImageSource="/back1.jpg"/>
+        </Grid.Background>
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
             <ColumnDefinition/>
