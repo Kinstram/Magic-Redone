@@ -14,16 +14,15 @@ namespace Magic_Redone
     public class SaveContext : DbContext
     {
         public DbSet<SaveEntity> Saves { get; set; }
-        public DbSet<Construct> Constructs { get; set; }
         public DbSet<ConstructToSave> ConstructsToSave { get; set; }
+        public DbSet<ConstructToSave> TrioToSave { get; set; }
         public DbSet<ScalationToSave> ScalationsToSave { get; set; }
 
         public SaveContext() => Database.EnsureCreated();
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlite("Data Source=UserSaves.db")
-                .EnableSensitiveDataLogging();
+            optionsBuilder.UseSqlite("Data Source=UserSaves.db");
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -32,27 +31,18 @@ namespace Magic_Redone
                 .HasIndex(u => u.SaveName)
                 .IsUnique();
 
-            // Настройка связи между ConstructToSave и SaveEntity (один-ко-многим)
+            // Настройка связей
             modelBuilder.Entity<ConstructToSave>()
                 .HasOne(cts => cts.SaveEntity)
-                .WithMany() // Использование .WithMany() для настройки обратной связи
+                .WithMany(se => se.SavedComponents)
                 .HasForeignKey(cts => cts.SaveEntityId)
-                 .OnDelete(DeleteBehavior.Cascade);
-
-            // Настройка связи между ConstructToSave и Construct (один-ко-одному)
-            modelBuilder.Entity<ConstructToSave>()
-                .HasOne(cts => cts.Construct)
-                .WithMany()
-                .HasForeignKey(cts => cts.ConstructId)
-                 .OnDelete(DeleteBehavior.NoAction);
+                .OnDelete(DeleteBehavior.Cascade);
 
             modelBuilder.Entity<ScalationToSave>()
                 .HasOne(sts => sts.SaveEntity)
                 .WithMany(se => se.SavedScalations)
                 .HasForeignKey(sts => sts.SaveEntityId)
-                 .OnDelete(DeleteBehavior.Cascade);
-
-            base.OnModelCreating(modelBuilder);
+                .OnDelete(DeleteBehavior.Cascade);
         }
     }
 }

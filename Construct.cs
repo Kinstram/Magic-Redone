@@ -16,7 +16,5 @@ namespace Magic_Redone
         public decimal ValueInt { get; set; }
         public decimal ValueMP { get; set; }
         public Construct() { }
-        public Construct (string a, decimal b, decimal c, decimal d) { Name = a; ValueExt = b; ValueInt = c; ValueMP = d; }
-        public Construct(Int16 a, Int16 b, string c, decimal d, decimal e, decimal f) { Id = a; Kind = b; Name = c; ValueExt = d; ValueInt = e; ValueMP = f; }
     }
 }

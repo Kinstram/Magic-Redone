@@ -8,11 +8,13 @@ namespace Magic_Redone
 {
     public class ConstructToSave
     {
-        public int Id { get; set; } // Новый уникальный ID
-        public Int16 ConstructId { get; set; } // Внешний ключ к Construct
-        public Construct Construct { get; set; } // Навигационное свойство к Construct
-        public int SaveEntityId { get; set; }  // Внешний ключ к SaveEntity
-        public SaveEntity SaveEntity { get; set; }  // Навигационное свойство к SaveEntity
-        public string SaveName { get; set; } // Для уникального поиска
+        public int Id { get; set; }
+        public Int16 OriginalId { get; set; } // ID из основной базы (только для справки)
+        public string Name { get; set; }
+        public decimal ValueExt { get; set; }
+        public decimal ValueInt { get; set; }
+        public decimal ValueMP { get; set; }
+        public int SaveEntityId { get; set; }
+        public SaveEntity SaveEntity { get; set; }
     }
 }

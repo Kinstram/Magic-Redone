@@ -13,17 +13,24 @@
         <DataGrid ItemsSource="{Binding SavesView}" AutoGenerateColumns="False">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Название" Binding="{Binding SaveName}" />
-                <DataGridTextColumn Header="Стихия" Binding="{Binding ElementName}" />
-                <DataGridTextColumn Header="Метод" Binding="{Binding MethodName}" />
-                <DataGridTextColumn Header="Форма" Binding="{Binding FormName}" />
-                <DataGridTextColumn Header="Первый компонент" Binding="{Binding Component1Name}" />
-                <DataGridTextColumn Header="СК" Binding="{Binding Scalation1}" />
-                <DataGridTextColumn Header="Второй компонент" Binding="{Binding Component2Name}" />
-                <DataGridTextColumn Header="СК" Binding="{Binding Scalation2}" />
-                <DataGridTextColumn Header="Третий компонент" Binding="{Binding Component3Name}" />
-                <DataGridTextColumn Header="Четвёртый компонент" Binding="{Binding Component4Name}" />
-                <DataGridTextColumn Header="Пятый компонент" Binding="{Binding Component5Name}" />
-                <DataGridTextColumn Header="Шестой компонент" Binding="{Binding Component6Name}" />
+                <DataGridTextColumn Header="Стихия" Binding="{Binding SavedComponents[0].Name}" />
+                <DataGridTextColumn Header="Метод" Binding="{Binding SavedComponents[1].Name}" />
+                <DataGridTextColumn Header="Форма" Binding="{Binding SavedComponents[2].Name}" />
+                <DataGridTextColumn Header="Первый компонент" Binding="{Binding SavedComponents[3].Name}" />
+                <DataGridTextColumn Header="СК" Binding="{Binding SavedScalations[0].Value}" />
+                <DataGridTextColumn Header="Второй компонент" Binding="{Binding SavedComponents[4].Name}" />
+                <DataGridTextColumn Header="СК" Binding="{Binding SavedScalations[1].Value}" />
+                <DataGridTextColumn Header="Третий компонент" Binding="{Binding SavedComponents[5].Name}" />
+                <DataGridTextColumn Header="СК" Binding="{Binding SavedScalations[2].Value}" />
+                <DataGridTextColumn Header="Четвёртый компонент" Binding="{Binding SavedComponents[6].Name}" />
+                <DataGridTextColumn Header="СК" Binding="{Binding SavedScalations[3].Value}" />
+                <DataGridTextColumn Header="Пятый компонент" Binding="{Binding SavedComponents[7].Name}" />
+                <DataGridTextColumn Header="СК" Binding="{Binding SavedScalations[4].Value}" />
+                <DataGridTextColumn Header="Шестой компонент" Binding="{Binding SavedComponents[8].Name}" />
+                <DataGridTextColumn Header="СК" Binding="{Binding SavedScalations[5].Value}" />
+                <DataGridTextColumn Header="†" Binding="{Binding CountedExt}" />
+                <DataGridTextColumn Header="‡" Binding="{Binding CountedInt}" />
+                <DataGridTextColumn Header="Ћ" Binding="{Binding CountedMP}" />
             </DataGrid.Columns>
         </DataGrid>
     </Grid>

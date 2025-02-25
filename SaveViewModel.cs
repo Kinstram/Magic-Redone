@@ -32,26 +32,17 @@ namespace Magic_Redone
 
         private async void LoadSavesAsync()
         {
-            try
-            {
-                var saves = await _context.Saves
-                    .AsNoTracking()
-                      .Include(s => s.SavedComponents)
-                        .ThenInclude(cts => cts.Construct)
-                     .Include(s => s.SavedTrio)
-                       .ThenInclude(cts => cts.Construct)
-                    .Include(s => s.SavedScalations)
-                    .ToListAsync();
+            var saves = await _context.Saves
+                .Include(s => s.SavedComponents)
+                .Include(s => s.SavedScalations
+                    .OrderBy(sc => sc.Id)) // Сортировка по Id
+                .AsNoTracking()
+                .ToListAsync();
 
-                Saves = new ObservableCollection<SaveEntity>(saves);
-                SavesView = CollectionViewSource.GetDefaultView(Saves);
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Ошибка загрузки данных: {ex.Message}", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
-            }
+            Saves = new ObservableCollection<SaveEntity>(saves);
+            SavesView = CollectionViewSource.GetDefaultView(Saves);
         }
-        
+
         public event PropertyChangedEventHandler PropertyChanged;
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {

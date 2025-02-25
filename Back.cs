@@ -121,6 +121,7 @@ namespace Magic_Redone
             {
                 try
                 {
+
                     var saveData = new SaveEntity
                     {
                         SaveName = main.txtSave.Text,
@@ -132,51 +133,42 @@ namespace Magic_Redone
                     context.Saves.Add(saveData);
                     context.SaveChanges();
 
-                    foreach (var component in componentsToSave)
+                    // Сохраняем трио
+                    foreach (var element in trioToSave.Where(c => c != null))
                     {
-                        var existingConstruct = context.Constructs.Find(component.Id);
-                        if (existingConstruct == null)
+                        context.ConstructsToSave.Add(new ConstructToSave
                         {
-                            context.Constructs.Add(component);
-                            context.SaveChanges();
-                            existingConstruct = component;
-                        }
-
-                        var constructToSave = new ConstructToSave()
-                        {
-                            ConstructId = existingConstruct.Id,
-                            SaveEntityId = saveData.Id,
-                            SaveName = saveData.SaveName
-                        };
-                        context.ConstructsToSave.Add(constructToSave);
-
+                            OriginalId = element.Id,
+                            Name = element.Name,
+                            ValueExt = element.ValueExt,
+                            ValueInt = element.ValueInt,
+                            ValueMP = element.ValueMP,
+                            SaveEntityId = saveData.Id
+                        });
                     }
 
-                    foreach (var element in trioToSave)
+                    // Сохраняем компоненты
+                    foreach (var component in componentsToSave.Where(c => c != null))
                     {
-                        var existingConstruct = context.Constructs.Find(element.Id);
-                        if (existingConstruct == null)
+                        context.ConstructsToSave.Add(new ConstructToSave
                         {
-                            context.Constructs.Add(element);
-                            context.SaveChanges();
-                            existingConstruct = element;
-                        }
-                        var constructToSave = new ConstructToSave()
-                        {
-                            ConstructId = existingConstruct.Id,
-                            SaveEntityId = saveData.Id,
-                            SaveName = saveData.SaveName
-                        };
-                        context.ConstructsToSave.Add(constructToSave);
+                            OriginalId = component.Id,
+                            Name = component.Name,
+                            ValueExt = component.ValueExt,
+                            ValueInt = component.ValueInt,
+                            ValueMP = component.ValueMP,
+                            SaveEntityId = saveData.Id
+                        });
                     }
+
+                    // Сохраняем скаляции
                     foreach (var scalation in scalationsToSave)
                     {
-                        var scalationToSave = new ScalationToSave()
+                        context.ScalationsToSave.Add(new ScalationToSave
                         {
                             Value = scalation,
-                            SaveEntityId = saveData.Id,
-                        };
-                        context.ScalationsToSave.Add(scalationToSave);
+                            SaveEntityId = saveData.Id
+                        });
                     }
 
                     context.SaveChanges();
