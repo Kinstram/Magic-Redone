@@ -110,20 +110,34 @@ namespace Magic_Redone
             trioToSave.Add(Getter.SelectedElement);
             trioToSave.Add(Getter.SelectedMethod);
             trioToSave.Add(Getter.SelectedForm);
-            if (string.IsNullOrEmpty(main.txtSave.Text))
-            {
-                MessageBox.Show("Введите название сохранения!");
-                return;
-            }
-
 
             using (var context = new SaveContext())
             {
                 try
                 {
+                    string saveName = main.txtSave.Text.Trim();
+
+                    // Проверка на пустое название
+                    if (string.IsNullOrWhiteSpace(saveName))
+                    {
+                        MessageBox.Show("Название сохранения не может быть пустым!", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Warning);
+                        return;
+                    }
+
+                    // Проверка на уникальность
+                    bool nameExists = context.Saves
+                        .Any(s => s.SaveName == saveName);
+
+                    if (nameExists)
+                    {
+                        MessageBox.Show("Сохранение с таким названием уже существует!", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Warning);
+                        return;
+                    }
+
+                    // Создание новой записи, если проверки пройдены
                     var saveData = new SaveEntity
                     {
-                        SaveName = main.txtSave.Text,
+                        SaveName = saveName,
                         CountedExt = Getter.CountedExt,
                         CountedInt = Getter.CountedInt,
                         CountedMP = Getter.CountedMP,
