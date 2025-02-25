@@ -10,7 +10,7 @@
       Background="{DynamicResource CommonBackground}">
 
     <Grid>
-        <DataGrid ItemsSource="{Binding SavesView}" AutoGenerateColumns="False">
+        <DataGrid ItemsSource="{Binding SavesView}" AutoGenerateColumns="False" IsReadOnly="True" >
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Название" Binding="{Binding SaveName}" />
                 <DataGridTextColumn Header="Стихия" Binding="{Binding SavedComponents[0].Name}" />
@@ -33,5 +33,6 @@
                 <DataGridTextColumn Header="Ћ" Binding="{Binding CountedMP}" />
             </DataGrid.Columns>
         </DataGrid>
+        <Button Content="Назад" Click="BackButton_Click" HorizontalAlignment="Right" VerticalAlignment="Top"/>
     </Grid>
 </Page>

@@ -21,8 +21,21 @@ namespace Magic_Redone
         }
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            var SavePage = new SavePage();
-            this.Content = SavePage;
+            SavePage savePage = new SavePage();
+
+            // Подписываемся на событие возврата
+            savePage.ReturnRequested += () =>
+            {
+                MainFrame.Visibility = Visibility.Collapsed;
+                MainContent.Visibility = Visibility.Visible;
+            };
+
+            // Показываем Frame и скрываем основной контент
+            MainFrame.Visibility = Visibility.Visible;
+            MainContent.Visibility = Visibility.Collapsed;
+
+            // Переходим на страницу
+            MainFrame.Navigate(savePage);
         }
 
         private void btnSave_Click(object sender, RoutedEventArgs e)
