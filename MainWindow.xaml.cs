@@ -1,4 +1,5 @@
 ﻿using Magic_Redone;
+using System.Diagnostics;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
@@ -18,6 +19,9 @@ namespace Magic_Redone
         {
             InitializeComponent();
             this.DataContext = new Results();
+
+            txtSave.GotFocus += txtSave_GotFocus;
+            txtSave.LostFocus += txtSave_LostFocus;
         }
         private void Button_Click(object sender, RoutedEventArgs e)
         {
@@ -37,10 +41,28 @@ namespace Magic_Redone
             // Переходим на страницу
             MainFrame.Navigate(savePage);
         }
-
         private void btnSave_Click(object sender, RoutedEventArgs e)
         {
             Back.SaveToLists(this);
+        }
+
+        private void txtSave_GotFocus(object sender, RoutedEventArgs e)
+        {
+            // Если текст в TextBox равен подсказке, очищаем его
+            if (txtSave.Text == "Введите название сохранения")
+            {
+                txtSave.Text = "";
+            }
+        }
+
+        private void txtSave_LostFocus(object sender, RoutedEventArgs e)
+        {
+            Debug.WriteLine("LostFocus event triggered");
+            // Если TextBox пустой, возвращаем подсказку
+            if (string.IsNullOrEmpty(txtSave.Text))
+            {
+                txtSave.Text = "Введите название сохранения";
+            }
         }
     }
 }

@@ -99,12 +99,12 @@ namespace Magic_Redone
             componentsToSave.Add(Getter.SelectedComponent6);
 
 
-            scalationsToSave.Add(Getter.SelectedScalation1);
-            scalationsToSave.Add(Getter.SelectedScalation2);
-            scalationsToSave.Add(Getter.SelectedScalation3);
-            scalationsToSave.Add(Getter.SelectedScalation4);
-            scalationsToSave.Add(Getter.SelectedScalation5);
-            scalationsToSave.Add(Getter.SelectedScalation6);
+            scalationsToSave.Add((Getter.SelectedScalation1 == null || Getter.SelectedScalation1 == 0) ? (short)1 : Getter.SelectedScalation1);
+            scalationsToSave.Add((Getter.SelectedScalation2 == null || Getter.SelectedScalation2 == 0) ? (short)1 : Getter.SelectedScalation2);
+            scalationsToSave.Add((Getter.SelectedScalation3 == null || Getter.SelectedScalation3 == 0) ? (short)1 : Getter.SelectedScalation3);
+            scalationsToSave.Add((Getter.SelectedScalation4 == null || Getter.SelectedScalation4 == 0) ? (short)1 : Getter.SelectedScalation4);
+            scalationsToSave.Add((Getter.SelectedScalation5 == null || Getter.SelectedScalation5 == 0) ? (short)1 : Getter.SelectedScalation5);
+            scalationsToSave.Add((Getter.SelectedScalation6 == null || Getter.SelectedScalation6 == 0) ? (short)1 : Getter.SelectedScalation6);
 
 
             trioToSave.Add(Getter.SelectedElement);
@@ -121,7 +121,6 @@ namespace Magic_Redone
             {
                 try
                 {
-
                     var saveData = new SaveEntity
                     {
                         SaveName = main.txtSave.Text,
@@ -182,6 +181,7 @@ namespace Magic_Redone
 
             MessageBox.Show("Успешно сохранено");
             main.txtSave.Clear();
+            main.txtSave.Text = "Введите название сохранения";
         }
     }
 }

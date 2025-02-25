@@ -194,14 +194,14 @@
                 Background="Transparent" Foreground="Black" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
 
             <ListBox x:Name="Scalation6"
-            ItemsSource="{Binding Collections.Scalations}"     
-            SelectedItem="{Binding Getter.SelectedScalation6, Mode=TwoWay}"
-            Grid.Column="9"
-            Grid.Row="0"
-            MinWidth="25" MinHeight="25" MaxWidth="80" MaxHeight="30"
-            HorizontalAlignment="Left"
-            VerticalAlignment="Center"
-            Background="White" Foreground="Black" IsSynchronizedWithCurrentItem="False">
+                ItemsSource="{Binding Collections.Scalations}"     
+                SelectedItem="{Binding Getter.SelectedScalation6, Mode=TwoWay}"
+                Grid.Column="9"
+                Grid.Row="0"
+                MinWidth="25" MinHeight="25" MaxWidth="80" MaxHeight="30"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Center"
+                Background="White" Foreground="Black" IsSynchronizedWithCurrentItem="False">
             </ListBox>
 
             <ComboBox x:Name="ComponentsListBox6" 
@@ -296,12 +296,13 @@
             </StackPanel>
 
             <!-- Кнопка сохранения -->
-            <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="2" Grid.Column="8" >
-                <TextBox x:Name="txtSave" Height="30" Text="Введите название сохранения"/>
+            <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="2" Grid.Column="7" Grid.ColumnSpan="3"  >
+                <TextBox x:Name="txtSave" Height="30" Text="Введите название сохранения" MaxLength="255" MinWidth="176"/>
                 <Button x:Name="btnSave" Content="Сохранить" Height="30" Click="btnSave_Click"/>
             </StackPanel>
             <Button Content="Просмотр сохранённых заклинаний" Width="250" Height="60"  Grid.Column="5" Grid.ColumnSpan="2" Grid.Row ="2" Click="Button_Click"/>
         </Grid>
+        
         <Frame x:Name="MainFrame" Visibility="Collapsed" NavigationUIVisibility="Hidden" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
     </Grid>
 </Window>
