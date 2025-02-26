@@ -35,6 +35,8 @@ namespace Magic_Redone
         public static void ResultCount(Getter Getter)
         {
             Scalation(Getter);
+            EffectCounter(Getter);
+
             //инициализация и обнуление переменных для подсчёта Element, Method и Form. Сделано отдельно, чтобы не множить на 0 при пустых компонентах
             decimal CountedTrioExt = 1m;
             decimal CountedTrioInt = 1m;
@@ -61,6 +63,7 @@ namespace Magic_Redone
                 CountedComponentsMP += comp.ValueMP;
             }
 
+            //обработка выбранного времени. SelectedTime - строка с названием времени, number - числовое значение множителя
             Modifiers.TimeDict().TryGetValue(Getter.SelectedTime, out var number);
 
             //итоговое суммирование произведения трио и суммы компонентов для дальнейшей передачи в Getter и WPF
@@ -72,18 +75,44 @@ namespace Magic_Redone
             Getter.CountedInt = Math.Round(Getter.CountedInt, 2);
             Getter.CountedMP = Math.Round(Getter.CountedMP, 2);
 
-            Getter.SelectedTimeValue = Math.Round((Getter.CountedMP -(CountedTrioMP + CountedComponentsMP)), 2);
+            Getter.SelectedTimeValue = Math.Round((Getter.CountedMP - (CountedTrioMP + CountedComponentsMP)), 2);
         }
         internal static void Scalation(Getter Getter)
         {
             var compDict = Modifiers.ScalableDict();
-            for (Int16 i = 0; i < Getter.SelectedComponents.Count; i++)
+            var effectDataDict = Modifiers.ScalableEffectsData; // Наш словарь с базовыми параметрами
+
+            for (int i = 0; i < Getter.SelectedComponents.Count; i++)
             {
-                if (compDict.TryGetValue((Getter.SelectedComponents[i].Name, Getter.SelectedScalations[i]), out var data))
+                var component = Getter.SelectedComponents[i];
+                if (component == null) continue;
+
+                // Получаем уровень масштабирования для этого компонента
+                Int16 scalationLevel = Getter.SelectedScalations[i];
+
+                // Обновление ValueExt/Int/MP (ваш существующий код)
+                if (compDict.TryGetValue((component.Name, scalationLevel), out var data))
                 {
-                    Getter.SelectedComponents[i].ValueExt = data.ValueExt;
-                    Getter.SelectedComponents[i].ValueInt = data.ValueInt;
-                    Getter.SelectedComponents[i].ValueMP = data.ValueMP;
+                    component.ValueExt = data.ValueExt;
+                    component.ValueInt = data.ValueInt;
+                    component.ValueMP = data.ValueMP;
+                }
+
+                // Обновление эффектов
+                if (effectDataDict.TryGetValue(component.Name, out var effectData))
+                {
+                    int scaledDiceSize = effectData.BaseDiceSize;
+                    for (int level = 1; level < scalationLevel; level++)
+                    {
+                        scaledDiceSize = (int)(scaledDiceSize * effectData.Multiplier);
+                    }
+
+                    component.Effect = new Effect
+                    {
+                        Type = EffectType.Damage,
+                        Quantity = 1,
+                        DiceSize = scaledDiceSize
+                    };
                 }
             }
         }
@@ -203,6 +232,34 @@ namespace Magic_Redone
             MessageBox.Show("Успешно сохранено");
             main.txtSave.Clear();
             main.txtSave.Text = "Введите название сохранения";
+        }
+        internal static void EffectCounter(Getter Getter)
+        {
+            //поиск эффектов в выбранных компонентах
+            var allEffects = Getter.SelectedComponents
+            .Where(c => c != null && c.Effect != null)
+            .Select(c => c.Effect)
+            .ToList();
+
+            // Группировка и суммирование эффектов
+            var groupedEffects = allEffects
+            .GroupBy(e => new { e.Type, e.DiceSize })
+            .Select(g => new Effect
+            {
+                Type = g.Key.Type,
+                Quantity = g.Sum(e => e.Quantity), // Суммируем количество кубиков
+                DiceSize = g.Key.DiceSize
+            })
+            .OrderBy(e => e.DiceSize);
+
+            // Форматирование в строки
+            Getter.Effects = new ObservableCollection<string>(groupedEffects.Select(e => $"{e.Type} {e.Display}"));
+        }
+        public enum EffectType
+        {
+            Damage,
+            Heal,
+            Defense
         }
     }
 }

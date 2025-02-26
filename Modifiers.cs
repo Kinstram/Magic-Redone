@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static Magic_Redone.Back;
 
 namespace Magic_Redone
 {
@@ -62,7 +63,6 @@ namespace Magic_Redone
              };
             return componentData;
         }
-
         public static Dictionary<string, decimal> TimeDict()
         {
             var data = new Dictionary<string, decimal>()
@@ -79,5 +79,11 @@ namespace Magic_Redone
             };
             return data;
         }
+
+        public static Dictionary<string, (int BaseDiceSize, double Multiplier)> ScalableEffectsData = new()
+        {
+            { "Жало", (BaseDiceSize: 4, Multiplier: 2) }, // d4 → d8 → d16
+            { "Щит", (BaseDiceSize: 3, Multiplier: 2) },  // DR: 3 → 6 → 12 (не кубики, но для примера)
+        };
     }
 }

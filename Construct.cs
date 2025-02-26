@@ -15,6 +15,7 @@ namespace Magic_Redone
         public decimal ValueExt { get; set; }
         public decimal ValueInt { get; set; }
         public decimal ValueMP { get; set; }
+        public Effect Effect { get; set; }
         public Construct() { }
     }
 }
