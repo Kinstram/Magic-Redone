@@ -31,6 +31,8 @@
                 <DataGridTextColumn Header="†" Binding="{Binding CountedExt}" />
                 <DataGridTextColumn Header="‡" Binding="{Binding CountedInt}" />
                 <DataGridTextColumn Header="Ћ" Binding="{Binding CountedMP}" />
+                <DataGridTextColumn Header="Время" Binding="{Binding TimeString}" />
+                <DataGridTextColumn Header="TЋ" Binding="{Binding TimeValue}" />
             </DataGrid.Columns>
         </DataGrid>
         <Button Content="Назад" Click="BackButton_Click" HorizontalAlignment="Right" VerticalAlignment="Top"/>

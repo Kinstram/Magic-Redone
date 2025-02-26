@@ -43,7 +43,7 @@ namespace Magic_Redone
         }
         private void btnSave_Click(object sender, RoutedEventArgs e)
         {
-            Back.SaveToLists(this);
+            Back.SpellSave(this);
         }
 
         private void txtSave_GotFocus(object sender, RoutedEventArgs e)
@@ -57,9 +57,8 @@ namespace Magic_Redone
 
         private void txtSave_LostFocus(object sender, RoutedEventArgs e)
         {
-            Debug.WriteLine("LostFocus event triggered");
             // Если TextBox пустой, возвращаем подсказку
-            if (string.IsNullOrEmpty(txtSave.Text))
+            if (string.IsNullOrWhiteSpace(txtSave.Text))
             {
                 txtSave.Text = "Введите название сохранения";
             }

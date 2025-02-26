@@ -295,6 +295,26 @@
                 <TextBlock Text="{Binding ComponentPWRF}" Background="Wheat" Foreground="Black" FontSize="16"/>
             </StackPanel>
 
+            <ComboBox x:Name="TimeChoose"
+                ItemsSource="{Binding Collections.Time}"     
+                SelectedItem="{Binding Getter.SelectedTime, Mode=TwoWay}"
+                IsEditable="True"
+                StaysOpenOnEdit="True"
+                Grid.Column="1"
+                Grid.Row="2"
+                MinWidth="100" MinHeight="25" MaxWidth="200" MaxHeight="30"
+                BorderThickness="2,2,2,2"
+                Margin="0, 100, 0, 0"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                Background="White" Foreground="Black" IsSynchronizedWithCurrentItem="False">
+            </ComboBox>
+
+            <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="1" Grid.Row="2"
+                        MinWidth="100" MinHeight="25" MaxWidth="200" MaxHeight="30" Margin="0, 150, 0, 0">
+                <TextBlock Text="{Binding Getter.SelectedTimeValue, StringFormat=Ћ {0}}" Background="Wheat" Foreground="Black" FontSize="16"/>
+            </StackPanel>
+            
             <!-- Кнопка сохранения -->
             <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="2" Grid.Column="7" Grid.ColumnSpan="3"  >
                 <TextBox x:Name="txtSave" Height="30" Text="Введите название сохранения" MaxLength="255" MinWidth="176"/>

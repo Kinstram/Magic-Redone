@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Magic_Redone
 {
-    public class ScalableComponents
+    public class Modifiers
     {
         public static Dictionary<(string componentName, Int16 scalationLevel), Construct> ScalableDict()
         {
@@ -18,7 +18,7 @@ namespace Magic_Redone
 
                 { ("Кость", 1), new Construct { ValueExt = 0.2m, ValueInt = -0.1m, ValueMP = 0.2m} },
                 { ("Кость", 2), new Construct { ValueExt = 0.4m, ValueInt = -0.2m, ValueMP = 0.4m} },
-                { ("Кость", 3), new Construct { ValueExt = 0.8m, ValueInt = -0.4m, ValueMP = 1m} },
+                { ("Кость", 3), new Construct { ValueExt = 0.8m, ValueInt = -0.4m, ValueMP = 0.8m} },
 
                 { ("Наконечник", 1), new Construct { ValueExt = 0m, ValueInt = 0m, ValueMP = 3m} },
                 { ("Наконечник", 2), new Construct { ValueExt = 0m, ValueInt = 0m, ValueMP = 6m} },
@@ -61,6 +61,23 @@ namespace Magic_Redone
                 { ("Мыщца", 3), new Construct { ValueExt = -0.4m, ValueInt = -0.4m, ValueMP = 4m} },
              };
             return componentData;
+        }
+
+        public static Dictionary<string, decimal> TimeDict()
+        {
+            var data = new Dictionary<string, decimal>()
+            {
+                {"1 Секунда", 1m},
+                {"15 Минут", 1.25m},
+                {"1 Час", 2m},
+                {"12 Часов", 2.5m},
+                {"1 Сутки", 3m},
+                {"1 Неделя", 63m},
+                {"1 Месяц", 90m},
+                {"6 Месяцев", 270m},
+                {"1 Год", 1095m},
+            };
+            return data;
         }
     }
 }

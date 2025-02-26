@@ -38,6 +38,8 @@ namespace Magic_Redone
             {
                 SelectedTrio.Add(DefaultConstruct());
             }//запись пустых ячеек в коллекции
+
+            SelectedTime = "1 Секунда";
         }
         public static Construct DefaultConstruct()
         {
@@ -267,6 +269,30 @@ namespace Magic_Redone
             }
         }
 
+        private string _selectedTime;
+        public string SelectedTime
+        {
+            get => _selectedTime;
+            set
+            {
+                _selectedTime = value;
+                Back.ResultCount(this);
+                OnPropertyChanged();
+                OnPropertyChanged(nameof(CountedMP));
+                
+            }
+        }
+
+        private decimal _selectedTimeValue;
+        public decimal SelectedTimeValue
+        {
+            get => _selectedTimeValue;
+            set
+            {
+                _selectedTimeValue = value;
+                OnPropertyChanged();
+            }
+        }
 
         private decimal _countedExt;
         public decimal CountedExt

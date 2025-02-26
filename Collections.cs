@@ -14,5 +14,6 @@ namespace Magic_Redone
         public ObservableCollection<Construct> Forms {get; set; } 
         public ObservableCollection<Construct> Components { get; set; }
         public ObservableCollection<Int16> Scalations { get; set; }
+        public ObservableCollection<String> Time {  get; set; }
     }
 }

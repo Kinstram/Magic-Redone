@@ -30,6 +30,7 @@ namespace Magic_Redone
             }
 
             Collections.Scalations = [1, 2, 3];
+            Collections.Time = ["1 Секунда", "15 Минут", "1 Час", "12 Часов", "1 Сутки", "1 Неделя", "1 Месяц", "6 Месяцев", "1 Год"];
         } //загрузка данных в коллекции для вывода в ComboBox
         public static void ResultCount(Getter Getter)
         {
@@ -60,18 +61,22 @@ namespace Magic_Redone
                 CountedComponentsMP += comp.ValueMP;
             }
 
+            Modifiers.TimeDict().TryGetValue(Getter.SelectedTime, out var number);
+
             //итоговое суммирование произведения трио и суммы компонентов для дальнейшей передачи в Getter и WPF
             Getter.CountedExt = CountedTrioExt + CountedComponentsExt;
             Getter.CountedInt = CountedTrioInt + CountedComponentsInt;
-            Getter.CountedMP = CountedTrioMP + CountedComponentsMP;
+            Getter.CountedMP = (CountedTrioMP + CountedComponentsMP) * number;
 
             Getter.CountedExt = Math.Round(Getter.CountedExt, 2);
             Getter.CountedInt = Math.Round(Getter.CountedInt, 2);
             Getter.CountedMP = Math.Round(Getter.CountedMP, 2);
+
+            Getter.SelectedTimeValue = Math.Round((Getter.CountedMP -(CountedTrioMP + CountedComponentsMP)), 2);
         }
         internal static void Scalation(Getter Getter)
         {
-            var compDict = ScalableComponents.ScalableDict();
+            var compDict = Modifiers.ScalableDict();
             for (Int16 i = 0; i < Getter.SelectedComponents.Count; i++)
             {
                 if (compDict.TryGetValue((Getter.SelectedComponents[i].Name, Getter.SelectedScalations[i]), out var data))
@@ -82,7 +87,7 @@ namespace Magic_Redone
                 }
             }
         }
-        public static void SaveToLists(MainWindow main)
+        public static void SpellSave(MainWindow main)
         {
             var Results = (Results)main.DataContext;
             var Getter = Results.Getter;
@@ -141,6 +146,8 @@ namespace Magic_Redone
                         CountedExt = Getter.CountedExt,
                         CountedInt = Getter.CountedInt,
                         CountedMP = Getter.CountedMP,
+                        TimeString = Getter.SelectedTime,
+                        TimeValue = Getter.SelectedTimeValue,
                     };
 
                     context.Saves.Add(saveData);

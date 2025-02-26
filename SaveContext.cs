@@ -15,7 +15,6 @@ namespace Magic_Redone
     {
         public DbSet<SaveEntity> Saves { get; set; }
         public DbSet<ConstructToSave> ConstructsToSave { get; set; }
-        public DbSet<ConstructToSave> TrioToSave { get; set; }
         public DbSet<ScalationToSave> ScalationsToSave { get; set; }
 
         public SaveContext() => Database.EnsureCreated();
