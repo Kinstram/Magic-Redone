@@ -326,17 +326,6 @@ namespace Magic_Redone
                 OnPropertyChanged();
             }
         }
-
-        private ObservableCollection<string> _effects = new ObservableCollection<string>();
-        public ObservableCollection<string> Effects
-        {
-            get => _effects;
-            set
-            {
-                _effects = value;
-                OnPropertyChanged();
-            }
-        }
         #endregion
     }
 }

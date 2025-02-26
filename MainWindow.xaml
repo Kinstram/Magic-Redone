@@ -292,13 +292,8 @@
                 <TextBlock Text="{Binding Getter.CountedExt, StringFormat=† {0}}" Background="Wheat" Foreground="Black" FontSize="16"/>
                 <TextBlock Text="{Binding Getter.CountedInt, StringFormat=‡ {0}}" Background="Wheat" Foreground="Black" FontSize="16"/>
                 <TextBlock Text="{Binding Getter.CountedMP, StringFormat=Ћ {0}}" Background="Wheat" Foreground="Black" FontSize="16"/>
-               <!-- <TextBlock Text="{Binding Getter.Effects}" Background="Wheat" Foreground="Black" FontSize="16"/>-->
+                <TextBlock Text="{Binding ComponentPWRF}" Background="Wheat" Foreground="Black" FontSize="16"/>
             </StackPanel>
-
-            <ListBox ItemsSource="{Binding Getter.Effects}" HorizontalAlignment="Center" VerticalAlignment="Center" 
-                     Grid.Column="2" Grid.Row="2" MinWidth="200" MinHeight="40"
-                     DisplayMemberPath="." 
-                     HorizontalContentAlignment="Center"/>
 
             <ComboBox x:Name="TimeChoose"
                 ItemsSource="{Binding Collections.Time}"     
