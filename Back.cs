@@ -1,7 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
+using System.Text.RegularExpressions;
 using System.Windows;
+using System.Windows.Media.Effects;
 
 namespace Magic_Redone
 {
@@ -11,7 +13,6 @@ namespace Magic_Redone
         {
             using (var context = new ApplicationContext())
             {
-
                 Int16 requiredKind = 0; //стихии
                 var elementsLoad = await context.Constructs.AsNoTracking().OrderBy(p => p.Name).Where(c => c.Kind == requiredKind).ToListAsync();
                 Collections.Elements = new ObservableCollection<Construct>(elementsLoad);
@@ -35,6 +36,7 @@ namespace Magic_Redone
         public static void ResultCount(Getter Getter)
         {
             Scalation(Getter);
+            EffectCounter(Getter);
             //инициализация и обнуление переменных для подсчёта Element, Method и Form. Сделано отдельно, чтобы не множить на 0 при пустых компонентах
             decimal CountedTrioExt = 1m;
             decimal CountedTrioInt = 1m;
@@ -72,7 +74,7 @@ namespace Magic_Redone
             Getter.CountedInt = Math.Round(Getter.CountedInt, 2);
             Getter.CountedMP = Math.Round(Getter.CountedMP, 2);
 
-            Getter.SelectedTimeValue = Math.Round((Getter.CountedMP -(CountedTrioMP + CountedComponentsMP)), 2);
+            Getter.SelectedTimeValue = Math.Round((Getter.CountedMP - (CountedTrioMP + CountedComponentsMP)), 2);
         }
         internal static void Scalation(Getter Getter)
         {
@@ -203,6 +205,58 @@ namespace Magic_Redone
             MessageBox.Show("Успешно сохранено");
             main.txtSave.Clear();
             main.txtSave.Text = "Введите название сохранения";
+        }
+        internal static void EffectCounter(Getter Getter)
+        {
+            var groupedComponents = Getter.SelectedComponents
+                .GroupBy(c => new { c.Effect, c.DiceSides })
+                .Select(g => new Construct
+                {
+                    Quantity = g.Sum(c => c.Quantity),
+                    DiceSides = g.Key.DiceSides,
+                    Effect = g.Key.Effect,
+                    // Безопасно берем EffectDesc из первого элемента, который не null
+                    EffectDesc = g.FirstOrDefault(c => c.EffectDesc != null)?.EffectDesc ?? "",
+                    Description = g.First().Description
+                })
+                .ToList();
+
+            // Формируем строки для Effects с проверкой на null/пустоту
+            var effectStrings = new List<string>();
+            foreach (var component in groupedComponents)
+            {
+                if (component.DiceSides > 0)
+                {
+                    string effectName = component.Effect switch
+                    {
+                        EffectType.Damage => "Урон",
+                        EffectType.Heal => "Лечение",
+                        _ => component.Effect.ToString()
+                    };
+                    effectStrings.Add($"{effectName} {component.Quantity}d{component.DiceSides}");
+                }
+                else if (!string.IsNullOrEmpty(component.EffectDesc))
+                {
+                    var match = Regex.Match(component.EffectDesc, @"(\d+)(\D*)");
+                    if (match.Success)
+                    {
+                        string unit = match.Groups[2].Value.Trim();
+                        effectStrings.Add($"{component.Quantity * int.Parse(match.Groups[1].Value)} {unit}");
+                    }
+                    else
+                    {
+                        effectStrings.Add(component.EffectDesc);
+                    }
+                }
+            }
+
+            Getter.Effects.Clear();
+            foreach (var effectStr in effectStrings)
+            {
+                Getter.Effects.Add(effectStr);
+            }
+            Getter.Effects.Add(Getter.SelectedComponent1.Name);
+            Debug.WriteLine(Getter.Effects.Count);
         }
     }
 }

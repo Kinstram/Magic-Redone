@@ -310,6 +310,11 @@
                 Background="White" Foreground="Black" IsSynchronizedWithCurrentItem="False">
             </ComboBox>
 
+            <ListBox ItemsSource="{Binding Getter.Effects}" HorizontalAlignment="Center" VerticalAlignment="Center" 
+                     Grid.Column="2" Grid.Row="2" MinWidth="200" MinHeight="40"
+                     DisplayMemberPath="." 
+                     HorizontalContentAlignment="Center"/>
+
             <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="1" Grid.Row="2"
                         MinWidth="100" MinHeight="25" MaxWidth="200" MaxHeight="30" Margin="0, 150, 0, 0">
                 <TextBlock Text="{Binding Getter.SelectedTimeValue, StringFormat=Ћ {0}}" Background="Wheat" Foreground="Black" FontSize="16"/>

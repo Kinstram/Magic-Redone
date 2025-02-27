@@ -15,6 +15,23 @@ namespace Magic_Redone
         public decimal ValueExt { get; set; }
         public decimal ValueInt { get; set; }
         public decimal ValueMP { get; set; }
+        public int Quantity { get; set; }
+        public int DiceSides { get; set; }
+        public EffectType Effect { get; set; }
+        public string EffectDesc { get; set; }
+        public string Description { get; set; }
         public Construct() { }
+
     }
+
+    public enum EffectType
+    {
+        None,
+        Damage,
+        Heal,
+        Protection,
+        HP,
+        Description
+    }
+
 }

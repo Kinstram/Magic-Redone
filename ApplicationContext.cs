@@ -19,8 +19,28 @@ namespace Magic_Redone
         {
             optionsBuilder.UseSqlite("Data Source=magic.db");
         }
+
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            // установка значений по умолчанию для всех записей Construct при создании бд.
+            modelBuilder.Entity<Construct>(entity =>
+            {
+                entity.Property(e => e.Effect)
+                      .HasDefaultValue(EffectType.None);
+
+                entity.Property(e => e.Quantity)
+                      .HasDefaultValue(0);
+
+                entity.Property(e => e.DiceSides)
+                      .HasDefaultValue(0);
+
+                entity.Property(e => e.EffectDesc)
+                      .HasDefaultValue(" ");
+
+                entity.Property(e => e.Description)
+                      .HasDefaultValue(" ");
+            });
             modelBuilder.Entity<Construct>().HasData(
                     new Construct { Id = 1, Kind = 0, Name = "Аркан", ValueExt = 1m, ValueInt = 1m, ValueMP = 1m },
                     new Construct { Id = 2, Kind = 0, Name = "Огонь", ValueExt = 1.2m, ValueInt = 0.5m, ValueMP = 0.8m },
@@ -50,7 +70,7 @@ namespace Magic_Redone
                     new Construct { Id = 24, Kind = 2, Name = "Труба", ValueExt = 1m, ValueInt = 1m, ValueMP = 1.2m },
                     new Construct { Id = 25, Kind = 2, Name = "Вихрь", ValueExt = 1m, ValueInt = 0.8m, ValueMP = 2m },
 
-                    new Construct { Id = 26, Kind = 3, Name = "Жало", ValueExt = 0m, ValueInt = -0.1m, ValueMP = 0.5m },
+                    new Construct { Id = 26, Kind = 3, Name = "Жало", ValueExt = 0m, ValueInt = -0.1m, ValueMP = 0.5m, Effect = EffectType.Damage, Quantity = 1, DiceSides = 4, EffectDesc = "Добавляет урон 1d4.", Description = "Добавляет урон 1d4. Скалируется." },
                     new Construct { Id = 27, Kind = 3, Name = "Сокрытие", ValueExt = 0m, ValueInt = 0m, ValueMP = 4m },
                     new Construct { Id = 28, Kind = 3, Name = "Связь", ValueExt = 0m, ValueInt = 0.2m, ValueMP = 1m },
                     new Construct { Id = 29, Kind = 3, Name = "Кость", ValueExt = 0.2m, ValueInt = -0.2m, ValueMP = 0.4m },
@@ -58,12 +78,12 @@ namespace Magic_Redone
                     new Construct { Id = 31, Kind = 3, Name = "Наконечник", ValueExt = 0m, ValueInt = 0m, ValueMP = 3m },
                     new Construct { Id = 32, Kind = 3, Name = "Взрыв", ValueExt = 0m, ValueInt = -0.5m, ValueMP = 2m },
                     new Construct { Id = 33, Kind = 3, Name = "Мир", ValueExt = 0m, ValueInt = 0.1m, ValueMP = 0.1m },
-                    new Construct { Id = 34, Kind = 3, Name = "Длань", ValueExt = 0m, ValueInt = -0.1m, ValueMP = 0.5m },
+                    new Construct { Id = 34, Kind = 3, Name = "Длань", ValueExt = 0m, ValueInt = -0.1m, ValueMP = 0.5m, Effect = EffectType.Heal, Quantity = 1, DiceSides = 4, EffectDesc = "Добавляет лечение 1d4", Description = "Лечебный компонент. Скалируется. Требует успешную проверку навыка “Врачебное дело”. При скалировании навыка требуется количество успехов навыка врачебного дела = количеству скалирований. Например при скалировании дважды, требуется два успеха. Иначе эффект лишь половинный. Рекомендуется использовать Аркан в качестве воздействие будет произведено именно выбранной стихией." },
                     new Construct { Id = 35, Kind = 3, Name = "Лех'сар", ValueExt = 0m, ValueInt = 0m, ValueMP = 1m },
                     new Construct { Id = 36, Kind = 3, Name = "Метка", ValueExt = 0m, ValueInt = 0m, ValueMP = 0.1m },
                     new Construct { Id = 37, Kind = 3, Name = "Щит", ValueExt = -0.2m, ValueInt = 0.2m, ValueMP = 1m },
                     new Construct { Id = 38, Kind = 3, Name = "Пузырь", ValueExt = 0m, ValueInt = 0.4m, ValueMP = 0.4m },
-                    new Construct { Id = 39, Kind = 3, Name = "Панцирь", ValueExt = -0.4m, ValueInt = 0.2m, ValueMP = 2m },
+                    new Construct { Id = 39, Kind = 3, Name = "Панцирь", ValueExt = -0.4m, ValueInt = 0.2m, ValueMP = 2m, Effect = EffectType.Protection, Quantity = 3, EffectDesc = "Добавляет 3 DR", Description = "Скалируется. Развеется после прохождения урона через DR. Чтобы избежать этого используйте “Щит”." },
                     new Construct { Id = 40, Kind = 3, Name = "Цепь", ValueExt = 0m, ValueInt = 0m, ValueMP = 0.5m },
                     new Construct { Id = 41, Kind = 3, Name = "Гончая", ValueExt = 0m, ValueInt = 0m, ValueMP = 0.2m },
                     new Construct { Id = 42, Kind = 3, Name = "Вихрь", ValueExt = 0m, ValueInt = -0.5m, ValueMP = 2m },
