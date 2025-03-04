@@ -9,7 +9,7 @@ namespace Magic_Redone
     public class ConstructToSave
     {
         public int Id { get; set; }
-        public Int16 OriginalId { get; set; } // ID из основной базы (только для справки)
+        public int OriginalId { get; set; } // ID из основной базы (только для справки)
         public string Name { get; set; }
         public decimal ValueExt { get; set; }
         public decimal ValueInt { get; set; }

@@ -62,7 +62,8 @@ namespace Magic_Redone
                 Name = original.Name,
                 ValueExt = original.ValueExt,
                 ValueInt = original.ValueInt,
-                ValueMP = original.ValueMP
+                ValueMP = original.ValueMP,
+                EffectList = original.EffectList
             };
         }
 
@@ -327,8 +328,8 @@ namespace Magic_Redone
             }
         }
 
-        private ObservableCollection<string> _effects = new ObservableCollection<string>();
-        public ObservableCollection<string> Effects
+        private ObservableCollection<EffectResult> _effects = new ObservableCollection<EffectResult>();
+        public ObservableCollection<EffectResult> Effects
         {
             get => _effects;
             set

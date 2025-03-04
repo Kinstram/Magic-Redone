@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
+using System.Printing;
 using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Media.Effects;
@@ -26,7 +27,7 @@ namespace Magic_Redone
                 Collections.Forms = new ObservableCollection<Construct>(formsLoad);
 
                 requiredKind = 3; //компоненты
-                var componentsLoad = await context.Constructs.AsNoTracking().OrderBy(p => p.Name).Where(c => c.Kind == requiredKind).ToListAsync();
+                var componentsLoad = await context.Constructs.AsNoTracking().Where(c => c.Kind == requiredKind).Include(c => c.EffectList).OrderBy(p => p.Name).ToListAsync();
                 Collections.Components = new ObservableCollection<Construct>(componentsLoad);
             }
 
@@ -61,6 +62,8 @@ namespace Magic_Redone
                 CountedComponentsExt += comp.ValueExt;
                 CountedComponentsInt += comp.ValueInt;
                 CountedComponentsMP += comp.ValueMP;
+
+                Debug.WriteLine(comp.EffectList.Count);
             }
 
             Modifiers.TimeDict().TryGetValue(Getter.SelectedTime, out var number);
@@ -75,6 +78,12 @@ namespace Magic_Redone
             Getter.CountedMP = Math.Round(Getter.CountedMP, 2);
 
             Getter.SelectedTimeValue = Math.Round((Getter.CountedMP - (CountedTrioMP + CountedComponentsMP)), 2);
+
+            Debug.WriteLine($"Found {Getter.Effects.Count} effects:");
+            foreach (var eff in Getter.Effects)
+            {
+                Debug.WriteLine(eff.ToString());
+            }
         }
         internal static void Scalation(Getter Getter)
         {
@@ -208,55 +217,21 @@ namespace Magic_Redone
         }
         internal static void EffectCounter(Getter Getter)
         {
-            var groupedComponents = Getter.SelectedComponents
-                .GroupBy(c => new { c.Effect, c.DiceSides })
-                .Select(g => new Construct
-                {
-                    Quantity = g.Sum(c => c.Quantity),
-                    DiceSides = g.Key.DiceSides,
-                    Effect = g.Key.Effect,
-                    // Безопасно берем EffectDesc из первого элемента, который не null
-                    EffectDesc = g.FirstOrDefault(c => c.EffectDesc != null)?.EffectDesc ?? "",
-                    Description = g.First().Description
-                })
-                .ToList();
-
-            // Формируем строки для Effects с проверкой на null/пустоту
-            var effectStrings = new List<string>();
-            foreach (var component in groupedComponents)
+            var effects = Getter.SelectedComponents
+            .Where(c => c != null)
+            .SelectMany(c => c.EffectList)
+            .GroupBy(e => e.Type)
+            .Select(g => new EffectResult
             {
-                if (component.DiceSides > 0)
-                {
-                    string effectName = component.Effect switch
-                    {
-                        EffectType.Damage => "Урон",
-                        EffectType.Heal => "Лечение",
-                        _ => component.Effect.ToString()
-                    };
-                    effectStrings.Add($"{effectName} {component.Quantity}d{component.DiceSides}");
-                }
-                else if (!string.IsNullOrEmpty(component.EffectDesc))
-                {
-                    var match = Regex.Match(component.EffectDesc, @"(\d+)(\D*)");
-                    if (match.Success)
-                    {
-                        string unit = match.Groups[2].Value.Trim();
-                        effectStrings.Add($"{component.Quantity * int.Parse(match.Groups[1].Value)} {unit}");
-                    }
-                    else
-                    {
-                        effectStrings.Add(component.EffectDesc);
-                    }
-                }
-            }
+                Type = g.Key,
+                Quantity = g.Sum(e => e.Quantity),
+                DiceSides = g.First().DiceSides,
+                EffectDesc = g.First().EffectDesc
+            })
+            .Where(e => e.Type != EffectType.None)
+            .ToList();
 
-            Getter.Effects.Clear();
-            foreach (var effectStr in effectStrings)
-            {
-                Getter.Effects.Add(effectStr);
-            }
-            Getter.Effects.Add(Getter.SelectedComponent1.Name);
-            Debug.WriteLine(Getter.Effects.Count);
+            Getter.Effects = new ObservableCollection<EffectResult>(effects);
         }
     }
 }

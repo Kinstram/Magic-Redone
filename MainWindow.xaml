@@ -74,14 +74,14 @@
                  Background="Transparent" Foreground="Black" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
 
             <ListBox x:Name="Scalation1"
-            ItemsSource="{Binding Collections.Scalations}"
-            SelectedItem="{Binding Getter.SelectedScalation1, Mode=TwoWay}"
-            Grid.Column="4"
-            Grid.Row="0"
-            MinWidth="25" MinHeight="25" MaxWidth="80" MaxHeight="30"
-            HorizontalAlignment="Left"
-            VerticalAlignment="Center"
-            Background="White" Foreground="Black" IsSynchronizedWithCurrentItem="False">
+                ItemsSource="{Binding Collections.Scalations}"
+                SelectedItem="{Binding Getter.SelectedScalation1, Mode=TwoWay}"
+                Grid.Column="4"
+                Grid.Row="0"
+                MinWidth="25" MinHeight="25" MaxWidth="80" MaxHeight="30"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Center"
+                Background="White" Foreground="Black" IsSynchronizedWithCurrentItem="False">
             </ListBox>
 
             <ComboBox x:Name="ComponentsListBox1" 
@@ -98,14 +98,14 @@
                 Background="Transparent" Foreground="Black" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
 
             <ListBox x:Name="Scalation2"
-            ItemsSource="{Binding Collections.Scalations}"     
-            SelectedItem="{Binding Getter.SelectedScalation2, Mode=TwoWay}"
-            Grid.Column="5"
-            Grid.Row="0"
-            MinWidth="25" MinHeight="25" MaxWidth="80" MaxHeight="30"
-            HorizontalAlignment="Left"
-            VerticalAlignment="Center"
-            Background="White" Foreground="Black" IsSynchronizedWithCurrentItem="False">
+                ItemsSource="{Binding Collections.Scalations}"     
+                SelectedItem="{Binding Getter.SelectedScalation2, Mode=TwoWay}"
+                Grid.Column="5"
+                Grid.Row="0"
+                MinWidth="25" MinHeight="25" MaxWidth="80" MaxHeight="30"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Center"
+                Background="White" Foreground="Black" IsSynchronizedWithCurrentItem="False">
             </ListBox>
 
             <ComboBox x:Name="ComponentsListBox2" 
@@ -122,14 +122,14 @@
                 Background="Transparent" Foreground="Black" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
 
             <ListBox x:Name="Scalation3"
-            ItemsSource="{Binding Collections.Scalations}"     
-            SelectedItem="{Binding Getter.SelectedScalation3, Mode=TwoWay}"
-            Grid.Column="6"
-            Grid.Row="0"
-            MinWidth="25" MinHeight="25" MaxWidth="80" MaxHeight="30"
-            HorizontalAlignment="Left"
-            VerticalAlignment="Center"
-            Background="White" Foreground="Black" IsSynchronizedWithCurrentItem="False">
+                ItemsSource="{Binding Collections.Scalations}"     
+                SelectedItem="{Binding Getter.SelectedScalation3, Mode=TwoWay}"
+                Grid.Column="6"
+                Grid.Row="0"
+                MinWidth="25" MinHeight="25" MaxWidth="80" MaxHeight="30"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Center"
+                Background="White" Foreground="Black" IsSynchronizedWithCurrentItem="False">
             </ListBox>
 
             <ComboBox x:Name="ComponentsListBox3" 
@@ -146,14 +146,14 @@
                 Background="Transparent" Foreground="Black" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
 
             <ListBox x:Name="Scalation4"
-            ItemsSource="{Binding Collections.Scalations}"     
-            SelectedItem="{Binding Getter.SelectedScalation4, Mode=TwoWay}"
-            Grid.Column="7"
-            Grid.Row="0"
-            MinWidth="25" MinHeight="25" MaxWidth="80" MaxHeight="30"
-            HorizontalAlignment="Left"
-            VerticalAlignment="Center"
-            Background="White" Foreground="Black" IsSynchronizedWithCurrentItem="False">
+                ItemsSource="{Binding Collections.Scalations}"     
+                SelectedItem="{Binding Getter.SelectedScalation4, Mode=TwoWay}"
+                Grid.Column="7"
+                Grid.Row="0"
+                MinWidth="25" MinHeight="25" MaxWidth="80" MaxHeight="30"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Center"
+                Background="White" Foreground="Black" IsSynchronizedWithCurrentItem="False">
             </ListBox>
 
             <ComboBox x:Name="ComponentsListBox4" 
@@ -170,14 +170,14 @@
                 Background="Transparent" Foreground="Black" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
 
             <ListBox x:Name="Scalation5"
-            ItemsSource="{Binding Collections.Scalations}"     
-            SelectedItem="{Binding Getter.SelectedScalation5, Mode=TwoWay}"
-            Grid.Column="8"
-            Grid.Row="0"
-            MinWidth="25" MinHeight="25" MaxWidth="80" MaxHeight="30"
-            HorizontalAlignment="Left"
-            VerticalAlignment="Center"
-            Background="White" Foreground="Black" IsSynchronizedWithCurrentItem="False">
+                ItemsSource="{Binding Collections.Scalations}"     
+                SelectedItem="{Binding Getter.SelectedScalation5, Mode=TwoWay}"
+                Grid.Column="8"
+                Grid.Row="0"
+                MinWidth="25" MinHeight="25" MaxWidth="80" MaxHeight="30"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Center"
+                Background="White" Foreground="Black" IsSynchronizedWithCurrentItem="False">
             </ListBox>
 
             <ComboBox x:Name="ComponentsListBox5" 
@@ -311,9 +311,14 @@
             </ComboBox>
 
             <ListBox ItemsSource="{Binding Getter.Effects}" HorizontalAlignment="Center" VerticalAlignment="Center" 
-                     Grid.Column="2" Grid.Row="2" MinWidth="200" MinHeight="40"
-                     DisplayMemberPath="." 
-                     HorizontalContentAlignment="Center"/>
+                     Grid.Column="2" Grid.Row="2" MinWidth="150" MinHeight="40" MaxWidth="300" MaxHeight="120"
+                     Grid.ColumnSpan="2">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding}" HorizontalAlignment="Center" TextWrapping="Wrap" MaxWidth="290"/>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
 
             <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="1" Grid.Row="2"
                         MinWidth="100" MinHeight="25" MaxWidth="200" MaxHeight="30" Margin="0, 150, 0, 0">
