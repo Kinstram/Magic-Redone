@@ -7,7 +7,7 @@ using System.Windows;
 namespace Magic_Redone
 {
     //приём из интерфейса
-    public class Getter : INotifyPropertyChanged 
+    public class Getter : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
         public void OnPropertyChanged([CallerMemberName] string propertyName = null)
@@ -22,7 +22,7 @@ namespace Magic_Redone
         public ObservableCollection<Construct> SelectedTrio { get; set; }
 
         public ObservableCollection<Int16> SelectedScalations { get; set; }
-       
+
         public Getter()
         { 
             SelectedComponents = new ObservableCollection<Construct>();

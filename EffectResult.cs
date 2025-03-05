@@ -9,17 +9,25 @@ namespace Magic_Redone
     public class EffectResult
     {
         public EffectType Type { get; set; }
-        public int Quantity { get; set; }
-        public int DiceSides { get; set; }
-        public string EffectDesc { get; set; }
+        public int Quantity { get; set; }          // Суммарное количество
+        public int DiceSides { get; set; }         // Общие грани кубика
+        public List<string> EffectDescs { get; set; } // Список уникальных описаний
 
-        public override string ToString() => Type switch
+        public override string ToString()
         {
-            EffectType.Damage => $"{Quantity}d{DiceSides} урона",
-            EffectType.Heal => $"{Quantity}d{DiceSides} лечения",
-            EffectType.Protection => $"{Quantity} DR",
-            EffectType.HP => $"{Quantity} HP",
-            EffectType.EffectDesc => $"{EffectDesc}",
+            var desc = EffectDescs.Any()
+                ? $" ({string.Join(", ", EffectDescs)})"
+                : "";
+
+            return $"{Quantity}d{DiceSides}{desc} {TypeToString()}";
+        }
+
+        private string TypeToString() => Type switch
+        {
+            EffectType.Damage => "урона",
+            EffectType.Heal => "лечения",
+            EffectType.Protection => "DR",
+            EffectType.HP => "HP",
             _ => string.Empty
         };
     }

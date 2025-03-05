@@ -37,7 +37,6 @@ namespace Magic_Redone
         public static void ResultCount(Getter Getter)
         {
             Scalation(Getter);
-            EffectCounter(Getter);
             //инициализация и обнуление переменных для подсчёта Element, Method и Form. Сделано отдельно, чтобы не множить на 0 при пустых компонентах
             decimal CountedTrioExt = 1m;
             decimal CountedTrioInt = 1m;
@@ -62,8 +61,6 @@ namespace Magic_Redone
                 CountedComponentsExt += comp.ValueExt;
                 CountedComponentsInt += comp.ValueInt;
                 CountedComponentsMP += comp.ValueMP;
-
-                Debug.WriteLine(comp.EffectList.Count);
             }
 
             Modifiers.TimeDict().TryGetValue(Getter.SelectedTime, out var number);
@@ -78,16 +75,12 @@ namespace Magic_Redone
             Getter.CountedMP = Math.Round(Getter.CountedMP, 2);
 
             Getter.SelectedTimeValue = Math.Round((Getter.CountedMP - (CountedTrioMP + CountedComponentsMP)), 2);
-
-            Debug.WriteLine($"Found {Getter.Effects.Count} effects:");
-            foreach (var eff in Getter.Effects)
-            {
-                Debug.WriteLine(eff.ToString());
-            }
         }
+
         internal static void Scalation(Getter Getter)
         {
             var compDict = Modifiers.ScalableDict();
+            var effectDict = Modifiers.EffectScalation();
             for (Int16 i = 0; i < Getter.SelectedComponents.Count; i++)
             {
                 if (compDict.TryGetValue((Getter.SelectedComponents[i].Name, Getter.SelectedScalations[i]), out var data))
@@ -97,6 +90,31 @@ namespace Magic_Redone
                     Getter.SelectedComponents[i].ValueMP = data.ValueMP;
                 }
             }
+
+            for (int i = 0; i < Getter.SelectedComponents.Count; i++)
+            {
+                var component = Getter.SelectedComponents[i];
+                if (component == null) continue;
+
+                // Получаем уровень скаляции ТОЛЬКО для текущего компонента
+                var scalationLevel = Getter.SelectedScalations[i];
+
+                // Применяем модификаторы строго к текущему компоненту
+                foreach (var effect in component.EffectList)
+                {
+                    if (effectDict.TryGetValue((component.Name, scalationLevel), out var effectData))
+                    {
+                        // Обновление параметров с проверкой на "неактивные" значения
+                        effect.Quantity = effectData.Quantity != 0 ? effectData.Quantity : effect.Quantity;
+
+                        effect.DiceSides = effectData.DiceSides != 0 ? effectData.DiceSides : effect.DiceSides;
+
+                        effect.EffectDesc = !string.IsNullOrWhiteSpace(effectData.EffectDesc) ? effectData.EffectDesc : effect.EffectDesc;
+                    }
+                }
+            }
+
+            EffectCounter(Getter);
         }
         public static void SpellSave(MainWindow main)
         {
@@ -219,20 +237,37 @@ namespace Magic_Redone
         {
             var effects = Getter.SelectedComponents
             .Where(c => c != null)
-            .SelectMany(c => c.EffectList)
-            .GroupBy(e => e.Type)
-            .Select(g => new EffectResult
+            .SelectMany(c => c.EffectList.Select(e => new
             {
-                Type = g.Key,
-                Quantity = g.Sum(e => e.Quantity),
-                DiceSides = g.First().DiceSides,
-                EffectDesc = g.First().EffectDesc
+                Effect = e,
+                Component = c
+            }))
+            // Группируем по ComponentId и Type
+            .GroupBy(x => new
+            {
+                ComponentId = x.Component.Id,
+                x.Effect.Type
             })
+            // Для каждой группы ComponentId+Type создаем подгруппы по DiceSides
+            .SelectMany(mainGroup => mainGroup
+                .GroupBy(x => x.Effect.DiceSides)
+                .Select(subGroup => new EffectResult
+                {
+                    Type = mainGroup.Key.Type,
+                    Quantity = subGroup.Sum(e => e.Effect.Quantity), // Суммируем Quantity в подгруппе
+                    DiceSides = subGroup.Key, // Берем DiceSides из ключа подгруппы
+                    EffectDescs = subGroup
+                        .Select(e => e.Effect.EffectDesc)
+                        .Where(d => !string.IsNullOrWhiteSpace(d))
+                        .Distinct()
+                        .ToList()
+                }))
             .Where(e => e.Type != EffectType.None)
-            .ToList();
+                    .ToList();
 
             Getter.Effects = new ObservableCollection<EffectResult>(effects);
         }
+
     }
 }
 

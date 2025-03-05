@@ -12,7 +12,7 @@ namespace Magic_Redone
         {
             var componentData = new Dictionary<(string componentName, Int16 scalationLevel), Construct>()
              {
-                { ("Жало", 1), new Construct { ValueExt = 0m, ValueInt = -0.1m, ValueMP = 0.5m} },
+                { ("Жало", 1), new Construct { ValueExt = 0m, ValueInt = -0.1m, ValueMP = 0.5m } },
                 { ("Жало", 2), new Construct { ValueExt = 0m, ValueInt = -0.2m, ValueMP = 1m} },
                 { ("Жало", 3), new Construct { ValueExt = 0m, ValueInt = -0.4m, ValueMP = 2m } },
 
@@ -78,6 +78,53 @@ namespace Magic_Redone
                 {"1 Год", 1095m},
             };
             return data;
+        }
+
+        public static Dictionary<(string componentName, Int16 scalationLevel), Effect> EffectScalation()
+        {
+            var effectData = new Dictionary<(string componentName, Int16 scalationLevel), Effect>()
+             {
+                { ("Жало", 1), new Effect { DiceSides = 4 } },
+                { ("Жало", 2), new Effect { DiceSides = 6 } },
+                { ("Жало", 3), new Effect { DiceSides = 8 } },
+
+                { ("Наконечник", 1), new Effect { EffectDesc = "(2)" } },
+                { ("Наконечник", 2), new Effect { EffectDesc = "(3)" } },
+                { ("Наконечник", 3), new Effect { EffectDesc = "(4)" } },
+
+                { ("Длань", 1), new Effect { DiceSides = 4 } },
+                { ("Длань", 2), new Effect { DiceSides = 6 } },
+                { ("Длань", 3), new Effect { DiceSides = 8 } },
+
+                { ("Лех'сар", 1), new Effect { EffectDesc = "Отклонение от цели на 1 гекса/покрытие 1 успеха уклонения." } },
+                { ("Лех'сар", 2), new Effect { EffectDesc = "Отклонение от цели на 2 гекса/покрытие 2 успеха уклонения." } },
+                { ("Лех'сар", 3), new Effect { EffectDesc = "Отклонение от цели на 4 гекса/покрытие 4 успеха уклонения." } },
+
+                { ("Щит", 1), new Effect { DiceSides = 4 } },
+                { ("Щит", 2), new Effect { DiceSides = 8 } },
+                { ("Щит", 3), new Effect { DiceSides = 16 } },
+
+                { ("Панцирь", 1), new Effect { DiceSides = 3 } },
+                { ("Панцирь", 2), new Effect { DiceSides = 6 } },
+                { ("Панцирь", 3), new Effect { DiceSides = 12 } },
+
+                { ("Змей", 1), new Effect { EffectDesc = "Следующую секунду, раз в секунду, наносит половинный вред заклинания." } },
+                { ("Змей", 2), new Effect { EffectDesc = "Следующие две секунды, раз в секунду, наносит половинный вред заклинания." } },
+                { ("Змей", 3), new Effect { EffectDesc = "Следующие три секунды, раз в секунду, наносит половинный вред заклинания." } },
+
+                { ("Дождь", 1), new Effect { EffectDesc = "Радиус 4 метра." } },
+                { ("Дождь", 2), new Effect { EffectDesc = "Радиус 8 метров." } },
+                { ("Дождь", 3), new Effect { EffectDesc = "Радиус 16 метров." } },
+
+                { ("Проклятие", 1), new Effect { EffectDesc = "Переносит эффект заклинания на прикоснувшегося к объекту заклинания." } },
+                { ("Проклятие", 2), new Effect { EffectDesc = "Дважды ереносит эффект заклинания на прикоснувшегося к объекту заклинания." } },
+                { ("Проклятие", 3), new Effect { EffectDesc = "Четырежды переносит эффект заклинания на прикоснувшегося к объекту заклинания." } },
+
+                { ("Мышца", 1), new Effect { EffectDesc = "Заклинание сжимается/разжимается на 1 гекс в секунду" } },
+                { ("Мышца", 2), new Effect { EffectDesc = "Заклинание сжимается/разжимается на 2 гекса в секунду." } },
+                { ("Мышца", 3), new Effect { EffectDesc = "Заклинание сжимается/разжимается на 4 гекса в секунду" } },
+             };
+            return effectData;
         }
     }
 }
