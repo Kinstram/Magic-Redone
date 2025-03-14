@@ -104,7 +104,7 @@ namespace Magic_Redone
                 new { Id = 1, ConstructId = 26, Type = EffectType.Damage, Quantity = 1, DiceSides = 4, EffectDesc = " " },
                 new { Id = 2, ConstructId = 34, Type = EffectType.Heal, Quantity = 1, DiceSides = 4, EffectDesc = " " },
                 new { Id = 3, ConstructId = 37, Type = EffectType.Protection, Quantity = 3, DiceSides = 0, EffectDesc = " " },
-                new { Id = 4, ConstructId = 27, Type = EffectType.EffectDesc, Quantity = 0, DiceSides = 0, EffectDesc = "Прячет заклинание в одном из спектров восприятия (зрение /слух /обоняние/ осязание/ ощущение магии/другое)" }
+                new { Id = 4, ConstructId = 27, Type = EffectType.EffectDesc, Quantity = 0, DiceSides = 0, EffectDesc = "Заклинание спрятанно в одном из спектров восприятия (зрение/слух/обоняние/осязание/ощущение магии/другое)" }
                 );
         }
     }

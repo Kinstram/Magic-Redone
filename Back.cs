@@ -2,9 +2,11 @@
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Printing;
+using System.Text.Json;
 using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Media.Effects;
+using static Magic_Redone.EffectToSave;
 
 namespace Magic_Redone
 {
@@ -125,6 +127,7 @@ namespace Magic_Redone
 
             List<Construct> componentsToSave = new List<Construct>();
             List<Construct> trioToSave = new List<Construct>();
+            List<EffectResult> effectsToSave = new List<EffectResult>();
             List<Int16> scalationsToSave = new List<Int16>();
 
             componentsToSave.Add(Getter.SelectedComponent1);
@@ -145,6 +148,8 @@ namespace Magic_Redone
             trioToSave.Add(Getter.SelectedElement);
             trioToSave.Add(Getter.SelectedMethod);
             trioToSave.Add(Getter.SelectedForm);
+
+            effectsToSave = new List <EffectResult>(Getter.Effects);
 
             using (var context = new SaveContext())
             {
@@ -211,6 +216,23 @@ namespace Magic_Redone
                         });
                     }
 
+                    foreach (var effect in effectsToSave.Where(c => c != null))
+                    {
+                        context.EffectToSave.Add(new EffectToSave
+                        {
+                            Type = effect.Type,
+                            DiceCombinations = effect.DiceCombinations
+                                .Select(d => new DiceCombination
+                                {
+                                    Quantity = d.Quantity,
+                                    DiceSides = d.DiceSides
+                                })
+                                .ToList(),
+                            EffectDescs = effect.EffectDescs,
+                            SaveEntityId = saveData.Id
+                        });
+                    }
+
                     // Сохраняем скаляции
                     foreach (var scalation in scalationsToSave)
                     {
@@ -221,7 +243,7 @@ namespace Magic_Redone
                         });
                     }
 
-                    // Запись в бд Saves
+                    // Запись в бд UserSaves
                     context.SaveChanges();
                 }
                 catch (Exception ex)
@@ -241,29 +263,20 @@ namespace Magic_Redone
             .Where(c => c != null && c.TiedEffect != null)
             .Select(c => c.TiedEffect)
             .Where(e => e.Type != EffectType.None)
-            .GroupBy(e => new {
-                e.Type,
-                e.DiceSides,
-                e.ConstructId // Добавляем идентификатор компонента в ключ группировки
-            })
+            .GroupBy(e => e.Type)
             .Select(g => new EffectResult
             {
-                Type = g.Key.Type,
-                DiceSides = g.Key.DiceSides,
-                Quantity = g.Sum(e => e.Quantity),
+                Type = g.Key,
+                DiceCombinations = g.Select(e => (e.Quantity, e.DiceSides)).ToList(),
                 EffectDescs = g.Select(e => e.EffectDesc)
                               .Where(d => !string.IsNullOrWhiteSpace(d))
-                              .Distinct()
                               .ToList()
             })
+            .OrderBy(e => e.Type)
             .ToList();
 
-
             Getter.Effects = new ObservableCollection<EffectResult>(effects);
-            foreach (var n in Getter.Effects)
-            {
-                Debug.WriteLine($"Count: {Getter.Effects.Count}    DiceSides: {n.DiceSides}");
-            }
+            
         }
 
     }

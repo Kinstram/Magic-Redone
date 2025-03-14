@@ -33,6 +33,35 @@
                 <DataGridTextColumn Header="Ћ" Binding="{Binding CountedMP}" />
                 <DataGridTextColumn Header="Время" Binding="{Binding TimeString}" />
                 <DataGridTextColumn Header="TЋ" Binding="{Binding TimeValue}" />
+                <DataGridTemplateColumn Header="Эффекты">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <ItemsControl ItemsSource="{Binding SavedEffects}">
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate>
+                                        <StackPanel>
+                                            <TextBlock Text="{Binding Type}"/>
+                                            <ItemsControl ItemsSource="{Binding DiceCombinations}">
+                                                <ItemsControl.ItemTemplate>
+                                                    <DataTemplate>
+                                                        <TextBlock>
+                                                            <TextBlock.Text>
+                                                                <MultiBinding StringFormat="{}{0}d{1}">
+                                                                    <Binding Path="Quantity"/>
+                                                                    <Binding Path="DiceSides"/>
+                                                                </MultiBinding>
+                                                            </TextBlock.Text>
+                                                        </TextBlock>
+                                                    </DataTemplate>
+                                                </ItemsControl.ItemTemplate>
+                                            </ItemsControl>
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
             </DataGrid.Columns>
         </DataGrid>
         <Button Content="Назад" Click="BackButton_Click" HorizontalAlignment="Right" VerticalAlignment="Top"/>
