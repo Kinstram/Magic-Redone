@@ -25,9 +25,9 @@ namespace Magic_Redone
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Construct>()
-                        .HasMany(c => c.EffectList)
+                        .HasOne(c => c.TiedEffect)
                         .WithOne(e => e.Construct)
-                        .HasForeignKey(e => e.ConstructId)
+                        .HasForeignKey<Effect>(e => e.ConstructId)
                         .OnDelete(DeleteBehavior.Cascade);
 
             modelBuilder.Entity<Construct>().HasData(

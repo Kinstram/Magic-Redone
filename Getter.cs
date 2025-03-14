@@ -50,8 +50,7 @@ namespace Magic_Redone
             return new Construct { Name = " ", ValueExt = 0m, ValueInt = 0m, ValueMP = 0m };
         } //"пустой" конструкт для компонентов. Используется при сложении, поэтому 0
 
-        //магическая хуета, благодаря которой работает скаляция. Иначе при выборе двух компонентов с одним именем приводит к одинаковым данным в обоих.
-        //по идее создаёт копию данных. Зачем? Видимо чтобы они не переписывали друг-друга. Как это происходит? Я бы хотел знать.
+        //Создаёт копию данных для скаляции. Иначе при выборе двух компонентов с одним именем приводит к одинаковым данным в обоих.
         private Construct CreateConstructCopy(Construct original)
         {
             if (original == null) return ZeroDefaultConstruct(); // Обработка null
@@ -63,7 +62,7 @@ namespace Magic_Redone
                 ValueExt = original.ValueExt,
                 ValueInt = original.ValueInt,
                 ValueMP = original.ValueMP,
-                EffectList = original.EffectList
+                TiedEffect = original.TiedEffect
             };
         }
 

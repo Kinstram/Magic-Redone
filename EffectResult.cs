@@ -9,8 +9,8 @@ namespace Magic_Redone
     public class EffectResult
     {
         public EffectType Type { get; set; }
-        public int Quantity { get; set; }          // Суммарное количество
-        public int DiceSides { get; set; }         // Общие грани кубика
+        public int Quantity { get; set; }             // Суммарное количество
+        public int DiceSides { get; set; }            // Общие грани кубика
         public List<string> EffectDescs { get; set; } // Список уникальных описаний
 
         public override string ToString()

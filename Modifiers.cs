@@ -8,6 +8,7 @@ namespace Magic_Redone
 {
     public class Modifiers
     {
+        // Словари для модификации выбранных компонентов. (Скаляция, время)
         public static Dictionary<(string componentName, Int16 scalationLevel), Construct> ScalableDict()
         {
             var componentData = new Dictionary<(string componentName, Int16 scalationLevel), Construct>()

@@ -10,7 +10,7 @@ namespace Magic_Redone
 {
     public class Back //обработка
     {
-        internal static async void LoadElements(Collections Collections)
+        internal static async void LoadElements(Collections Collections) // Загрузка и распределение данных из бд в коллекции для возможности их выбора в интерфейсе и передачи на обработку в Getter
         {
             using (var context = new ApplicationContext())
             {
@@ -27,14 +27,17 @@ namespace Magic_Redone
                 Collections.Forms = new ObservableCollection<Construct>(formsLoad);
 
                 requiredKind = 3; //компоненты
-                var componentsLoad = await context.Constructs.AsNoTracking().Where(c => c.Kind == requiredKind).Include(c => c.EffectList).OrderBy(p => p.Name).ToListAsync();
+                var componentsLoad = await context.Constructs.AsNoTracking().Where(c => c.Kind == requiredKind).OrderBy(p => p.Name).Include(x => x.TiedEffect).ToListAsync();
                 Collections.Components = new ObservableCollection<Construct>(componentsLoad);
+
+                var effectsLoad = await context.EffectList.AsNoTracking().OrderBy(p => p.ConstructId).ToListAsync();
             }
 
             Collections.Scalations = [1, 2, 3];
             Collections.Time = ["1 Секунда", "15 Минут", "1 Час", "12 Часов", "1 Сутки", "1 Неделя", "1 Месяц", "6 Месяцев", "1 Год"];
-        } //загрузка данных в коллекции для вывода в ComboBox
-        public static void ResultCount(Getter Getter)
+        }
+
+        public static void ResultCount(Getter Getter) // Подсчёт Ext, Int, MP и т.п. выбранных в интерфейсе компонентов
         {
             Scalation(Getter);
             //инициализация и обнуление переменных для подсчёта Element, Method и Form. Сделано отдельно, чтобы не множить на 0 при пустых компонентах
@@ -77,7 +80,7 @@ namespace Magic_Redone
             Getter.SelectedTimeValue = Math.Round((Getter.CountedMP - (CountedTrioMP + CountedComponentsMP)), 2);
         }
 
-        internal static void Scalation(Getter Getter)
+        internal static void Scalation(Getter Getter) // Скаляция и время
         {
             var compDict = Modifiers.ScalableDict();
             var effectDict = Modifiers.EffectScalation();
@@ -96,21 +99,20 @@ namespace Magic_Redone
                 var component = Getter.SelectedComponents[i];
                 if (component == null) continue;
 
-                // Получаем уровень скаляции ТОЛЬКО для текущего компонента
                 var scalationLevel = Getter.SelectedScalations[i];
+                var effect = component.TiedEffect;
 
-                // Применяем модификаторы строго к текущему компоненту
-                foreach (var effect in component.EffectList)
+                if (effectDict.TryGetValue((component.Name, scalationLevel), out var effectData))
                 {
-                    if (effectDict.TryGetValue((component.Name, scalationLevel), out var effectData))
+                    // Создаем НОВЫЙ объект эффекта вместо изменения существующего
+                    component.TiedEffect = new Effect // Замените на ваш реальный конструктор
                     {
-                        // Обновление параметров с проверкой на "неактивные" значения
-                        effect.Quantity = effectData.Quantity != 0 ? effectData.Quantity : effect.Quantity;
-
-                        effect.DiceSides = effectData.DiceSides != 0 ? effectData.DiceSides : effect.DiceSides;
-
-                        effect.EffectDesc = !string.IsNullOrWhiteSpace(effectData.EffectDesc) ? effectData.EffectDesc : effect.EffectDesc;
-                    }
+                        Type = effect.Type,
+                        Quantity = effectData.Quantity != 0 ? effectData.Quantity : effect.Quantity,
+                        DiceSides = effectData.DiceSides != 0 ? effectData.DiceSides : effect.DiceSides,
+                        EffectDesc = !string.IsNullOrWhiteSpace(effectData.EffectDesc) ? effectData.EffectDesc : effect.EffectDesc,
+                        ConstructId = effect.ConstructId // Сохраняем идентификатор оригинального компонента
+                    };
                 }
             }
 
@@ -132,14 +134,13 @@ namespace Magic_Redone
             componentsToSave.Add(Getter.SelectedComponent5);
             componentsToSave.Add(Getter.SelectedComponent6);
 
-
+            // Проверка на null и установка скаляций по умолчанию как 1 (int16), чтобы в сейвах не отображались нули при невыбранной скаляции при сохранении
             scalationsToSave.Add((Getter.SelectedScalation1 == null || Getter.SelectedScalation1 == 0) ? (short)1 : Getter.SelectedScalation1);
             scalationsToSave.Add((Getter.SelectedScalation2 == null || Getter.SelectedScalation2 == 0) ? (short)1 : Getter.SelectedScalation2);
             scalationsToSave.Add((Getter.SelectedScalation3 == null || Getter.SelectedScalation3 == 0) ? (short)1 : Getter.SelectedScalation3);
             scalationsToSave.Add((Getter.SelectedScalation4 == null || Getter.SelectedScalation4 == 0) ? (short)1 : Getter.SelectedScalation4);
             scalationsToSave.Add((Getter.SelectedScalation5 == null || Getter.SelectedScalation5 == 0) ? (short)1 : Getter.SelectedScalation5);
             scalationsToSave.Add((Getter.SelectedScalation6 == null || Getter.SelectedScalation6 == 0) ? (short)1 : Getter.SelectedScalation6);
-
 
             trioToSave.Add(Getter.SelectedElement);
             trioToSave.Add(Getter.SelectedMethod);
@@ -220,6 +221,7 @@ namespace Magic_Redone
                         });
                     }
 
+                    // Запись в бд Saves
                     context.SaveChanges();
                 }
                 catch (Exception ex)
@@ -232,40 +234,36 @@ namespace Magic_Redone
             MessageBox.Show("Успешно сохранено");
             main.txtSave.Clear();
             main.txtSave.Text = "Введите название сохранения";
-        }
+        } // Записьданных и их сохранение в SaveContext
         internal static void EffectCounter(Getter Getter)
         {
             var effects = Getter.SelectedComponents
-            .Where(c => c != null)
-            .SelectMany(c => c.EffectList.Select(e => new
-            {
-                Effect = e,
-                Component = c
-            }))
-            // Группируем по ComponentId и Type
-            .GroupBy(x => new
-            {
-                ComponentId = x.Component.Id,
-                x.Effect.Type
-            })
-            // Для каждой группы ComponentId+Type создаем подгруппы по DiceSides
-            .SelectMany(mainGroup => mainGroup
-                .GroupBy(x => x.Effect.DiceSides)
-                .Select(subGroup => new EffectResult
-                {
-                    Type = mainGroup.Key.Type,
-                    Quantity = subGroup.Sum(e => e.Effect.Quantity), // Суммируем Quantity в подгруппе
-                    DiceSides = subGroup.Key, // Берем DiceSides из ключа подгруппы
-                    EffectDescs = subGroup
-                        .Select(e => e.Effect.EffectDesc)
-                        .Where(d => !string.IsNullOrWhiteSpace(d))
-                        .Distinct()
-                        .ToList()
-                }))
+            .Where(c => c != null && c.TiedEffect != null)
+            .Select(c => c.TiedEffect)
             .Where(e => e.Type != EffectType.None)
-                    .ToList();
+            .GroupBy(e => new {
+                e.Type,
+                e.DiceSides,
+                e.ConstructId // Добавляем идентификатор компонента в ключ группировки
+            })
+            .Select(g => new EffectResult
+            {
+                Type = g.Key.Type,
+                DiceSides = g.Key.DiceSides,
+                Quantity = g.Sum(e => e.Quantity),
+                EffectDescs = g.Select(e => e.EffectDesc)
+                              .Where(d => !string.IsNullOrWhiteSpace(d))
+                              .Distinct()
+                              .ToList()
+            })
+            .ToList();
+
 
             Getter.Effects = new ObservableCollection<EffectResult>(effects);
+            foreach (var n in Getter.Effects)
+            {
+                Debug.WriteLine($"Count: {Getter.Effects.Count}    DiceSides: {n.DiceSides}");
+            }
         }
 
     }

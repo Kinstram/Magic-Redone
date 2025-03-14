@@ -24,7 +24,7 @@ namespace Magic_Redone
 
         public string Description { get; set; }
 
-        public ICollection<Effect> EffectList { get; set; } = new List<Effect>();
+        public Effect TiedEffect { get; set; }
 
         public Construct() { }
     }
