@@ -7,7 +7,7 @@ using System.Windows;
 namespace Magic_Redone
 {
     //приём из интерфейса
-    public class Getter : INotifyPropertyChanged 
+    public class Getter : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
         public void OnPropertyChanged([CallerMemberName] string propertyName = null)
@@ -22,7 +22,7 @@ namespace Magic_Redone
         public ObservableCollection<Construct> SelectedTrio { get; set; }
 
         public ObservableCollection<Int16> SelectedScalations { get; set; }
-       
+
         public Getter()
         { 
             SelectedComponents = new ObservableCollection<Construct>();
@@ -50,8 +50,7 @@ namespace Magic_Redone
             return new Construct { Name = " ", ValueExt = 0m, ValueInt = 0m, ValueMP = 0m };
         } //"пустой" конструкт для компонентов. Используется при сложении, поэтому 0
 
-        //магическая хуета, благодаря которой работает скаляция. Иначе при выборе двух компонентов с одним именем приводит к одинаковым данным в обоих.
-        //по идее создаёт копию данных. Зачем? Видимо чтобы они не переписывали друг-друга. Как это происходит? Я бы хотел знать.
+        //Создаёт копию данных для скаляции. Иначе при выборе двух компонентов с одним именем приводит к одинаковым данным в обоих.
         private Construct CreateConstructCopy(Construct original)
         {
             if (original == null) return ZeroDefaultConstruct(); // Обработка null
@@ -62,7 +61,8 @@ namespace Magic_Redone
                 Name = original.Name,
                 ValueExt = original.ValueExt,
                 ValueInt = original.ValueInt,
-                ValueMP = original.ValueMP
+                ValueMP = original.ValueMP,
+                TiedEffect = original.TiedEffect
             };
         }
 
@@ -323,6 +323,17 @@ namespace Magic_Redone
             set
             {
                 _countedMP = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private ObservableCollection<EffectResult> _effects = new ObservableCollection<EffectResult>();
+        public ObservableCollection<EffectResult> Effects
+        {
+            get => _effects;
+            set
+            {
+                _effects = value;
                 OnPropertyChanged();
             }
         }

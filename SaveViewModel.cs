@@ -23,7 +23,7 @@ namespace Magic_Redone
                 OnPropertyChanged();
             }
         }
-
+        
         public SaveViewModel()
         {
             _context = new SaveContext();
@@ -33,11 +33,12 @@ namespace Magic_Redone
         private async void LoadSavesAsync()
         {
             var saves = await _context.Saves
-                .Include(s => s.SavedComponents)
-                .Include(s => s.SavedScalations
-                    .OrderBy(sc => sc.Id)) // Сортировка по Id
-                .AsNoTracking()
-                .ToListAsync();
+                    .Include(s => s.SavedComponents) // ConstructToSave
+                    .Include(s => s.SavedScalations
+                        .OrderBy(sc => sc.Id)) // Сортировка ScalationToSave
+                    .Include(s => s.SavedEffect) // EffectToSave
+                    .AsNoTracking()
+                    .ToListAsync();
 
             Saves = new ObservableCollection<SaveEntity>(saves);
             SavesView = CollectionViewSource.GetDefaultView(Saves);

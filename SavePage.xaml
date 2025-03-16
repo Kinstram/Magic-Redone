@@ -10,7 +10,7 @@
       Background="{DynamicResource CommonBackground}">
 
     <Grid>
-        <DataGrid ItemsSource="{Binding SavesView}" AutoGenerateColumns="False" IsReadOnly="True" >
+        <DataGrid ItemsSource="{Binding SavesView}" AutoGenerateColumns="False" IsReadOnly="True" Background="{DynamicResource CommonBackground}"  RowBackground="DarkGray" AlternatingRowBackground="LightGray">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Название" Binding="{Binding SaveName}" />
                 <DataGridTextColumn Header="Стихия" Binding="{Binding SavedComponents[0].Name}" />
@@ -33,6 +33,7 @@
                 <DataGridTextColumn Header="Ћ" Binding="{Binding CountedMP}" />
                 <DataGridTextColumn Header="Время" Binding="{Binding TimeString}" />
                 <DataGridTextColumn Header="TЋ" Binding="{Binding TimeValue}" />
+                <DataGridTextColumn Header="Эффект" Binding="{Binding SavedEffect.EffectString}" />
             </DataGrid.Columns>
         </DataGrid>
         <Button Content="Назад" Click="BackButton_Click" HorizontalAlignment="Right" VerticalAlignment="Top"/>
