@@ -47,28 +47,10 @@ namespace Magic_Redone
                 .HasForeignKey(sts => sts.SaveEntityId)
                 .OnDelete(DeleteBehavior.Cascade);
 
-            var converter = new ValueConverter<List<string>, string>(
-                        v => JsonSerializer.Serialize(v, (JsonSerializerOptions)null),
-                        v => JsonSerializer.Deserialize<List<string>>(v, (JsonSerializerOptions)null) ?? new List<string>()
-                    );
-
-            modelBuilder.Entity<EffectToSave>(entity =>
-            {
-                // Применяем конвертер к свойству EffectDescs
-                entity.Property(e => e.EffectDescs)
-                      .HasConversion(converter);
-
-                // Настройка связи с SaveEntity
-                entity.HasOne(fts => fts.SaveEntity)
-                      .WithMany(se => se.SavedEffects)
-                      .HasForeignKey(fts => fts.SaveEntityId)
-                      .OnDelete(DeleteBehavior.Cascade);
-            });
-
-            modelBuilder.Entity<DiceCombination>()
-                .HasOne(d => d.EffectToSave)
-                .WithMany(e => e.DiceCombinations)
-                .HasForeignKey(d => d.EffectToSaveId)
+            modelBuilder.Entity<EffectToSave>()
+                .HasOne(ets => ets.SaveEntity)
+                .WithOne(se => se.SavedEffect)
+                .HasForeignKey<EffectToSave>(ets => ets.SaveEntityId)
                 .OnDelete(DeleteBehavior.Cascade);
         }
     }

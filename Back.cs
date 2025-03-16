@@ -127,8 +127,10 @@ namespace Magic_Redone
 
             List<Construct> componentsToSave = new List<Construct>();
             List<Construct> trioToSave = new List<Construct>();
-            List<EffectResult> effectsToSave = new List<EffectResult>();
             List<Int16> scalationsToSave = new List<Int16>();
+
+            var effectToString = Getter.Effects.Take(6).Where(e => e != null).Select(e => e.ToString());
+            var effectString = string.Join(", ", effectToString);
 
             componentsToSave.Add(Getter.SelectedComponent1);
             componentsToSave.Add(Getter.SelectedComponent2);
@@ -148,8 +150,6 @@ namespace Magic_Redone
             trioToSave.Add(Getter.SelectedElement);
             trioToSave.Add(Getter.SelectedMethod);
             trioToSave.Add(Getter.SelectedForm);
-
-            effectsToSave = new List <EffectResult>(Getter.Effects);
 
             using (var context = new SaveContext())
             {
@@ -216,23 +216,6 @@ namespace Magic_Redone
                         });
                     }
 
-                    foreach (var effect in effectsToSave.Where(c => c != null))
-                    {
-                        context.EffectToSave.Add(new EffectToSave
-                        {
-                            Type = effect.Type,
-                            DiceCombinations = effect.DiceCombinations
-                                .Select(d => new DiceCombination
-                                {
-                                    Quantity = d.Quantity,
-                                    DiceSides = d.DiceSides
-                                })
-                                .ToList(),
-                            EffectDescs = effect.EffectDescs,
-                            SaveEntityId = saveData.Id
-                        });
-                    }
-
                     // Сохраняем скаляции
                     foreach (var scalation in scalationsToSave)
                     {
@@ -242,6 +225,12 @@ namespace Magic_Redone
                             SaveEntityId = saveData.Id
                         });
                     }
+
+                    context.EffectToSave.Add(new EffectToSave
+                    {
+                        EffectString = effectString,
+                        SaveEntityId = saveData.Id
+                    });
 
                     // Запись в бд UserSaves
                     context.SaveChanges();
