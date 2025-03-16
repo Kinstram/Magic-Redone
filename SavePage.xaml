@@ -10,7 +10,7 @@
       Background="{DynamicResource CommonBackground}">
 
     <Grid>
-        <DataGrid ItemsSource="{Binding SavesView}" AutoGenerateColumns="False" IsReadOnly="True" >
+        <DataGrid ItemsSource="{Binding SavesView}" AutoGenerateColumns="False" IsReadOnly="True" Background="{DynamicResource CommonBackground}"  RowBackground="DarkGray" AlternatingRowBackground="LightGray">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Название" Binding="{Binding SaveName}" />
                 <DataGridTextColumn Header="Стихия" Binding="{Binding SavedComponents[0].Name}" />

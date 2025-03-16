@@ -4,8 +4,6 @@
              xmlns:local="clr-namespace:Magic_Redone"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
-        <!--->
-            <ImageBrush x:Key="CommonBackground" ImageSource="back1.jpg" />
-        <!-->
+        <ImageBrush x:Key="CommonBackground" ImageSource="back1.jpg" />
     </Application.Resources>
 </Application>
