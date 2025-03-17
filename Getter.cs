@@ -66,7 +66,7 @@ namespace Magic_Redone
             };
         }
 
-        #region Инициализация свойств для привязки
+        #region Инициализация свойств для привязки в WPF
         private Construct _selectedElement;
         public Construct SelectedElement
         {

@@ -1,12 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
-using System.Printing;
-using System.Text.Json;
-using System.Text.RegularExpressions;
 using System.Windows;
-using System.Windows.Media.Effects;
-using static Magic_Redone.EffectToSave;
 
 namespace Magic_Redone
 {
@@ -42,6 +37,8 @@ namespace Magic_Redone
         public static void ResultCount(Getter Getter) // Подсчёт Ext, Int, MP и т.п. выбранных в интерфейсе компонентов
         {
             Scalation(Getter);
+            EffectCounter(Getter);
+
             //инициализация и обнуление переменных для подсчёта Element, Method и Form. Сделано отдельно, чтобы не множить на 0 при пустых компонентах
             decimal CountedTrioExt = 1m;
             decimal CountedTrioInt = 1m;
@@ -118,8 +115,9 @@ namespace Magic_Redone
                 }
             }
 
-            EffectCounter(Getter);
+            
         }
+
         public static void SpellSave(MainWindow main)
         {
             var Results = (Results)main.DataContext;
@@ -245,7 +243,8 @@ namespace Magic_Redone
             MessageBox.Show("Успешно сохранено");
             main.txtSave.Clear();
             main.txtSave.Text = "Введите название сохранения";
-        } // Записьданных и их сохранение в SaveContext
+        } // Запись данных и их сохранение в SaveContext
+
         internal static void EffectCounter(Getter Getter)
         {
             var effects = Getter.SelectedComponents

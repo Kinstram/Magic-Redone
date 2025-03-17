@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace Magic_Redone
@@ -14,45 +16,51 @@ namespace Magic_Redone
 
         public override string ToString()
         {
-            // Фильтруем некорректные комбинации (Quantity или DiceSides <= 0)
             var validCombinations = DiceCombinations
                 .Where(d => d.Quantity > 0 && d.DiceSides > 0)
                 .ToList();
 
-            // Группируем и сортируем только валидные комбинации
             var grouped = validCombinations
                 .GroupBy(d => d.DiceSides)
                 .Select(g => (Quantity: g.Sum(x => x.Quantity), DiceSides: g.Key))
                 .OrderBy(d => d.DiceSides)
                 .ToList();
 
-            // Формируем части строки
             var diceString = grouped.Any()
                 ? string.Join(" + ", grouped.Select(d => $"{d.Quantity}d{d.DiceSides}"))
                 : "";
 
+            // Извлекаем числовое значение из EffectDescs (например, " (2)")
+            var numberPart = EffectDescs
+                .SelectMany(d => Regex.Matches(d, @"\((\d+)\)").Cast<Match>())
+                .LastOrDefault()? // Берём последнее совпадение
+                .Groups[1].Value;
+
+            // Добавляем число к diceString, если найдено
+            if (!string.IsNullOrEmpty(numberPart))
+            {
+                diceString += $" ({numberPart})";
+            }
+
+            // Формируем остальные описания (исключая числовые части в скобках)
             var desc = EffectDescs
-                .Where(d => !string.IsNullOrWhiteSpace(d))
+                .Where(d => !string.IsNullOrWhiteSpace(d) && !Regex.IsMatch(d, @"\(\d+\)"))
                 .Distinct()
                 .ToList();
 
             var descString = desc.Any()
-                ? string.Join(", ", desc)
+                ? string.Join(" ", desc)
                 : "";
 
             // Комбинируем результат
-            if (grouped.Any() && desc.Any())
+            if (!string.IsNullOrEmpty(diceString) && !string.IsNullOrEmpty(descString))
                 return $"{diceString} {TypeToString()} ({descString})";
-
-            else if (grouped.Any())
+            else if (!string.IsNullOrEmpty(diceString))
                 return $"{diceString} {TypeToString()}";
-
-            else if (desc.Any()) 
+            else if (!string.IsNullOrEmpty(descString))
                 return descString;
 
-            else
-            return "Нет эффектов"; // Fallback на случай пустого результата
-
+            return "Нет эффектов";
         }
 
         private string TypeToString() => Type switch

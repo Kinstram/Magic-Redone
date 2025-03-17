@@ -17,9 +17,7 @@ namespace Magic_Redone
         public string Name { get; set; }
 
         public decimal ValueExt { get; set; }
-
         public decimal ValueInt { get; set; }
-
         public decimal ValueMP { get; set; }
 
         public string Description { get; set; }
@@ -54,6 +52,7 @@ namespace Magic_Redone
         Heal,
         Protection,
         HP,
+        Modifier,
         EffectDesc
     }
 }
