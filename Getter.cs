@@ -1,6 +1,5 @@
 ﻿using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using System.Windows;
 
@@ -15,16 +14,18 @@ namespace Magic_Redone
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
-        //инициализация коллекции, для записи SelectedComponents 1..6, для передачи в Back и дальнейший подсчёт итогов 
+        public Collections Collections { get; set; } = new();
+
+        // Инициализация коллекции, для записи SelectedComponents 1..6, для передачи в Back и дальнейший подсчёт итогов 
         public ObservableCollection<Construct> SelectedComponents { get; set; }
 
-        //инициализация коллекции, для записи SelectedElement, SelectedMethod, SelectedForm, для передачи в Back и дальнейший подсчёт итогов 
+        // Инициализация коллекции, для записи SelectedElement, SelectedMethod, SelectedForm, для передачи в Back и дальнейший подсчёт итогов 
         public ObservableCollection<Construct> SelectedTrio { get; set; }
-
         public ObservableCollection<Int16> SelectedScalations { get; set; }
 
         public Getter()
-        { 
+        {
+            Back.LoadElements(Collections);
             SelectedComponents = new ObservableCollection<Construct>();
             SelectedScalations = new ObservableCollection<Int16>();
             for (int i = 0; i < 6; i++)
@@ -44,11 +45,11 @@ namespace Magic_Redone
         public static Construct DefaultConstruct()
         {
             return new Construct { Name = " ", ValueExt = 1m, ValueInt = 1m, ValueMP = 1m };
-        } //"пустой" конструкт для стихии, метода, формы. Используется при умножении, поэтому 1
+        } // "пустой" конструкт для стихии, метода, формы. Используется при умножении, поэтому 1
         public static Construct ZeroDefaultConstruct()
         {
             return new Construct { Name = " ", ValueExt = 0m, ValueInt = 0m, ValueMP = 0m };
-        } //"пустой" конструкт для компонентов. Используется при сложении, поэтому 0
+        } // "пустой" конструкт для компонентов. Используется при сложении, поэтому 0
 
         //Создаёт копию данных для скаляции. Иначе при выборе двух компонентов с одним именем приводит к одинаковым данным в обоих.
         private Construct CreateConstructCopy(Construct original)

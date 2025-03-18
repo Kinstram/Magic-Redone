@@ -1,9 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Text.RegularExpressions;
 
 namespace Magic_Redone
 {
@@ -18,7 +13,7 @@ namespace Magic_Redone
             string diceString = ""; // Обнуление строки при вызове функции
 
             // Группировка и фильтрация DiceCombinations. actionCombinations - эффекты, выражаемые в кубах (1d4 и т.п.)
-            // sideCombinations - эффекты, выражаемые иначе
+            // sideCombinations - эффекты, выражаемые не в кубах
             List<(int Quantity, int DiceSides)> actionCombinations = DiceCombinations
                 .Where(d => d.Quantity > 0 && d.DiceSides > 0)
                 .GroupBy(d => d.DiceSides)
@@ -54,7 +49,6 @@ namespace Magic_Redone
 
             return $"{diceString} {descString}";
         }
-
         private string TypeToString() => Type switch
         {
             EffectType.Damage => "урона",

@@ -1,15 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Text.Json;
-using System.Threading.Tasks;
-using static Magic_Redone.EffectToSave;
 
 
 namespace Magic_Redone
@@ -19,7 +8,6 @@ namespace Magic_Redone
         public DbSet<SaveEntity> Saves { get; set; }
         public DbSet<ConstructToSave> ConstructsToSave { get; set; }
         public DbSet<ScalationToSave> ScalationsToSave { get; set; }
-        public DbSet<EffectToSave> EffectToSave { get; set; }
 
         public SaveContext() => Database.EnsureCreated();
 
@@ -34,7 +22,6 @@ namespace Magic_Redone
                 .HasIndex(u => u.SaveName)
                 .IsUnique();
 
-            // Настройка связей
             modelBuilder.Entity<ConstructToSave>()
                 .HasOne(cts => cts.SaveEntity)
                 .WithMany(se => se.SavedComponents)
@@ -45,12 +32,6 @@ namespace Magic_Redone
                 .HasOne(sts => sts.SaveEntity)
                 .WithMany(se => se.SavedScalations)
                 .HasForeignKey(sts => sts.SaveEntityId)
-                .OnDelete(DeleteBehavior.Cascade);
-
-            modelBuilder.Entity<EffectToSave>()
-                .HasOne(ets => ets.SaveEntity)
-                .WithOne(se => se.SavedEffect)
-                .HasForeignKey<EffectToSave>(ets => ets.SaveEntityId)
                 .OnDelete(DeleteBehavior.Cascade);
         }
     }
