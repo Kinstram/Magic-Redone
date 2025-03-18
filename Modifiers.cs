@@ -89,9 +89,9 @@ namespace Magic_Redone
                 { ("Жало", 2), new Effect { DiceSides = 6 } },
                 { ("Жало", 3), new Effect { DiceSides = 8 } },
 
-                { ("Наконечник", 1), new Effect { EffectDesc = "Даёт пробитие брони (2)" } },
-                { ("Наконечник", 2), new Effect { EffectDesc = "Даёт пробитие брони (3)" } },
-                { ("Наконечник", 3), new Effect { EffectDesc = "Даёт пробитие брони (4)" } },
+                { ("Наконечник", 1), new Effect { EffectDesc = "(2)" } },
+                { ("Наконечник", 2), new Effect { EffectDesc = "(3)" } },
+                { ("Наконечник", 3), new Effect { EffectDesc = "(4)" } },
 
                 { ("Длань", 1), new Effect { DiceSides = 4 } },
                 { ("Длань", 2), new Effect { DiceSides = 6 } },

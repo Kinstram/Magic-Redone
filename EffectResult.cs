@@ -52,10 +52,7 @@ namespace Magic_Redone
                 ? string.Join("; ", desc)
                 : "";
 
-            //Debug.WriteLine($"ТЕСТ \t{FormatEffectLine(diceString, descString)}");
-            //Debug.WriteLine($"ТЕСТ 1 \t{FormatEffectLine("1d4", "(2) Делает то-то")}");
             return $"{diceString} {descString}";
-            //return FormatEffectLine(diceString, descString);
         }
 
         private string TypeToString() => Type switch

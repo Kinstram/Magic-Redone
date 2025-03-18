@@ -3,7 +3,6 @@ using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Text.RegularExpressions;
 using System.Windows;
-using System.Windows.Media.Effects;
 
 namespace Magic_Redone
 {
@@ -260,7 +259,6 @@ namespace Magic_Redone
             .ToList();
       
             string effectToString = string.Join("\n", effects.Where(e => e != null).Select(e => e.ToString()));
-            Debug.WriteLine(effectToString);
             Getter.EffectLine = FormatEffectLine(effectToString);
         } // Группировка и запись эффектов в EffectLine для дальнейшей обработки и вывода в WPF
 
@@ -278,7 +276,6 @@ namespace Magic_Redone
                 }
             }
 
-            Debug.WriteLine(match.Value);
             return modifiedString;
         }
     }

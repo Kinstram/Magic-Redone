@@ -99,7 +99,7 @@ namespace Magic_Redone
                 new { Id = 5, ConstructId = 28, Type = EffectType.EffectDesc, Quantity = 0, DiceSides = 0, EffectDesc = "Позволяет связывать разные заклинания, что снижает время их создания на 1 секунду. Позволяет комбинировать компоненты, увеличивая скаляцию эффекта" },
                 new { Id = 6, ConstructId = 29, Type = EffectType.EffectDesc, Quantity = 0, DiceSides = 0, EffectDesc = "Скалируется. Просто повышает коэффициент" },
                 new { Id = 7, ConstructId = 30, Type = EffectType.EffectDesc, Quantity = 0, DiceSides = 0, EffectDesc = "Просто повышает коэффициент. НЕ скалируется" },
-                new { Id = 8, ConstructId = 31, Type = EffectType.Modifier, Quantity = 0, DiceSides = 0, EffectDesc = "Даёт пробитие брони (2)" },
+                new { Id = 8, ConstructId = 31, Type = EffectType.Modifier, Quantity = 0, DiceSides = 0, EffectDesc = "(2)" },
                 new { Id = 9, ConstructId = 32, Type = EffectType.Modifier, Quantity = 0, DiceSides = 0, EffectDesc = "Даёт урон в половину кубиков осколками и заменяет тип урона на ex. Пример: 2d4 burn -> 2d4 ex [1d4]" },
                 new { Id = 10, ConstructId = 33, Type = EffectType.EffectDesc, Quantity = 0, DiceSides = 0, EffectDesc = "Заклинание не наносит вреда" },
                 new { Id = 11, ConstructId = 35, Type = EffectType.EffectDesc, Quantity = 0, DiceSides = 0, EffectDesc = "Наводит заклинание на цель. Скалируется. Базовая стоимость - отклонение от цели на 1 гекс/покрытие 1 успеха уклонения" },
