@@ -1,7 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
+using System.Text.RegularExpressions;
 using System.Windows;
+using System.Windows.Media.Effects;
 
 namespace Magic_Redone
 {
@@ -37,7 +39,7 @@ namespace Magic_Redone
         public static void ResultCount(Getter Getter) // Подсчёт Ext, Int, MP и т.п. выбранных в интерфейсе компонентов
         {
             Scalation(Getter);
-            EffectCounter(Getter);
+            EffectGrouper(Getter);
 
             //инициализация и обнуление переменных для подсчёта Element, Method и Form. Сделано отдельно, чтобы не множить на 0 при пустых компонентах
             decimal CountedTrioExt = 1m;
@@ -114,8 +116,6 @@ namespace Magic_Redone
                     };
                 }
             }
-
-            
         }
 
         public static void SpellSave(MainWindow main)
@@ -126,9 +126,6 @@ namespace Magic_Redone
             List<Construct> componentsToSave = new List<Construct>();
             List<Construct> trioToSave = new List<Construct>();
             List<Int16> scalationsToSave = new List<Int16>();
-
-            var effectToString = Getter.Effects.Take(6).Where(e => e != null).Select(e => e.ToString());
-            var effectString = string.Join(", ", effectToString);
 
             componentsToSave.Add(Getter.SelectedComponent1);
             componentsToSave.Add(Getter.SelectedComponent2);
@@ -226,7 +223,7 @@ namespace Magic_Redone
 
                     context.EffectToSave.Add(new EffectToSave
                     {
-                        EffectString = effectString,
+                        EffectString = Getter.EffectLine,
                         SaveEntityId = saveData.Id
                     });
 
@@ -245,12 +242,11 @@ namespace Magic_Redone
             main.txtSave.Text = "Введите название сохранения";
         } // Запись данных и их сохранение в SaveContext
 
-        internal static void EffectCounter(Getter Getter)
+        internal static void EffectGrouper(Getter Getter)
         {
-            var effects = Getter.SelectedComponents
+            List<EffectResult> effects = Getter.SelectedComponents
             .Where(c => c != null && c.TiedEffect != null)
             .Select(c => c.TiedEffect)
-            .Where(e => e.Type != EffectType.None)
             .GroupBy(e => e.Type)
             .Select(g => new EffectResult
             {
@@ -262,11 +258,29 @@ namespace Magic_Redone
             })
             .OrderBy(e => e.Type)
             .ToList();
+      
+            string effectToString = string.Join("\n", effects.Where(e => e != null).Select(e => e.ToString()));
+            Debug.WriteLine(effectToString);
+            Getter.EffectLine = FormatEffectLine(effectToString);
+        } // Группировка и запись эффектов в EffectLine для дальнейшей обработки и вывода в WPF
 
-            Getter.Effects = new ObservableCollection<EffectResult>(effects);
-            
+        internal static string FormatEffectLine(string formatingString)
+        {
+            string modifiedString = formatingString;
+            Match match = Regex.Match(formatingString, @"\(\d+\)");
+            if (match.Value != null)
+            {
+                string[] strings = modifiedString.Split(" ", 2);
+                if (strings.Count() > 1)
+                {
+                    strings[1] = Regex.Replace(strings[1], @"\s*\(\d+\)\s*", " ").Trim();
+                    modifiedString = strings[0] + " " + match.Value + " " + strings[1];
+                }
+            }
+
+            Debug.WriteLine(match.Value);
+            return modifiedString;
         }
-
     }
 }
 

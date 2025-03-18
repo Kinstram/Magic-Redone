@@ -327,13 +327,13 @@ namespace Magic_Redone
             }
         }
 
-        private ObservableCollection<EffectResult> _effects = new ObservableCollection<EffectResult>();
-        public ObservableCollection<EffectResult> Effects
+        private string _effectLine;
+        public string EffectLine
         {
-            get => _effects;
+            get => _effectLine;
             set
             {
-                _effects = value;
+               _effectLine = value;
                 OnPropertyChanged();
             }
         }

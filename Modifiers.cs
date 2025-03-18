@@ -101,13 +101,13 @@ namespace Magic_Redone
                 { ("Лех'сар", 2), new Effect { EffectDesc = "Отклонение от цели на 2 гекса/покрытие 2 успеха уклонения." } },
                 { ("Лех'сар", 3), new Effect { EffectDesc = "Отклонение от цели на 4 гекса/покрытие 4 успеха уклонения." } },
 
-                { ("Щит", 1), new Effect { DiceSides = 4 } },
-                { ("Щит", 2), new Effect { DiceSides = 8 } },
-                { ("Щит", 3), new Effect { DiceSides = 16 } },
+                { ("Щит", 1), new Effect { Quantity = 4 } },
+                { ("Щит", 2), new Effect { Quantity = 8 } },
+                { ("Щит", 3), new Effect { Quantity = 16 } },
 
-                { ("Панцирь", 1), new Effect { DiceSides = 3 } },
-                { ("Панцирь", 2), new Effect { DiceSides = 6 } },
-                { ("Панцирь", 3), new Effect { DiceSides = 12 } },
+                { ("Панцирь", 1), new Effect { Quantity = 3 } },
+                { ("Панцирь", 2), new Effect { Quantity = 6 } },
+                { ("Панцирь", 3), new Effect { Quantity = 12 } },
 
                 { ("Змей", 1), new Effect { EffectDesc = "Следующую секунду, раз в секунду, наносит половинный вред заклинания." } },
                 { ("Змей", 2), new Effect { EffectDesc = "Следующие две секунды, раз в секунду, наносит половинный вред заклинания." } },

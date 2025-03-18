@@ -4,7 +4,6 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 
 namespace Magic_Redone
 {
@@ -16,51 +15,47 @@ namespace Magic_Redone
 
         public override string ToString()
         {
-            var validCombinations = DiceCombinations
-                .Where(d => d.Quantity > 0 && d.DiceSides > 0)
-                .ToList();
+            string diceString = ""; // Обнуление строки при вызове функции
 
-            var grouped = validCombinations
+            // Группировка и фильтрация DiceCombinations. actionCombinations - эффекты, выражаемые в кубах (1d4 и т.п.)
+            // sideCombinations - эффекты, выражаемые иначе
+            List<(int Quantity, int DiceSides)> actionCombinations = DiceCombinations
+                .Where(d => d.Quantity > 0 && d.DiceSides > 0)
                 .GroupBy(d => d.DiceSides)
                 .Select(g => (Quantity: g.Sum(x => x.Quantity), DiceSides: g.Key))
                 .OrderBy(d => d.DiceSides)
                 .ToList();
 
-            var diceString = grouped.Any()
-                ? string.Join(" + ", grouped.Select(d => $"{d.Quantity}d{d.DiceSides}"))
+            List<(int Quantity, int DiceSides)> sideCombinations = DiceCombinations
+                .Where(d => d.Quantity > 0 && d.DiceSides == 0)
+                .GroupBy(d => d.Quantity)
+                .Select(g => (Quantity: g.Sum(x => x.Quantity), DiceSides: 0))
+                .ToList();
+
+            // Суммирование Quantity(цифрового выражения) эффектов, формирование строки и добавление подписи типа ("урона", "HP" и т.д.)
+            diceString = actionCombinations.Any()
+                ? string.Join(" + ", actionCombinations.Select(d => $"{d.Quantity}d{d.DiceSides} {TypeToString()}"))
                 : "";
 
-            // Извлекаем числовое значение из EffectDescs (например, " (2)")
-            var numberPart = EffectDescs
-                .SelectMany(d => Regex.Matches(d, @"\((\d+)\)").Cast<Match>())
-                .LastOrDefault()? // Берём последнее совпадение
-                .Groups[1].Value;
+            diceString += sideCombinations.Any()
+                ? string.Join(" ", sideCombinations.Select(d => $"{d.Quantity} {TypeToString()}"))
+                : "";
 
-            // Добавляем число к diceString, если найдено
-            if (!string.IsNullOrEmpty(numberPart))
-            {
-                diceString += $" ({numberPart})";
-            }
-
-            // Формируем остальные описания (исключая числовые части в скобках)
+            // Получение и удаление повторяющихся описаний
             var desc = EffectDescs
-                .Where(d => !string.IsNullOrWhiteSpace(d) && !Regex.IsMatch(d, @"\(\d+\)"))
+                .Where(d => !string.IsNullOrWhiteSpace(d))
                 .Distinct()
                 .ToList();
 
-            var descString = desc.Any()
-                ? string.Join(" ", desc)
+            // Преобразование описаний в единую строку
+            string descString = desc.Any()
+                ? string.Join("; ", desc)
                 : "";
 
-            // Комбинируем результат
-            if (!string.IsNullOrEmpty(diceString) && !string.IsNullOrEmpty(descString))
-                return $"{diceString} {TypeToString()} ({descString})";
-            else if (!string.IsNullOrEmpty(diceString))
-                return $"{diceString} {TypeToString()}";
-            else if (!string.IsNullOrEmpty(descString))
-                return descString;
-
-            return "Нет эффектов";
+            //Debug.WriteLine($"ТЕСТ \t{FormatEffectLine(diceString, descString)}");
+            //Debug.WriteLine($"ТЕСТ 1 \t{FormatEffectLine("1d4", "(2) Делает то-то")}");
+            return $"{diceString} {descString}";
+            //return FormatEffectLine(diceString, descString);
         }
 
         private string TypeToString() => Type switch
