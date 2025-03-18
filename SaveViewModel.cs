@@ -36,7 +36,6 @@ namespace Magic_Redone
                     .Include(s => s.SavedComponents) // ConstructToSave
                     .Include(s => s.SavedScalations
                         .OrderBy(sc => sc.Id)) // Сортировка ScalationToSave
-                    .Include(s => s.SavedEffect) // EffectToSave
                     .AsNoTracking()
                     .ToListAsync();
 

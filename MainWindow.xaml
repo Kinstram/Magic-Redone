@@ -32,7 +32,7 @@
             <ComboBox x:Name="ElementsListBox" 
                  ItemsSource="{Binding Collections.Elements}"
                  DisplayMemberPath="Name" 
-                 SelectedItem="{Binding Getter.SelectedElement, Mode=TwoWay}" 
+                 SelectedItem="{Binding SelectedElement, Mode=TwoWay}" 
                  IsEditable="True"
                  StaysOpenOnEdit="True" 
                  MinWidth="100" MinHeight="25" MaxWidth="200" MaxHeight="30"
@@ -45,7 +45,7 @@
             <ComboBox x:Name="MethodsListBox" 
                  ItemsSource="{Binding Collections.Methods}" 
                  DisplayMemberPath="Name" 
-                 SelectedItem="{Binding Getter.SelectedMethod, Mode=TwoWay}" 
+                 SelectedItem="{Binding SelectedMethod, Mode=TwoWay}" 
                  d:ItemsSource="{d:SampleData ItemCount=5}"
                  IsEditable="True"
                  StaysOpenOnEdit="True"
@@ -58,7 +58,7 @@
             <ComboBox x:Name="FormsListBox" 
                  ItemsSource="{Binding Collections.Forms}" 
                  DisplayMemberPath="Name" 
-                 SelectedItem="{Binding Getter.SelectedForm, Mode=TwoWay}" 
+                 SelectedItem="{Binding SelectedForm, Mode=TwoWay}" 
                  d:ItemsSource="{d:SampleData ItemCount=5}"
                  IsEditable="True"
                  StaysOpenOnEdit="True"
@@ -70,7 +70,7 @@
 
             <ListBox x:Name="Scalation1"
                 ItemsSource="{Binding Collections.Scalations}"
-                SelectedItem="{Binding Getter.SelectedScalation1, Mode=TwoWay}"
+                SelectedItem="{Binding SelectedScalation1, Mode=TwoWay}"
                 Grid.Column="4"
                 Grid.Row="0"
                 MinWidth="25" MinHeight="25" MaxWidth="80" MaxHeight="30"
@@ -82,7 +82,7 @@
             <ComboBox x:Name="ComponentsListBox1" 
                 ItemsSource="{Binding Collections.Components}" 
                 DisplayMemberPath="Name" 
-                SelectedItem="{Binding Getter.SelectedComponent1, Mode=TwoWay}" 
+                SelectedItem="{Binding SelectedComponent1, Mode=TwoWay}" 
                 d:ItemsSource="{d:SampleData ItemCount=5}"
                 IsEditable="True"
                 StaysOpenOnEdit="True"
@@ -94,7 +94,7 @@
 
             <ListBox x:Name="Scalation2"
                 ItemsSource="{Binding Collections.Scalations}"     
-                SelectedItem="{Binding Getter.SelectedScalation2, Mode=TwoWay}"
+                SelectedItem="{Binding SelectedScalation2, Mode=TwoWay}"
                 Grid.Column="5"
                 Grid.Row="0"
                 MinWidth="25" MinHeight="25" MaxWidth="80" MaxHeight="30"
@@ -106,7 +106,7 @@
             <ComboBox x:Name="ComponentsListBox2" 
                 ItemsSource="{Binding Collections.Components}" 
                 DisplayMemberPath="Name" 
-                SelectedItem="{Binding Getter.SelectedComponent2, Mode=TwoWay}" 
+                SelectedItem="{Binding SelectedComponent2, Mode=TwoWay}" 
                 d:ItemsSource="{d:SampleData ItemCount=5}"
                 IsEditable="True"
                 StaysOpenOnEdit="True"
@@ -118,7 +118,7 @@
 
             <ListBox x:Name="Scalation3"
                 ItemsSource="{Binding Collections.Scalations}"     
-                SelectedItem="{Binding Getter.SelectedScalation3, Mode=TwoWay}"
+                SelectedItem="{Binding SelectedScalation3, Mode=TwoWay}"
                 Grid.Column="6"
                 Grid.Row="0"
                 MinWidth="25" MinHeight="25" MaxWidth="80" MaxHeight="30"
@@ -130,7 +130,7 @@
             <ComboBox x:Name="ComponentsListBox3" 
                 ItemsSource="{Binding Collections.Components}" 
                 DisplayMemberPath="Name" 
-                SelectedItem="{Binding Getter.SelectedComponent3, Mode=TwoWay}" 
+                SelectedItem="{Binding SelectedComponent3, Mode=TwoWay}" 
                 d:ItemsSource="{d:SampleData ItemCount=5}"
                 IsEditable="True"
                 StaysOpenOnEdit="True"
@@ -142,7 +142,7 @@
 
             <ListBox x:Name="Scalation4"
                 ItemsSource="{Binding Collections.Scalations}"     
-                SelectedItem="{Binding Getter.SelectedScalation4, Mode=TwoWay}"
+                SelectedItem="{Binding SelectedScalation4, Mode=TwoWay}"
                 Grid.Column="7"
                 Grid.Row="0"
                 MinWidth="25" MinHeight="25" MaxWidth="80" MaxHeight="30"
@@ -154,7 +154,7 @@
             <ComboBox x:Name="ComponentsListBox4" 
                 ItemsSource="{Binding Collections.Components}" 
                 DisplayMemberPath="Name" 
-                SelectedItem="{Binding Getter.SelectedComponent4, Mode=TwoWay}" 
+                SelectedItem="{Binding SelectedComponent4, Mode=TwoWay}" 
                 d:ItemsSource="{d:SampleData ItemCount=5}"
                 IsEditable="True"
                 StaysOpenOnEdit="True"
@@ -166,7 +166,7 @@
 
             <ListBox x:Name="Scalation5"
                 ItemsSource="{Binding Collections.Scalations}"     
-                SelectedItem="{Binding Getter.SelectedScalation5, Mode=TwoWay}"
+                SelectedItem="{Binding SelectedScalation5, Mode=TwoWay}"
                 Grid.Column="8"
                 Grid.Row="0"
                 MinWidth="25" MinHeight="25" MaxWidth="80" MaxHeight="30"
@@ -178,7 +178,7 @@
             <ComboBox x:Name="ComponentsListBox5" 
                 ItemsSource="{Binding Collections.Components}" 
                 DisplayMemberPath="Name" 
-                SelectedItem="{Binding Getter.SelectedComponent5, Mode=TwoWay}" 
+                SelectedItem="{Binding SelectedComponent5, Mode=TwoWay}" 
                 d:ItemsSource="{d:SampleData ItemCount=5}"
                 IsEditable="True"
                 StaysOpenOnEdit="True"
@@ -190,7 +190,7 @@
 
             <ListBox x:Name="Scalation6"
                 ItemsSource="{Binding Collections.Scalations}"     
-                SelectedItem="{Binding Getter.SelectedScalation6, Mode=TwoWay}"
+                SelectedItem="{Binding SelectedScalation6, Mode=TwoWay}"
                 Grid.Column="9"
                 Grid.Row="0"
                 MinWidth="25" MinHeight="25" MaxWidth="80" MaxHeight="30"
@@ -202,7 +202,7 @@
             <ComboBox x:Name="ComponentsListBox6" 
                 ItemsSource="{Binding Collections.Components}" 
                 DisplayMemberPath="Name" 
-                SelectedItem="{Binding Getter.SelectedComponent6, Mode=TwoWay}" 
+                SelectedItem="{Binding SelectedComponent6, Mode=TwoWay}" 
                 d:ItemsSource="{d:SampleData ItemCount=5}"
                 IsEditable="True"
                 StaysOpenOnEdit="True"
@@ -214,85 +214,85 @@
 
             <StackPanel HorizontalAlignment="Center" VerticalAlignment="Bottom" Grid.Column="0" Grid.Row="1">
                 <TextBlock Text="Выбранная стихия" Background="Wheat" Foreground="Black" Padding="4, 2, 4, 2"/>
-                <TextBlock Text="{Binding Getter.SelectedElement.ValueExt, StringFormat=† {0}}" Background="Wheat" Foreground="Black" FontSize="16"/>
-                <TextBlock Text="{Binding Getter.SelectedElement.ValueInt, StringFormat=‡ {0}}" Background="Wheat" Foreground="Black" FontSize="16"/>
-                <TextBlock Text="{Binding Getter.SelectedElement.ValueMP, StringFormat=Ћ {0}}" Background="Wheat" Foreground="Black" FontSize="16"/>
+                <TextBlock Text="{Binding SelectedElement.ValueExt, StringFormat=† {0}}" Background="Wheat" Foreground="Black" FontSize="16"/>
+                <TextBlock Text="{Binding SelectedElement.ValueInt, StringFormat=‡ {0}}" Background="Wheat" Foreground="Black" FontSize="16"/>
+                <TextBlock Text="{Binding SelectedElement.ValueMP, StringFormat=Ћ {0}}" Background="Wheat" Foreground="Black" FontSize="16"/>
             </StackPanel>
 
             <StackPanel HorizontalAlignment="Center" VerticalAlignment="Bottom" Grid.Column="1" Grid.Row="1">
                 <TextBlock Text="Выбранный способ" Background="Wheat" Foreground="Black" Padding="4, 2, 4, 2" />
-                <TextBlock Text="{Binding Getter.SelectedMethod.ValueExt, StringFormat=† {0}}" Background="Wheat" Foreground="Black" FontSize="16"/>
-                <TextBlock Text="{Binding Getter.SelectedMethod.ValueInt, StringFormat=‡ {0}}" Background="Wheat" Foreground="Black" FontSize="16"/>
-                <TextBlock Text="{Binding Getter.SelectedMethod.ValueMP, StringFormat=Ћ {0}}" Background="Wheat" Foreground="Black" FontSize="16"/>
+                <TextBlock Text="{Binding SelectedMethod.ValueExt, StringFormat=† {0}}" Background="Wheat" Foreground="Black" FontSize="16"/>
+                <TextBlock Text="{Binding SelectedMethod.ValueInt, StringFormat=‡ {0}}" Background="Wheat" Foreground="Black" FontSize="16"/>
+                <TextBlock Text="{Binding SelectedMethod.ValueMP, StringFormat=Ћ {0}}" Background="Wheat" Foreground="Black" FontSize="16"/>
             </StackPanel>
 
             <StackPanel HorizontalAlignment="Center" VerticalAlignment="Bottom" Grid.Column="2" Grid.Row="1">
                 <TextBlock Text="Выбранная форма" Background="Wheat" Foreground="Black" Padding="4, 2, 4, 2" />
-                <TextBlock Text="{Binding Getter.SelectedForm.ValueExt, StringFormat=† {0}}" Background="Wheat" Foreground="Black" FontSize="16"/>
-                <TextBlock Text="{Binding Getter.SelectedForm.ValueInt, StringFormat=‡ {0}}" Background="Wheat" Foreground="Black" FontSize="16"/>
-                <TextBlock Text="{Binding Getter.SelectedForm.ValueMP, StringFormat=Ћ {0}}" Background="Wheat" Foreground="Black" FontSize="16"/>
+                <TextBlock Text="{Binding SelectedForm.ValueExt, StringFormat=† {0}}" Background="Wheat" Foreground="Black" FontSize="16"/>
+                <TextBlock Text="{Binding SelectedForm.ValueInt, StringFormat=‡ {0}}" Background="Wheat" Foreground="Black" FontSize="16"/>
+                <TextBlock Text="{Binding SelectedForm.ValueMP, StringFormat=Ћ {0}}" Background="Wheat" Foreground="Black" FontSize="16"/>
             </StackPanel>
 
             <StackPanel HorizontalAlignment="Right" VerticalAlignment="Bottom" Grid.Column="3" Grid.Row="1">
                 <TextBlock Text="Первый компонент" Background="Wheat" Foreground="Black" Padding="4, 2, 4, 2" />
-                <TextBlock Text="{Binding Getter.SelectedComponents[0].ValueExt, StringFormat=† {0}}" Background="Wheat" Foreground="Black" FontSize="16"/>
-                <TextBlock Text="{Binding Getter.SelectedComponents[0].ValueInt, StringFormat=‡ {0}}" Background="Wheat" Foreground="Black" FontSize="16"/>
-                <TextBlock Text="{Binding Getter.SelectedComponents[0].ValueMP, StringFormat=Ћ {0}}" Background="Wheat" Foreground="Black" FontSize="16"/>
-                <TextBlock Text="{Binding Getter.Component1PWR}" Background="Wheat" Foreground="Black" FontSize="16"/>
+                <TextBlock Text="{Binding SelectedComponents[0].ValueExt, StringFormat=† {0}}" Background="Wheat" Foreground="Black" FontSize="16"/>
+                <TextBlock Text="{Binding SelectedComponents[0].ValueInt, StringFormat=‡ {0}}" Background="Wheat" Foreground="Black" FontSize="16"/>
+                <TextBlock Text="{Binding SelectedComponents[0].ValueMP, StringFormat=Ћ {0}}" Background="Wheat" Foreground="Black" FontSize="16"/>
+                <TextBlock Text="{Binding Component1PWR}" Background="Wheat" Foreground="Black" FontSize="16"/>
             </StackPanel>
 
             <StackPanel HorizontalAlignment="Right" VerticalAlignment="Bottom" Grid.Column="4" Grid.Row="1">
                 <TextBlock Text="Второй компонент" Background="Wheat" Foreground="Black" Padding="4, 2, 4, 2" />
-                <TextBlock Text="{Binding Getter.SelectedComponents[1].ValueExt, StringFormat=† {0}}" Background="Wheat" Foreground="Black" FontSize="16"/>
-                <TextBlock Text="{Binding Getter.SelectedComponents[1].ValueInt, StringFormat=‡ {0}}" Background="Wheat" Foreground="Black" FontSize="16"/>
-                <TextBlock Text="{Binding Getter.SelectedComponents[1].ValueMP, StringFormat=Ћ {0}}" Background="Wheat" Foreground="Black" FontSize="16"/>
-                <TextBlock Text="{Binding Getter.Component2PWR}" Background="Wheat" Foreground="Black" FontSize="16"/>
+                <TextBlock Text="{Binding SelectedComponents[1].ValueExt, StringFormat=† {0}}" Background="Wheat" Foreground="Black" FontSize="16"/>
+                <TextBlock Text="{Binding SelectedComponents[1].ValueInt, StringFormat=‡ {0}}" Background="Wheat" Foreground="Black" FontSize="16"/>
+                <TextBlock Text="{Binding SelectedComponents[1].ValueMP, StringFormat=Ћ {0}}" Background="Wheat" Foreground="Black" FontSize="16"/>
+                <TextBlock Text="{Binding Component2PWR}" Background="Wheat" Foreground="Black" FontSize="16"/>
             </StackPanel>
 
             <StackPanel HorizontalAlignment="Right" VerticalAlignment="Bottom" Grid.Column="5" Grid.Row="1">
                 <TextBlock Text="Третий компонент" Background="Wheat" Foreground="Black" Padding="4, 2, 4, 2" />
-                <TextBlock Text="{Binding Getter.SelectedComponents[2].ValueExt, StringFormat=† {0}}" Background="Wheat" Foreground="Black" FontSize="16"/>
-                <TextBlock Text="{Binding Getter.SelectedComponents[2].ValueInt, StringFormat=‡ {0}}" Background="Wheat" Foreground="Black" FontSize="16"/>
-                <TextBlock Text="{Binding Getter.SelectedComponents[2].ValueMP, StringFormat=Ћ {0}}" Background="Wheat" Foreground="Black" FontSize="16"/>
-                <TextBlock Text="{Binding Getter.Component3PWR}" Background="Wheat" Foreground="Black" FontSize="16"/>
+                <TextBlock Text="{Binding SelectedComponents[2].ValueExt, StringFormat=† {0}}" Background="Wheat" Foreground="Black" FontSize="16"/>
+                <TextBlock Text="{Binding SelectedComponents[2].ValueInt, StringFormat=‡ {0}}" Background="Wheat" Foreground="Black" FontSize="16"/>
+                <TextBlock Text="{Binding SelectedComponents[2].ValueMP, StringFormat=Ћ {0}}" Background="Wheat" Foreground="Black" FontSize="16"/>
+                <TextBlock Text="{Binding Component3PWR}" Background="Wheat" Foreground="Black" FontSize="16"/>
             </StackPanel>
 
             <StackPanel HorizontalAlignment="Right" VerticalAlignment="Bottom" Grid.Column="6" Grid.Row="1">
                 <TextBlock Text="Четвёртый компонент" Background="Wheat" Foreground="Black" Padding="4, 2, 4, 2" />
-                <TextBlock Text="{Binding Getter.SelectedComponents[3].ValueExt, StringFormat=† {0}}" Background="Wheat" Foreground="Black" FontSize="16"/>
-                <TextBlock Text="{Binding Getter.SelectedComponents[3].ValueInt, StringFormat=‡ {0}}" Background="Wheat" Foreground="Black" FontSize="16"/>
-                <TextBlock Text="{Binding Getter.SelectedComponents[3].ValueMP, StringFormat=Ћ {0}}" Background="Wheat" Foreground="Black" FontSize="16"/>
-                <TextBlock Text="{Binding Getter.Component4PWR}" Background="Wheat" Foreground="Black" FontSize="16"/>
+                <TextBlock Text="{Binding SelectedComponents[3].ValueExt, StringFormat=† {0}}" Background="Wheat" Foreground="Black" FontSize="16"/>
+                <TextBlock Text="{Binding SelectedComponents[3].ValueInt, StringFormat=‡ {0}}" Background="Wheat" Foreground="Black" FontSize="16"/>
+                <TextBlock Text="{Binding SelectedComponents[3].ValueMP, StringFormat=Ћ {0}}" Background="Wheat" Foreground="Black" FontSize="16"/>
+                <TextBlock Text="{Binding Component4PWR}" Background="Wheat" Foreground="Black" FontSize="16"/>
             </StackPanel>
 
             <StackPanel HorizontalAlignment="Right" VerticalAlignment="Bottom" Grid.Column="7" Grid.Row="1">
                 <TextBlock Text="Пятый компонент" Background="Wheat" Foreground="Black" Padding="4, 2, 4, 2" />
-                <TextBlock Text="{Binding Getter.SelectedComponents[4].ValueExt, StringFormat=† {0}}" Background="Wheat" Foreground="Black" FontSize="16"/>
-                <TextBlock Text="{Binding Getter.SelectedComponents[4].ValueInt, StringFormat=‡ {0}}" Background="Wheat" Foreground="Black" FontSize="16"/>
-                <TextBlock Text="{Binding Getter.SelectedComponents[4].ValueMP, StringFormat=Ћ {0}}" Background="Wheat" Foreground="Black" FontSize="16"/>
-                <TextBlock Text="{Binding Getter.Component5PWR}" Background="Wheat" Foreground="Black" FontSize="16"/>
+                <TextBlock Text="{Binding SelectedComponents[4].ValueExt, StringFormat=† {0}}" Background="Wheat" Foreground="Black" FontSize="16"/>
+                <TextBlock Text="{Binding SelectedComponents[4].ValueInt, StringFormat=‡ {0}}" Background="Wheat" Foreground="Black" FontSize="16"/>
+                <TextBlock Text="{Binding SelectedComponents[4].ValueMP, StringFormat=Ћ {0}}" Background="Wheat" Foreground="Black" FontSize="16"/>
+                <TextBlock Text="{Binding Component5PWR}" Background="Wheat" Foreground="Black" FontSize="16"/>
             </StackPanel>
 
             <StackPanel HorizontalAlignment="Right" VerticalAlignment="Bottom" Grid.Column="8" Grid.Row="1">
                 <TextBlock Text="Шестой компонент" Background="Wheat" Foreground="Black" Padding="4, 2, 4, 2" />
-                <TextBlock Text="{Binding Getter.SelectedComponents[5].ValueExt, StringFormat=† {0}}" Background="Wheat" Foreground="Black" FontSize="16"/>
-                <TextBlock Text="{Binding Getter.SelectedComponents[5].ValueInt, StringFormat=‡ {0}}" Background="Wheat" Foreground="Black" FontSize="16"/>
-                <TextBlock Text="{Binding Getter.SelectedComponents[5].ValueMP, StringFormat=Ћ {0}}" Background="Wheat" Foreground="Black" FontSize="16"/>
-                <TextBlock Text="{Binding Getter.Component6PWR}" Background="Wheat" Foreground="Black" FontSize="16"/>
+                <TextBlock Text="{Binding SelectedComponents[5].ValueExt, StringFormat=† {0}}" Background="Wheat" Foreground="Black" FontSize="16"/>
+                <TextBlock Text="{Binding SelectedComponents[5].ValueInt, StringFormat=‡ {0}}" Background="Wheat" Foreground="Black" FontSize="16"/>
+                <TextBlock Text="{Binding SelectedComponents[5].ValueMP, StringFormat=Ћ {0}}" Background="Wheat" Foreground="Black" FontSize="16"/>
+                <TextBlock Text="{Binding Component6PWR}" Background="Wheat" Foreground="Black" FontSize="16"/>
             </StackPanel>
 
             <!-- Отображение результата -->
             <StackPanel HorizontalAlignment="Center" VerticalAlignment="Bottom" Grid.Column="0" Grid.Row="2">
                 <TextBlock Text="Результат" Background="Wheat" Foreground="Black" Padding="4, 2, 4, 2"/>
-                <TextBlock Text="{Binding Getter.CountedExt, StringFormat=† {0}}" Background="Wheat" Foreground="Black" FontSize="16"/>
-                <TextBlock Text="{Binding Getter.CountedInt, StringFormat=‡ {0}}" Background="Wheat" Foreground="Black" FontSize="16"/>
-                <TextBlock Text="{Binding Getter.CountedMP, StringFormat=Ћ {0}}" Background="Wheat" Foreground="Black" FontSize="16"/>
+                <TextBlock Text="{Binding CountedExt, StringFormat=† {0}}" Background="Wheat" Foreground="Black" FontSize="16"/>
+                <TextBlock Text="{Binding CountedInt, StringFormat=‡ {0}}" Background="Wheat" Foreground="Black" FontSize="16"/>
+                <TextBlock Text="{Binding CountedMP, StringFormat=Ћ {0}}" Background="Wheat" Foreground="Black" FontSize="16"/>
                 <TextBlock Text="{Binding ComponentPWRF}" Background="Wheat" Foreground="Black" FontSize="16"/>
             </StackPanel>
 
             <ComboBox x:Name="TimeChoose"
                 ItemsSource="{Binding Collections.Time}"     
-                SelectedItem="{Binding Getter.SelectedTime, Mode=TwoWay}"
+                SelectedItem="{Binding SelectedTime, Mode=TwoWay}"
                 IsEditable="True"
                 StaysOpenOnEdit="True"
                 Grid.Column="1"
@@ -308,13 +308,13 @@
             <StackPanel Grid.Row="2" Grid.Column="2" Grid.ColumnSpan="2"
                         MinWidth="150" MinHeight="40" HorizontalAlignment="Center" VerticalAlignment="Center" 
                         MaxWidth="400" MaxHeight="200">
-                <TextBlock Text="{Binding Getter.EffectLine}" Background="Wheat" Foreground="Black" FontSize="16" 
+                <TextBlock Text="{Binding EffectLine}" Background="Wheat" Foreground="Black" FontSize="16" 
                            HorizontalAlignment="Center" TextWrapping="Wrap" MinWidth="150" MinHeight="40" MaxWidth="390" MaxHeight="190"/>
             </StackPanel>
 
             <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="1" Grid.Row="2"
                         MinWidth="100" MinHeight="25" MaxWidth="200" MaxHeight="30" Margin="0, 150, 0, 0">
-                <TextBlock Text="{Binding Getter.SelectedTimeValue, StringFormat=Ћ {0}}" Background="Wheat" Foreground="Black" FontSize="16"/>
+                <TextBlock Text="{Binding SelectedTimeValue, StringFormat=Ћ {0}}" Background="Wheat" Foreground="Black" FontSize="16"/>
             </StackPanel>
             
             <!-- Кнопка сохранения -->

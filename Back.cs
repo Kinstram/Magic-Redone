@@ -1,6 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System.Collections.ObjectModel;
-using System.Diagnostics;
 using System.Text.RegularExpressions;
 using System.Windows;
 
@@ -37,15 +36,15 @@ namespace Magic_Redone
 
         public static void ResultCount(Getter Getter) // Подсчёт Ext, Int, MP и т.п. выбранных в интерфейсе компонентов
         {
-            Scalation(Getter);
-            EffectGrouper(Getter);
+            Scalation(Getter); // Проверка на скаляции
+            EffectGrouper(Getter); // Вывод эффектов
 
-            //инициализация и обнуление переменных для подсчёта Element, Method и Form. Сделано отдельно, чтобы не множить на 0 при пустых компонентах
+            // Инициализация и обнуление переменных для подсчёта Element, Method и Form. Сделано отдельно, чтобы не множить на 0 при пустых компонентах
             decimal CountedTrioExt = 1m;
             decimal CountedTrioInt = 1m;
             decimal CountedTrioMP = 1m;
 
-            //умножение записей коллекции трио друг на друга
+            // Умножение записей коллекции трио друг на друга
             foreach (var el in Getter.SelectedTrio.Where(e => e != null))
             {
                 CountedTrioExt *= el.ValueExt;
@@ -53,12 +52,12 @@ namespace Magic_Redone
                 CountedTrioMP *= el.ValueMP;
             }
 
-            //инициализация и обнуление переменных для подсчёта SelectedComponents 1..6
+            // Инициализация и обнуление переменных для подсчёта SelectedComponents 1..6
             decimal CountedComponentsExt = 0m;
             decimal CountedComponentsInt = 0m;
             decimal CountedComponentsMP = 0m;
 
-            //суммирование записей коллекции с компонентам
+            // Суммирование записей коллекции с компонентам
             foreach (var comp in Getter.SelectedComponents.Where(e => e != null))
             {
                 CountedComponentsExt += comp.ValueExt;
@@ -77,41 +76,39 @@ namespace Magic_Redone
             Getter.CountedInt = Math.Round(Getter.CountedInt, 2);
             Getter.CountedMP = Math.Round(Getter.CountedMP, 2);
 
-            Getter.SelectedTimeValue = Math.Round((Getter.CountedMP - (CountedTrioMP + CountedComponentsMP)), 2);
+            Getter.SelectedTimeValue = Math.Round((Getter.CountedMP - (CountedTrioMP + CountedComponentsMP)), 2); // Подсчёт стоимости модификатора времени
         }
 
         internal static void Scalation(Getter Getter) // Скаляция и время
         {
             var compDict = Modifiers.ScalableDict();
             var effectDict = Modifiers.EffectScalation();
+
+            // Проверка и перезапись данных в SelectedComponents с учётом скаляции
             for (Int16 i = 0; i < Getter.SelectedComponents.Count; i++)
             {
-                if (compDict.TryGetValue((Getter.SelectedComponents[i].Name, Getter.SelectedScalations[i]), out var data))
-                {
-                    Getter.SelectedComponents[i].ValueExt = data.ValueExt;
-                    Getter.SelectedComponents[i].ValueInt = data.ValueInt;
-                    Getter.SelectedComponents[i].ValueMP = data.ValueMP;
-                }
-            }
-
-            for (int i = 0; i < Getter.SelectedComponents.Count; i++)
-            {
                 var component = Getter.SelectedComponents[i];
-                if (component == null) continue;
 
                 var scalationLevel = Getter.SelectedScalations[i];
                 var effect = component.TiedEffect;
 
+                if (compDict.TryGetValue((component.Name, scalationLevel), out var data))
+                {
+                    component.ValueExt = data.ValueExt;
+                    component.ValueInt = data.ValueInt;
+                    component.ValueMP = data.ValueMP;
+                }
+
                 if (effectDict.TryGetValue((component.Name, scalationLevel), out var effectData))
                 {
-                    // Создаем НОВЫЙ объект эффекта вместо изменения существующего
-                    component.TiedEffect = new Effect // Замените на ваш реальный конструктор
+                    // Создаем новый объект эффекта вместо существующего во избежание перезаписи
+                    component.TiedEffect = new Effect
                     {
                         Type = effect.Type,
                         Quantity = effectData.Quantity != 0 ? effectData.Quantity : effect.Quantity,
                         DiceSides = effectData.DiceSides != 0 ? effectData.DiceSides : effect.DiceSides,
                         EffectDesc = !string.IsNullOrWhiteSpace(effectData.EffectDesc) ? effectData.EffectDesc : effect.EffectDesc,
-                        ConstructId = effect.ConstructId // Сохраняем идентификатор оригинального компонента
+                        ConstructId = effect.ConstructId
                     };
                 }
             }
@@ -119,13 +116,13 @@ namespace Magic_Redone
 
         public static void SpellSave(MainWindow main)
         {
-            var Results = (Results)main.DataContext;
-            var Getter = Results.Getter;
+            Getter Getter = new();
 
             List<Construct> componentsToSave = new List<Construct>();
             List<Construct> trioToSave = new List<Construct>();
             List<Int16> scalationsToSave = new List<Int16>();
 
+            // Запись каждого выбранного компонента
             componentsToSave.Add(Getter.SelectedComponent1);
             componentsToSave.Add(Getter.SelectedComponent2);
             componentsToSave.Add(Getter.SelectedComponent3);
@@ -158,9 +155,8 @@ namespace Magic_Redone
                         return;
                     }
 
-                    // Проверка на уникальность
-                    bool nameExists = context.Saves
-                        .Any(s => s.SaveName == saveName);
+                    // Проверка названия сохранения на уникальность
+                    bool nameExists = context.Saves.Any(s => s.SaveName == saveName);
 
                     if (nameExists)
                     {
@@ -177,6 +173,7 @@ namespace Magic_Redone
                         CountedMP = Getter.CountedMP,
                         TimeString = Getter.SelectedTime,
                         TimeValue = Getter.SelectedTimeValue,
+                        SavedEffect = Getter.EffectLine
                     };
 
                     context.Saves.Add(saveData);
@@ -219,13 +216,6 @@ namespace Magic_Redone
                             SaveEntityId = saveData.Id
                         });
                     }
-
-                    context.EffectToSave.Add(new EffectToSave
-                    {
-                        EffectString = Getter.EffectLine,
-                        SaveEntityId = saveData.Id
-                    });
-
                     // Запись в бд UserSaves
                     context.SaveChanges();
                 }
@@ -243,6 +233,7 @@ namespace Magic_Redone
 
         internal static void EffectGrouper(Getter Getter)
         {
+            // Получение выбранных эффектов
             List<EffectResult> effects = Getter.SelectedComponents
             .Where(c => c != null && c.TiedEffect != null)
             .Select(c => c.TiedEffect)
@@ -258,6 +249,7 @@ namespace Magic_Redone
             .OrderBy(e => e.Type)
             .ToList();
       
+            // Запись всех эффектов в одну строку для дальнейшей передачи в FormatEffectLine
             string effectToString = string.Join("\n", effects.Where(e => e != null).Select(e => e.ToString()));
             Getter.EffectLine = FormatEffectLine(effectToString);
         } // Группировка и запись эффектов в EffectLine для дальнейшей обработки и вывода в WPF
@@ -265,19 +257,20 @@ namespace Magic_Redone
         internal static string FormatEffectLine(string formatingString)
         {
             string modifiedString = formatingString;
-            Match match = Regex.Match(formatingString, @"\(\d+\)");
+            Match match = Regex.Match(formatingString, @"\(\d+\)"); // Поиск "(число)" для дальнешей подстановки в строку урона
+
             if (match.Value != null)
             {
-                string[] strings = modifiedString.Split(" ", 2);
+                string[] strings = modifiedString.Split(" ", 2); // Разделение строки на урон и остальную часть (1d4 | урона ...)
                 if (strings.Count() > 1)
                 {
-                    strings[1] = Regex.Replace(strings[1], @"\s*\(\d+\)\s*", " ").Trim();
+                    strings[1] = Regex.Replace(strings[1], @"\s*\(\d+\)\s*", " ").Trim(); // Удаление модификатора из строки с описанием, чтобы избежать повторения
                     modifiedString = strings[0] + " " + match.Value + " " + strings[1];
                 }
             }
 
             return modifiedString;
-        }
+        } // Определение модификаторов (Type = Modifier) для их корректное отображение 
     }
 }
 

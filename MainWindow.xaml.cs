@@ -1,15 +1,5 @@
-﻿using Magic_Redone;
-using System.Diagnostics;
-using System.Text;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+﻿using System.Windows;
+
 
 namespace Magic_Redone
 {
@@ -18,11 +8,12 @@ namespace Magic_Redone
         public MainWindow()
         {
             InitializeComponent();
-            this.DataContext = new Results();
+            this.DataContext = new Getter();
 
             txtSave.GotFocus += txtSave_GotFocus;
             txtSave.LostFocus += txtSave_LostFocus;
         }
+
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             SavePage savePage = new SavePage();
@@ -41,6 +32,7 @@ namespace Magic_Redone
             // Переходим на страницу
             MainFrame.Navigate(savePage);
         }
+
         private void btnSave_Click(object sender, RoutedEventArgs e)
         {
             Back.SpellSave(this);
