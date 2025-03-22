@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Text.RegularExpressions;
 using System.Windows;
 
@@ -12,22 +13,22 @@ namespace Magic_Redone
             using (var context = new ApplicationContext())
             {
                 Int16 requiredKind = 0; //стихии
-                var elementsLoad = await context.Constructs.AsNoTracking().OrderBy(p => p.Name).Where(c => c.Kind == requiredKind).ToListAsync();
+                List<Construct> elementsLoad = await context.Constructs.AsNoTracking().OrderBy(p => p.Name).Where(c => c.Kind == requiredKind).ToListAsync();
                 Collections.Elements = new ObservableCollection<Construct>(elementsLoad);
 
                 requiredKind = 1; //способы
-                var methodsLoad = await context.Constructs.AsNoTracking().OrderBy(p => p.Name).Where(c => c.Kind == requiredKind).ToListAsync();
+                List<Construct> methodsLoad = await context.Constructs.AsNoTracking().OrderBy(p => p.Name).Where(c => c.Kind == requiredKind).ToListAsync();
                 Collections.Methods = new ObservableCollection<Construct>(methodsLoad);
 
                 requiredKind = 2; //формы
-                var formsLoad = await context.Constructs.AsNoTracking().OrderBy(p => p.Name).Where(c => c.Kind == requiredKind).ToListAsync();
+                List<Construct> formsLoad = await context.Constructs.AsNoTracking().OrderBy(p => p.Name).Where(c => c.Kind == requiredKind).ToListAsync();
                 Collections.Forms = new ObservableCollection<Construct>(formsLoad);
 
                 requiredKind = 3; //компоненты
-                var componentsLoad = await context.Constructs.AsNoTracking().Where(c => c.Kind == requiredKind).OrderBy(p => p.Name).Include(x => x.TiedEffect).ToListAsync();
+                List<Construct> componentsLoad = await context.Constructs.AsNoTracking().Where(c => c.Kind == requiredKind).OrderBy(p => p.Name).Include(x => x.TiedEffect).ToListAsync();
                 Collections.Components = new ObservableCollection<Construct>(componentsLoad);
 
-                var effectsLoad = await context.EffectList.AsNoTracking().OrderBy(p => p.ConstructId).ToListAsync();
+                List<Effect> effectsLoad = await context.EffectList.AsNoTracking().OrderBy(p => p.ConstructId).ToListAsync();
             }
 
             Collections.Scalations = [1, 2, 3];
@@ -45,7 +46,7 @@ namespace Magic_Redone
             decimal CountedTrioMP = 1m;
 
             // Умножение записей коллекции трио друг на друга
-            foreach (var el in Getter.SelectedTrio.Where(e => e != null))
+            foreach (Construct el in Getter.SelectedTrio.Where(e => e != null))
             {
                 CountedTrioExt *= el.ValueExt;
                 CountedTrioInt *= el.ValueInt;
@@ -58,14 +59,14 @@ namespace Magic_Redone
             decimal CountedComponentsMP = 0m;
 
             // Суммирование записей коллекции с компонентам
-            foreach (var comp in Getter.SelectedComponents.Where(e => e != null))
+            foreach (Construct comp in Getter.SelectedComponents.Where(e => e != null))
             {
                 CountedComponentsExt += comp.ValueExt;
                 CountedComponentsInt += comp.ValueInt;
                 CountedComponentsMP += comp.ValueMP;
             }
 
-            Modifiers.TimeDict().TryGetValue(Getter.SelectedTime, out var number);
+            Modifiers.TimeDict().TryGetValue(Getter.SelectedTime, out decimal number);
 
             //итоговое суммирование произведения трио и суммы компонентов для дальнейшей передачи в Getter и WPF
             Getter.CountedExt = CountedTrioExt + CountedComponentsExt;
@@ -87,19 +88,19 @@ namespace Magic_Redone
             // Проверка и перезапись данных в SelectedComponents с учётом скаляции
             for (Int16 i = 0; i < Getter.SelectedComponents.Count; i++)
             {
-                var component = Getter.SelectedComponents[i];
+                Construct component = Getter.SelectedComponents[i];
 
-                var scalationLevel = Getter.SelectedScalations[i];
-                var effect = component.TiedEffect;
+                Int16 scalationLevel = Getter.SelectedScalations[i];
+                Effect effect = component.TiedEffect;
 
-                if (compDict.TryGetValue((component.Name, scalationLevel), out var data))
+                if (compDict.TryGetValue((component.Name, scalationLevel), out Construct data))
                 {
                     component.ValueExt = data.ValueExt;
                     component.ValueInt = data.ValueInt;
                     component.ValueMP = data.ValueMP;
                 }
 
-                if (effectDict.TryGetValue((component.Name, scalationLevel), out var effectData))
+                if (effectDict.TryGetValue((component.Name, scalationLevel), out Effect effectData))
                 {
                     // Создаем новый объект эффекта вместо существующего во избежание перезаписи
                     component.TiedEffect = new Effect
@@ -165,7 +166,7 @@ namespace Magic_Redone
                     }
 
                     // Создание новой записи, если проверки пройдены
-                    var saveData = new SaveEntity
+                    SaveEntity saveData = new SaveEntity
                     {
                         SaveName = saveName,
                         CountedExt = Getter.CountedExt,
@@ -180,7 +181,7 @@ namespace Magic_Redone
                     context.SaveChanges();
 
                     // Сохраняем трио
-                    foreach (var element in trioToSave.Where(c => c != null))
+                    foreach (Construct element in trioToSave.Where(c => c != null))
                     {
                         context.ConstructsToSave.Add(new ConstructToSave
                         {
@@ -194,7 +195,7 @@ namespace Magic_Redone
                     }
 
                     // Сохраняем компоненты
-                    foreach (var component in componentsToSave.Where(c => c != null))
+                    foreach (Construct component in componentsToSave.Where(c => c != null))
                     {
                         context.ConstructsToSave.Add(new ConstructToSave
                         {
@@ -208,7 +209,7 @@ namespace Magic_Redone
                     }
 
                     // Сохраняем скаляции
-                    foreach (var scalation in scalationsToSave)
+                    foreach (Int16 scalation in scalationsToSave)
                     {
                         context.ScalationsToSave.Add(new ScalationToSave
                         {
@@ -248,7 +249,7 @@ namespace Magic_Redone
             })
             .OrderBy(e => e.Type)
             .ToList();
-      
+
             // Запись всех эффектов в одну строку для дальнейшей передачи в FormatEffectLine
             string effectToString = string.Join("\n", effects.Where(e => e != null).Select(e => e.ToString()));
             Getter.EffectLine = FormatEffectLine(effectToString);
@@ -256,21 +257,50 @@ namespace Magic_Redone
 
         internal static string FormatEffectLine(string formatingString)
         {
-            string modifiedString = formatingString;
-            Match match = Regex.Match(formatingString, @"\(\d+\)"); // Поиск "(число)" для дальнешей подстановки в строку урона
+            Debug.WriteLine(formatingString);
 
-            if (match.Value != null)
+            // Проверка на наличе урона (1d4)
+            var dicesCheck = Regex.Match(formatingString, @"\dd\d");
+            if (!dicesCheck.Success) return formatingString;
+
+            var damageTypeMatch = Regex.Match(formatingString, @"\b(cut|burn|cr|ex)\b"); // Поиск типа урона
+            var damageType = damageTypeMatch.Success ? damageTypeMatch.Value : string.Empty; // Запись типа урона. Сделано для корректного отображения при отсутствии типа урона
+            var hasExpl = Regex.IsMatch(formatingString, @"\bex\b"); // Поиск Взрыва
+            var hasPen = Regex.IsMatch(formatingString, @"\(\d\)"); // Поиск Наконечника
+
+            if (hasExpl || hasPen)
             {
-                string[] strings = modifiedString.Split(" ", 2); // Разделение строки на урон и остальную часть (1d4 | урона ...)
-                if (strings.Count() > 1)
+                var diceParts = dicesCheck.Value.Split('d'); // Разбивка урона на количестов кубиков и количество граней
+                int quantity = int.Parse(diceParts[0]);
+                int dice = int.Parse(diceParts[1]);
+
+                // Обработка взрыва
+                if (hasExpl)
                 {
-                    strings[1] = Regex.Replace(strings[1], @"\s*\(\d+\)\s*", " ").Trim(); // Удаление модификатора из строки с описанием, чтобы избежать повторения
-                    modifiedString = strings[0] + " " + match.Value + " " + strings[1];
+                    damageType = "ex";
+                    int explQuantity = quantity / 2 <= 1 ? 1 : quantity / 2;
+                    string explString = $"{explQuantity}d{dice}";
+
+                    // Доп обработка при наличии Наконечника
+                    if (hasPen)
+                    {
+                        var penModifier = Regex.Match(formatingString, @"\(\d\)").Value;
+                        return $"{dicesCheck.Value} {penModifier} {damageType} [{explString}] урона";
+                    }
+
+                    return $"{dicesCheck.Value} {damageType} [{explString}] урона";
+                }
+
+                // Обработка наконечника
+                if (hasPen)
+                {
+                    var penModifier = Regex.Match(formatingString, @"\(\d\)").Value;
+                    return $"{dicesCheck.Value} {penModifier} {damageType} урона";
                 }
             }
 
-            return modifiedString;
-        } // Определение модификаторов (Type = Modifier) для их корректное отображение 
+            return formatingString;
+        }
     }
 }
 

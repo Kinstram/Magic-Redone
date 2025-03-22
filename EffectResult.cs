@@ -51,7 +51,7 @@ namespace Magic_Redone
         }
         private string TypeToString() => Type switch
         {
-            EffectType.Damage => "урона",
+            EffectType.Damage => "cr урона",
             EffectType.Heal => "лечения",
             EffectType.Protection => "DR",
             EffectType.HP => "HP",
