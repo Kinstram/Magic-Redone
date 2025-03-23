@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
+using System.Text;
 using System.Text.RegularExpressions;
 using System.Windows;
 
@@ -10,7 +11,7 @@ namespace Magic_Redone
     {
         internal static async void LoadElements(Collections Collections) // Загрузка и распределение данных из бд в коллекции для возможности их выбора в интерфейсе и передачи на обработку в Getter
         {
-            using (var context = new ApplicationContext())
+            using (ApplicationContext context = new())
             {
                 Int16 requiredKind = 0; //стихии
                 List<Construct> elementsLoad = await context.Constructs.AsNoTracking().OrderBy(p => p.Name).Where(c => c.Kind == requiredKind).ToListAsync();
@@ -143,7 +144,7 @@ namespace Magic_Redone
             trioToSave.Add(Getter.SelectedMethod);
             trioToSave.Add(Getter.SelectedForm);
 
-            using (var context = new SaveContext())
+            using (SaveContext context = new())
             {
                 try
                 {
@@ -259,47 +260,60 @@ namespace Magic_Redone
         {
             Debug.WriteLine(formatingString);
 
-            // Проверка на наличе урона (1d4)
-            var dicesCheck = Regex.Match(formatingString, @"\dd\d");
-            if (!dicesCheck.Success) return formatingString;
+            // Разделяем строку на эффект и описание
+            int index = formatingString.IndexOf("\n");
+            if (index == -1) return formatingString;
 
-            var damageTypeMatch = Regex.Match(formatingString, @"\b(cut|burn|cr|ex)\b"); // Поиск типа урона
-            var damageType = damageTypeMatch.Success ? damageTypeMatch.Value : string.Empty; // Запись типа урона. Сделано для корректного отображения при отсутствии типа урона
-            var hasExpl = Regex.IsMatch(formatingString, @"\bex\b"); // Поиск Взрыва
-            var hasPen = Regex.IsMatch(formatingString, @"\(\d\)"); // Поиск Наконечника
+            string effectLine = formatingString.Substring(0, index);
+            string description = formatingString.Substring(index);
 
-            if (hasExpl || hasPen)
+            // Ищем кубы ТОЛЬКО в части с эффектом
+            MatchCollection diceMatches = Regex.Matches(effectLine, @"\d+d\d+");
+            if (diceMatches.Count == 0) return formatingString;
+
+            // Извлекаем модификаторы
+            Match damageTypeMatch = Regex.Match(effectLine, @"\b(cut|burn|cr|ex)\b");
+            string damageType = damageTypeMatch.Success ? damageTypeMatch.Value : "cr"; // cr по умолчанию
+            bool hasExpl = description.Contains("ex");
+            bool hasPen = Regex.IsMatch(description, @"\(\d\)");
+
+            // Обрабатываем кубы
+            List<string> mainDice = new();
+            List<string> explDice = new();
+
+            foreach (Match match in diceMatches)
             {
-                var diceParts = dicesCheck.Value.Split('d'); // Разбивка урона на количестов кубиков и количество граней
-                int quantity = int.Parse(diceParts[0]);
-                int dice = int.Parse(diceParts[1]);
+                string[] parts = match.Value.Split('d');
+                int qty = int.Parse(parts[0]);
+                int dice = int.Parse(parts[1]);
 
-                // Обработка взрыва
+                mainDice.Add(match.Value);
+
                 if (hasExpl)
                 {
-                    damageType = "ex";
-                    int explQuantity = quantity / 2 <= 1 ? 1 : quantity / 2;
-                    string explString = $"{explQuantity}d{dice}";
-
-                    // Доп обработка при наличии Наконечника
-                    if (hasPen)
-                    {
-                        var penModifier = Regex.Match(formatingString, @"\(\d\)").Value;
-                        return $"{dicesCheck.Value} {penModifier} {damageType} [{explString}] урона";
-                    }
-
-                    return $"{dicesCheck.Value} {damageType} [{explString}] урона";
-                }
-
-                // Обработка наконечника
-                if (hasPen)
-                {
-                    var penModifier = Regex.Match(formatingString, @"\(\d\)").Value;
-                    return $"{dicesCheck.Value} {penModifier} {damageType} урона";
+                    int explQty = qty / 2 > 0 ? qty / 2 : 1;
+                    explDice.Add($"{explQty}d{dice}");
                 }
             }
 
-            return formatingString;
+            // Собираем результат
+            StringBuilder result = new StringBuilder(string.Join(" + ", mainDice));
+
+            if (hasPen)
+            {
+                string pen = Regex.Match(description, @"\(\d\)").Value;
+                result.Append($" {pen}");
+            }
+            result.Append($" {(hasExpl ? "ex" : damageType)}");
+            if (hasExpl)
+            { 
+                result.Append($" [{string.Join(" + ", explDice)}]");
+            }
+
+            result.Append(" урона");
+
+            Debug.WriteLine($"Debug line - {result}");
+            return result.ToString();
         }
     }
 }

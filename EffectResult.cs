@@ -37,7 +37,7 @@ namespace Magic_Redone
                 : "";
 
             // Получение и удаление повторяющихся описаний
-            var desc = EffectDescs
+            List<string> desc = EffectDescs
                 .Where(d => !string.IsNullOrWhiteSpace(d))
                 .Distinct()
                 .ToList();

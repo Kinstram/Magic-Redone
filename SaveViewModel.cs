@@ -32,7 +32,7 @@ namespace Magic_Redone
 
         private async void LoadSavesAsync()
         {
-            var saves = await _context.Saves
+            List<SaveEntity> saves = await _context.Saves
                     .Include(s => s.SavedComponents) // ConstructToSave
                     .Include(s => s.SavedScalations
                         .OrderBy(sc => sc.Id)) // Сортировка ScalationToSave
