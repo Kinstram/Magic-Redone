@@ -118,7 +118,7 @@ namespace Magic_Redone
 
         public static void SpellSave(MainWindow main)
         {
-            Getter Getter = new();
+            Getter Getter = (Getter) main.DataContext;
 
             List<Construct> componentsToSave = new List<Construct>();
             List<Construct> trioToSave = new List<Construct>();
@@ -258,7 +258,6 @@ namespace Magic_Redone
 
         internal static string FormatEffectLine(string formatingString)
         {
-            Debug.WriteLine(formatingString);
 
             // Разделяем строку на эффект и описание
             int index = formatingString.IndexOf("\n");
@@ -311,8 +310,7 @@ namespace Magic_Redone
             }
 
             result.Append(" урона");
-
-            Debug.WriteLine($"Debug line - {result}");
+            result.Append($"\t {description}");
             return result.ToString();
         }
     }

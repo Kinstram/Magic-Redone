@@ -325,7 +325,7 @@
             
             <Button Content="Просмотр сохранённых заклинаний" Width="250" Height="60"  Grid.Column="5" Grid.ColumnSpan="2" Grid.Row ="2" Click="Button_Click"/>
             
-            <TextBlock Text="v. 0.35" HorizontalAlignment="Right" VerticalAlignment="Bottom" Grid.Column="8" Grid.Row="2" Grid.ColumnSpan="2"
+            <TextBlock Text="v. 0.36" HorizontalAlignment="Right" VerticalAlignment="Bottom" Grid.Column="8" Grid.Row="2" Grid.ColumnSpan="2"
                        Background="Transparent" FontSize="12" Foreground="Black" Opacity="0.5" />
         </Grid>
         

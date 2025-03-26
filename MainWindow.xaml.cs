@@ -55,5 +55,6 @@ namespace Magic_Redone
                 txtSave.Text = "Введите название сохранения";
             }
         }
+
     }
 }
