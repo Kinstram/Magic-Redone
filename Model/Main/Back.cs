@@ -302,6 +302,7 @@ namespace Magic_Redone
             {
                 string pen = Regex.Match(description, @"\(\d\)").Value;
                 result.Append($" {pen}");
+                description = Regex.Replace(description, @"\(\d\)", "");
             }
             result.Append($" {(hasExpl ? "ex" : damageType)}");
             if (hasExpl)
@@ -311,7 +312,7 @@ namespace Magic_Redone
 
             result.Append(" урона");
             result.Append($"\t {description}");
-            return result.ToString();
+            return result.ToString().Trim();
         }
     }
 }
