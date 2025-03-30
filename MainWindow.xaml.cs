@@ -17,7 +17,7 @@ namespace Magic_Redone
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             SavePage savePage = new SavePage();
-
+            
             // Подписываемся на событие возврата
             savePage.ReturnRequested += () =>
             {

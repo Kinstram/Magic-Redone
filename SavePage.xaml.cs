@@ -15,15 +15,15 @@ namespace Magic_Redone
 
         public SavePage()
         {
-            this.DataContext = saveViewModel;
             InitializeComponent();
+            this.DataContext = saveViewModel;
+            Loaded += OnPageLoaded;
         }
         private void BackButton_Click(object sender, RoutedEventArgs e)
         {
             // Вызываем событие возврата
             ReturnRequested?.Invoke();
         }
-
         private void DeleteButton_Click(object sender, RoutedEventArgs e)
         {
             var confirmResult = MessageBox.Show(
@@ -37,6 +37,10 @@ namespace Magic_Redone
                 Window ownerWindow = Window.GetWindow(this) ?? Application.Current.MainWindow;
                 saveModel.Deletion(ownerWindow); // Больше не передаем ViewModel
             }
+        }
+        private void OnPageLoaded(object sender, RoutedEventArgs e)
+        {
+            saveViewModel.LoadSavesAsync();
         }
     }
 }
