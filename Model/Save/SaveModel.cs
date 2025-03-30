@@ -10,9 +10,10 @@ namespace Magic_Redone
 {
     public class SaveModel
     {
-        public async void Deletion()
+        public async void Deletion(Window owner)
         {
             var inputDialog = new InputDialogWindow("Введите имя сохранения для удаления:");
+            inputDialog.Owner = owner; // Устанавливаем владельца
             if (inputDialog.ShowDialog() == true)
             {
                 string nameToDelete = inputDialog.Answer;

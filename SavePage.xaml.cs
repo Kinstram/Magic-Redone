@@ -34,7 +34,8 @@ namespace Magic_Redone
 
             if (confirmResult == MessageBoxResult.Yes)
             {
-                saveModel.Deletion(); // Больше не передаем ViewModel
+                Window ownerWindow = Window.GetWindow(this) ?? Application.Current.MainWindow;
+                saveModel.Deletion(ownerWindow); // Больше не передаем ViewModel
             }
         }
     }
