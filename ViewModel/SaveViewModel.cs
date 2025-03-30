@@ -11,8 +11,20 @@ namespace Magic_Redone
 {
     public class SaveViewModel : INotifyPropertyChanged
     {
-        private readonly SaveContext _context;
-        public ObservableCollection<SaveEntity> Saves { get; set; }
+        private static SaveViewModel _instance;
+        public static SaveViewModel Instance => _instance ??= new SaveViewModel();
+
+        private ObservableCollection<SaveEntity> _saves;
+        public ObservableCollection<SaveEntity> Saves
+        {
+            get => _saves;
+            set
+            {
+                _saves = value;
+                OnPropertyChanged();
+            }
+        }
+
         private ICollectionView _savesView;
         public ICollectionView SavesView
         {
@@ -23,24 +35,25 @@ namespace Magic_Redone
                 OnPropertyChanged();
             }
         }
-        
-        public SaveViewModel()
+
+        private SaveViewModel()
         {
-            _context = new SaveContext();
             LoadSavesAsync();
         }
 
-        private async void LoadSavesAsync()
+        public async void LoadSavesAsync()
         {
-            List<SaveEntity> saves = await _context.Saves
-                    .Include(s => s.SavedComponents) // ConstructToSave
-                    .Include(s => s.SavedScalations
-                        .OrderBy(sc => sc.Id)) // Сортировка ScalationToSave
+            using (var context = new SaveContext())
+            {
+                List<SaveEntity> saves = await context.Saves
+                    .Include(s => s.SavedComponents)
+                    .Include(s => s.SavedScalations.OrderBy(sc => sc.Id))
                     .AsNoTracking()
                     .ToListAsync();
 
-            Saves = new ObservableCollection<SaveEntity>(saves);
-            SavesView = CollectionViewSource.GetDefaultView(Saves);
+                Saves = new ObservableCollection<SaveEntity>(saves);
+                SavesView = CollectionViewSource.GetDefaultView(Saves);
+            }
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
