@@ -21,13 +21,13 @@ namespace Magic_Redone
 
         // Инициализация коллекции, для записи SelectedElement, SelectedMethod, SelectedForm, для передачи в Back и дальнейший подсчёт итогов 
         public ObservableCollection<Construct> SelectedTrio { get; set; }
-        public ObservableCollection<Int16> SelectedScalations { get; set; }
+        public ObservableCollection<int> SelectedScalations { get; set; }
 
         public Getter()
         {
             Back.LoadElements(Collections);
             SelectedComponents = new ObservableCollection<Construct>();
-            SelectedScalations = new ObservableCollection<Int16>();
+            SelectedScalations = new ObservableCollection<int>();
             for (int i = 0; i < 6; i++)
             {
                 SelectedComponents.Add(ZeroDefaultConstruct());

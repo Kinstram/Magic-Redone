@@ -39,6 +39,7 @@ namespace Magic_Redone
         public static void ResultCount(Getter Getter) // Подсчёт Ext, Int, MP и т.п. выбранных в интерфейсе компонентов
         {
             Scalation(Getter); // Проверка на скаляции
+            // Вставить сюда
             EffectGrouper(Getter); // Вывод эффектов
 
             // Инициализация и обнуление переменных для подсчёта Element, Method и Form. Сделано отдельно, чтобы не множить на 0 при пустых компонентах
@@ -85,13 +86,59 @@ namespace Magic_Redone
         {
             var compDict = Modifiers.ScalableDict();
             var effectDict = Modifiers.EffectScalation();
+            List<int> validBoundings = new();
+            List<int> boundingsScalations = new();
+            List<int> scalationsDouble = Getter.SelectedScalations.ToList();
+            int scalationModifier = 0;
 
             // Проверка и перезапись данных в SelectedComponents с учётом скаляции
             for (Int16 i = 0; i < Getter.SelectedComponents.Count; i++)
             {
                 Construct component = Getter.SelectedComponents[i];
+                var array = Getter.SelectedComponents;
 
-                Int16 scalationLevel = Getter.SelectedScalations[i];
+                if (component.Name == "Связь")
+                {
+                    bool isBetween = false;
+
+                    if (array[i - 1].Name == array[i + 1].Name)
+                    {
+                        isBetween = true;
+                        break;
+                    }
+
+                    if (isBetween)
+                    {
+                        validBoundings.Add(i);
+                        boundingsScalations.Add(i - 1);
+                        boundingsScalations.Add(i + 1);
+                    }
+
+                    if (validBoundings.Count > 1)
+                    {
+                        Debug.WriteLine(array[validBoundings[0] - 1].Name);
+                        Debug.WriteLine(array[validBoundings[1] + 1].Name);
+                        Debug.WriteLine(validBoundings[0]);
+                        Debug.WriteLine(validBoundings[1] + 2);
+                    }
+                    if (validBoundings.Count > 1 && (validBoundings[0] == (validBoundings[1] - 2)) && (array[validBoundings[0] - 1].Name == array[validBoundings[1] + 1].Name))
+                    {
+                        scalationModifier = 2;
+                    }
+                    else scalationModifier = 1;
+                }
+            }
+
+            boundingsScalations = boundingsScalations.Distinct().ToList();
+            foreach (int n in boundingsScalations)
+            {
+                scalationsDouble[n] += scalationModifier;
+            }
+
+            for (int i = 0; i < Getter.SelectedComponents.Count; i++)
+            {
+                Construct component = Getter.SelectedComponents[i];
+                int scalationLevel = scalationsDouble[i];
                 Effect effect = component.TiedEffect;
 
                 if (compDict.TryGetValue((component.Name, scalationLevel), out Construct data))
@@ -118,7 +165,7 @@ namespace Magic_Redone
 
         public static void SpellSave(MainWindow main)
         {
-            Getter Getter = (Getter) main.DataContext;
+            Getter Getter = (Getter)main.DataContext;
 
             List<Construct> componentsToSave = new List<Construct>();
             List<Construct> trioToSave = new List<Construct>();
@@ -306,7 +353,7 @@ namespace Magic_Redone
             }
             result.Append($" {(hasExpl ? "ex" : damageType)}");
             if (hasExpl)
-            { 
+            {
                 result.Append($" [{string.Join(" + ", explDice)}]");
             }
 
