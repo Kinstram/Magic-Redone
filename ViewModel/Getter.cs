@@ -1,5 +1,6 @@
 ﻿using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using System.Windows;
 
@@ -31,7 +32,7 @@ namespace Magic_Redone
             for (int i = 0; i < 6; i++)
             {
                 SelectedComponents.Add(ZeroDefaultConstruct());
-                SelectedScalations.Add(1); //изначально все скаляции устанавливаются на 1
+                SelectedScalations.Add(0); //изначально все скаляции устанавливаются на 1
             }//запись пустых ячеек в коллекции
 
             SelectedTrio = new ObservableCollection<Construct>();

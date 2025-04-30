@@ -7,7 +7,7 @@ using System.Windows;
 
 namespace Magic_Redone
 {
-    public class Back //обработка
+    public class Back
     {
         internal static async void LoadElements(Collections Collections) // Загрузка и распределение данных из бд в коллекции для возможности их выбора в интерфейсе и передачи на обработку в Getter
         {
@@ -32,14 +32,13 @@ namespace Magic_Redone
                 List<Effect> effectsLoad = await context.EffectList.AsNoTracking().OrderBy(p => p.ConstructId).ToListAsync();
             }
 
-            Collections.Scalations = [1, 2, 3];
+            //Collections.Scalations = [0, 1, 2, 3, 4, 5, 6];
             Collections.Time = ["1 Секунда", "15 Минут", "1 Час", "12 Часов", "1 Сутки", "1 Неделя", "1 Месяц", "6 Месяцев", "1 Год"];
         }
 
         public static void ResultCount(Getter Getter) // Подсчёт Ext, Int, MP и т.п. выбранных в интерфейсе компонентов
         {
             Scalation(Getter); // Проверка на скаляции
-            // Вставить сюда
             EffectGrouper(Getter); // Вывод эффектов
 
             // Инициализация и обнуление переменных для подсчёта Element, Method и Form. Сделано отдельно, чтобы не множить на 0 при пустых компонентах
@@ -96,15 +95,15 @@ namespace Magic_Redone
             {
                 Construct component = Getter.SelectedComponents[i];
                 var array = Getter.SelectedComponents;
+                Debug.WriteLine(Getter.SelectedComponents[i].Name);
 
                 if (component.Name == "Связь")
                 {
                     bool isBetween = false;
 
-                    if (array[i - 1].Name == array[i + 1].Name)
+                    if ((i != 0 && i != 5) && array[i - 1].Name == array[i + 1].Name)
                     {
                         isBetween = true;
-                        break;
                     }
 
                     if (isBetween)
@@ -126,10 +125,17 @@ namespace Magic_Redone
                         scalationModifier = 2;
                     }
                     else scalationModifier = 1;
+                    Debug.WriteLine("scalationModifier - " + scalationModifier);
                 }
             }
 
             boundingsScalations = boundingsScalations.Distinct().ToList();
+            if (boundingsScalations.Count > 0)
+            {
+                Debug.WriteLine("---");
+                Debug.WriteLine("0 - " + boundingsScalations[0]);
+                if (boundingsScalations.Count > 1) Debug.WriteLine("1 - " + boundingsScalations[1]);
+            }
             foreach (int n in boundingsScalations)
             {
                 scalationsDouble[n] += scalationModifier;
@@ -146,6 +152,8 @@ namespace Magic_Redone
                     component.ValueExt = data.ValueExt;
                     component.ValueInt = data.ValueInt;
                     component.ValueMP = data.ValueMP;
+                    Debug.WriteLine("Смена основы");
+                    Debug.WriteLine(component.ValueMP);
                 }
 
                 if (effectDict.TryGetValue((component.Name, scalationLevel), out Effect effectData))
@@ -159,8 +167,11 @@ namespace Magic_Redone
                         EffectDesc = !string.IsNullOrWhiteSpace(effectData.EffectDesc) ? effectData.EffectDesc : effect.EffectDesc,
                         ConstructId = effect.ConstructId
                     };
+                    Debug.WriteLine("Смена эффекта");
+                    Debug.WriteLine(component.TiedEffect.DiceSides);
                 }
             }
+            Getter.OnPropertyChanged(nameof(Getter.SelectedComponents));
         }
 
         public static void SpellSave(MainWindow main)

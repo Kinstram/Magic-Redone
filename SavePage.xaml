@@ -6,8 +6,7 @@
       xmlns:local="clr-namespace:Magic_Redone"
       mc:Ignorable="d"
       d:DesignHeight="866" d:DesignWidth="1466"
-      Title="SavePage"
-      Background="{DynamicResource CommonBackground}">
+      Title="SavePage">
 
     <Grid>
         <DataGrid ItemsSource="{Binding SavesView}" AutoGenerateColumns="False" IsReadOnly="True" Background="{DynamicResource CommonBackground}"  RowBackground="DarkGray" AlternatingRowBackground="LightGray">
