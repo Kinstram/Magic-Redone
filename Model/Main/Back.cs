@@ -32,7 +32,6 @@ namespace Magic_Redone
                 List<Effect> effectsLoad = await context.EffectList.AsNoTracking().OrderBy(p => p.ConstructId).ToListAsync();
             }
 
-            //Collections.Scalations = [0, 1, 2, 3, 4, 5, 6];
             Collections.Time = ["1 Секунда", "15 Минут", "1 Час", "12 Часов", "1 Сутки", "1 Неделя", "1 Месяц", "6 Месяцев", "1 Год"];
         }
 
@@ -190,13 +189,13 @@ namespace Magic_Redone
             componentsToSave.Add(Getter.SelectedComponent5);
             componentsToSave.Add(Getter.SelectedComponent6);
 
-            // Проверка на null и установка скаляций по умолчанию как 1 (int16), чтобы в сейвах не отображались нули при невыбранной скаляции при сохранении
-            scalationsToSave.Add((Getter.SelectedScalation1 == null || Getter.SelectedScalation1 == 0) ? (short)1 : Getter.SelectedScalation1);
-            scalationsToSave.Add((Getter.SelectedScalation2 == null || Getter.SelectedScalation2 == 0) ? (short)1 : Getter.SelectedScalation2);
-            scalationsToSave.Add((Getter.SelectedScalation3 == null || Getter.SelectedScalation3 == 0) ? (short)1 : Getter.SelectedScalation3);
-            scalationsToSave.Add((Getter.SelectedScalation4 == null || Getter.SelectedScalation4 == 0) ? (short)1 : Getter.SelectedScalation4);
-            scalationsToSave.Add((Getter.SelectedScalation5 == null || Getter.SelectedScalation5 == 0) ? (short)1 : Getter.SelectedScalation5);
-            scalationsToSave.Add((Getter.SelectedScalation6 == null || Getter.SelectedScalation6 == 0) ? (short)1 : Getter.SelectedScalation6);
+            // Запись выбранных скаляций
+            scalationsToSave.Add(Getter.SelectedScalation1);
+            scalationsToSave.Add(Getter.SelectedScalation2);
+            scalationsToSave.Add(Getter.SelectedScalation3);
+            scalationsToSave.Add(Getter.SelectedScalation4);
+            scalationsToSave.Add(Getter.SelectedScalation5);
+            scalationsToSave.Add(Getter.SelectedScalation6);
 
             trioToSave.Add(Getter.SelectedElement);
             trioToSave.Add(Getter.SelectedMethod);

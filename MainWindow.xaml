@@ -33,20 +33,23 @@
                  ItemsSource="{Binding Collections.Elements}"
                  DisplayMemberPath="Name" 
                  SelectedItem="{Binding SelectedElement, Mode=TwoWay}"
+                 ToolTip="Стихия"
                  Grid.Column="0"
                  Style="{StaticResource ComboBoxTrio}"/>
 
             <ComboBox x:Name="MethodsListBox"
                  ItemsSource="{Binding Collections.Methods}" 
                  DisplayMemberPath="Name" 
-                 SelectedItem="{Binding SelectedMethod, Mode=TwoWay}" 
+                 SelectedItem="{Binding SelectedMethod, Mode=TwoWay}"
+                 ToolTip="Метод создания"
                  Grid.Column="1"
                  Style="{StaticResource ComboBoxTrio}"/>
 
             <ComboBox x:Name="FormsListBox" 
                  ItemsSource="{Binding Collections.Forms}" 
                  DisplayMemberPath="Name" 
-                 SelectedItem="{Binding SelectedForm, Mode=TwoWay}" 
+                 SelectedItem="{Binding SelectedForm, Mode=TwoWay}"
+                 ToolTip="Форма"
                  Grid.Column="2"
                  Style="{StaticResource ComboBoxTrio}"/>
 

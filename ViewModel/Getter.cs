@@ -29,10 +29,10 @@ namespace Magic_Redone
             Back.LoadElements(Collections);
             SelectedComponents = new ObservableCollection<Construct>();
             SelectedScalations = new ObservableCollection<int>();
+            SelectedScalations = [0, 0, 0, 0, 0, 0];
             for (int i = 0; i < 6; i++)
             {
                 SelectedComponents.Add(ZeroDefaultConstruct());
-                SelectedScalations.Add(0); //изначально все скаляции устанавливаются на 1
             }//запись пустых ячеек в коллекции
 
             SelectedTrio = new ObservableCollection<Construct>();

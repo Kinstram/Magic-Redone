@@ -11,6 +11,13 @@
         <Setter Property="MaxHeight" Value="30"/>
         <Setter Property="HorizontalAlignment" Value="Center"/>
         <Setter Property="HorizontalContentAlignment" Value="Center"/>
+        <Setter Property="ItemContainerStyle">
+            <Setter.Value>
+                <Style TargetType="ComboBoxItem">
+                    <Setter Property="ToolTip" Value="{Binding Description}"/>
+                </Style>
+            </Setter.Value>
+        </Setter>
     </Style>
 
     <Style x:Key="ComboBoxElement" TargetType="ComboBox" BasedOn="{StaticResource MaterialDesignComboBox}">
@@ -18,6 +25,14 @@
         <!--For some reason isn't inherited automatically-->
         <Setter Property="MinWidth" Value="100"/>
         <Setter Property="IsEditable" Value="True"/>
+        <Setter Property="ToolTip" Value="Компонент"/>
+        <Setter Property="ItemContainerStyle">
+            <Setter.Value>
+                <Style TargetType="ComboBoxItem">
+                    <Setter Property="ToolTip" Value="{Binding Description}"/>
+                </Style>
+            </Setter.Value>
+        </Setter>
     </Style>
 
 </ResourceDictionary>
