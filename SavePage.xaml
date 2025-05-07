@@ -6,37 +6,70 @@
       xmlns:local="clr-namespace:Magic_Redone"
       mc:Ignorable="d"
       d:DesignHeight="866" d:DesignWidth="1466"
-      Title="SavePage">
+      Title="Magic Redone">
 
     <Grid>
-        <DataGrid ItemsSource="{Binding SavesView}" AutoGenerateColumns="False" IsReadOnly="True">
-            <DataGrid.Columns>
-                <DataGridTextColumn Header="№" Binding="{Binding Id}"/>
-                <DataGridTextColumn Header="Название" Binding="{Binding SaveName}" />
-                <DataGridTextColumn Header="Стихия" Binding="{Binding SavedComponents[0].Name}" />
-                <DataGridTextColumn Header="Метод" Binding="{Binding SavedComponents[1].Name}" />
-                <DataGridTextColumn Header="Форма" Binding="{Binding SavedComponents[2].Name}" />
-                <DataGridTextColumn Header="Первый компонент" Binding="{Binding SavedComponents[3].Name}" />
-                <DataGridTextColumn Header="СК" Binding="{Binding SavedScalations[0].Value}" />
-                <DataGridTextColumn Header="Второй компонент" Binding="{Binding SavedComponents[4].Name}" />
-                <DataGridTextColumn Header="СК" Binding="{Binding SavedScalations[1].Value}" />
-                <DataGridTextColumn Header="Третий компонент" Binding="{Binding SavedComponents[5].Name}" />
-                <DataGridTextColumn Header="СК" Binding="{Binding SavedScalations[2].Value}" />
-                <DataGridTextColumn Header="Четвёртый компонент" Binding="{Binding SavedComponents[6].Name}" />
-                <DataGridTextColumn Header="СК" Binding="{Binding SavedScalations[3].Value}" />
-                <DataGridTextColumn Header="Пятый компонент" Binding="{Binding SavedComponents[7].Name}" />
-                <DataGridTextColumn Header="СК" Binding="{Binding SavedScalations[4].Value}" />
-                <DataGridTextColumn Header="Шестой компонент" Binding="{Binding SavedComponents[8].Name}" />
-                <DataGridTextColumn Header="СК" Binding="{Binding SavedScalations[5].Value}" />
-                <DataGridTextColumn Header="†" Binding="{Binding CountedExt}" />
-                <DataGridTextColumn Header="‡" Binding="{Binding CountedInt}" />
-                <DataGridTextColumn Header="Ћ" Binding="{Binding CountedMP}" />
-                <DataGridTextColumn Header="Время" Binding="{Binding TimeString}" />
-                <DataGridTextColumn Header="TЋ" Binding="{Binding TimeValue}" />
-                <DataGridTextColumn Header="Эффект" Binding="{Binding SavedEffect}" />
-            </DataGrid.Columns>
-        </DataGrid>
-        <Button Content="Назад" Click="BackButton_Click" HorizontalAlignment="Right" VerticalAlignment="Top"/>
-        <Button Content="Удалить" Click="DeleteButton_Click" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0, 0, 100, 0"/>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!-- Панель кнопок -->
+        <StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0 5">
+            <Button Content="Удалить" Click="DeleteButton_Click" Margin="0 0 10 0"/>
+            <Button Content="Назад" Click="BackButton_Click"/>
+        </StackPanel>
+
+        <!-- Таблица с прокруткой -->
+        <ScrollViewer Grid.Row="1" 
+                      HorizontalScrollBarVisibility="Auto"
+                      VerticalScrollBarVisibility="Auto"
+                      >
+            <DataGrid ItemsSource="{Binding SavesView}" 
+                      AutoGenerateColumns="False"
+                      IsReadOnly="True"
+                      ItemsControl.AlternationCount="1000"
+                      MaxWidth="{Binding ActualWidth, 
+                              RelativeSource={RelativeSource AncestorType=ScrollViewer}}">
+                <!-- Колонки DataGrid остаются без изменений -->
+                <DataGrid.Columns>
+                    <DataGridTemplateColumn>
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <CheckBox>
+                                </CheckBox>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    <DataGridTextColumn Header="№">
+                        <DataGridTextColumn.Binding>
+                            <Binding RelativeSource="{RelativeSource AncestorType=DataGridRow}" Path="(ItemsControl.AlternationIndex)"/>
+                        </DataGridTextColumn.Binding>
+                    </DataGridTextColumn>
+                    <DataGridTextColumn Header="Название" Binding="{Binding SaveName}" />
+                    <DataGridTextColumn Header="Стихия" Binding="{Binding SavedComponents[0].Name}" />
+                    <DataGridTextColumn Header="Метод" Binding="{Binding SavedComponents[1].Name}" />
+                    <DataGridTextColumn Header="Форма" Binding="{Binding SavedComponents[2].Name}" />
+                    <DataGridTextColumn Header="1" Binding="{Binding SavedComponents[3].Name}" />
+                    <DataGridTextColumn Header="СК" Binding="{Binding SavedScalations[0].Value}" />
+                    <DataGridTextColumn Header="2" Binding="{Binding SavedComponents[4].Name}" />
+                    <DataGridTextColumn Header="СК" Binding="{Binding SavedScalations[1].Value}" />
+                    <DataGridTextColumn Header="3" Binding="{Binding SavedComponents[5].Name}" />
+                    <DataGridTextColumn Header="СК" Binding="{Binding SavedScalations[2].Value}" />
+                    <DataGridTextColumn Header="4" Binding="{Binding SavedComponents[6].Name}" />
+                    <DataGridTextColumn Header="СК" Binding="{Binding SavedScalations[3].Value}" />
+                    <DataGridTextColumn Header="5" Binding="{Binding SavedComponents[7].Name}" />
+                    <DataGridTextColumn Header="СК" Binding="{Binding SavedScalations[4].Value}" />
+                    <DataGridTextColumn Header="6" Binding="{Binding SavedComponents[8].Name}" />
+                    <DataGridTextColumn Header="СК" Binding="{Binding SavedScalations[5].Value}" />
+                    <DataGridTextColumn Header="†" Binding="{Binding CountedExt}" />
+                    <DataGridTextColumn Header="‡" Binding="{Binding CountedInt}" />
+                    <DataGridTextColumn Header="Ћ" Binding="{Binding CountedMP}" />
+                    <DataGridTextColumn Header="Время" Binding="{Binding TimeString}" />
+                    <DataGridTextColumn Header="TЋ" Binding="{Binding TimeValue}" />
+                    <DataGridTextColumn Header="Эффект" Binding="{Binding SavedEffect}" />
+                </DataGrid.Columns>
+            </DataGrid>
+        </ScrollViewer>
     </Grid>
 </Page>
