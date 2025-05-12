@@ -15,10 +15,10 @@
         </Grid.RowDefinitions>
 
         <!-- Панель кнопок -->
-        <StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0 5">
-            <Button Content="Удалить" Click="DeleteButton_Click" Margin="0 0 10 0"/>
-            <Button Content="Назад" Click="BackButton_Click"/>
-        </StackPanel>
+        <DockPanel Grid.Row="0" Margin="0 5" LastChildFill="False">
+            <Button Content="Назад" Click="BackButton_Click" Margin="5 0" DockPanel.Dock="Left"/>
+            <Button Content="Удалить" Click="DeleteButton_Click" Margin="0 0 5 0" DockPanel.Dock="Right"/>
+        </DockPanel>
 
         <!-- Таблица с прокруткой -->
         <ScrollViewer Grid.Row="1" 
@@ -36,8 +36,7 @@
                     <DataGridTemplateColumn>
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
-                                <CheckBox>
-                                </CheckBox>
+                                <CheckBox IsChecked="{Binding IsSelected, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
@@ -46,28 +45,28 @@
                             <Binding RelativeSource="{RelativeSource AncestorType=DataGridRow}" Path="(ItemsControl.AlternationIndex)"/>
                         </DataGridTextColumn.Binding>
                     </DataGridTextColumn>
-                    <DataGridTextColumn Header="Название" Binding="{Binding SaveName}" />
-                    <DataGridTextColumn Header="Стихия" Binding="{Binding SavedComponents[0].Name}" />
-                    <DataGridTextColumn Header="Метод" Binding="{Binding SavedComponents[1].Name}" />
-                    <DataGridTextColumn Header="Форма" Binding="{Binding SavedComponents[2].Name}" />
-                    <DataGridTextColumn Header="1" Binding="{Binding SavedComponents[3].Name}" />
-                    <DataGridTextColumn Header="СК" Binding="{Binding SavedScalations[0].Value}" />
-                    <DataGridTextColumn Header="2" Binding="{Binding SavedComponents[4].Name}" />
-                    <DataGridTextColumn Header="СК" Binding="{Binding SavedScalations[1].Value}" />
-                    <DataGridTextColumn Header="3" Binding="{Binding SavedComponents[5].Name}" />
-                    <DataGridTextColumn Header="СК" Binding="{Binding SavedScalations[2].Value}" />
-                    <DataGridTextColumn Header="4" Binding="{Binding SavedComponents[6].Name}" />
-                    <DataGridTextColumn Header="СК" Binding="{Binding SavedScalations[3].Value}" />
-                    <DataGridTextColumn Header="5" Binding="{Binding SavedComponents[7].Name}" />
-                    <DataGridTextColumn Header="СК" Binding="{Binding SavedScalations[4].Value}" />
-                    <DataGridTextColumn Header="6" Binding="{Binding SavedComponents[8].Name}" />
-                    <DataGridTextColumn Header="СК" Binding="{Binding SavedScalations[5].Value}" />
-                    <DataGridTextColumn Header="†" Binding="{Binding CountedExt}" />
-                    <DataGridTextColumn Header="‡" Binding="{Binding CountedInt}" />
-                    <DataGridTextColumn Header="Ћ" Binding="{Binding CountedMP}" />
-                    <DataGridTextColumn Header="Время" Binding="{Binding TimeString}" />
-                    <DataGridTextColumn Header="TЋ" Binding="{Binding TimeValue}" />
-                    <DataGridTextColumn Header="Эффект" Binding="{Binding SavedEffect}" />
+                    <DataGridTextColumn Header="Название" Binding="{Binding Entity.SaveName}" />
+                    <DataGridTextColumn Header="Стихия" Binding="{Binding Entity.SavedComponents[0].Name}" />
+                    <DataGridTextColumn Header="Метод" Binding="{Binding Entity.SavedComponents[1].Name}" />
+                    <DataGridTextColumn Header="Форма" Binding="{Binding Entity.SavedComponents[2].Name}" />
+                    <DataGridTextColumn Header="1" Binding="{Binding Entity.SavedComponents[3].Name}" />
+                    <DataGridTextColumn Header="СК" Binding="{Binding Entity.SavedScalations[0].Value}" />
+                    <DataGridTextColumn Header="2" Binding="{Binding Entity.SavedComponents[4].Name}" />
+                    <DataGridTextColumn Header="СК" Binding="{Binding Entity.SavedScalations[1].Value}" />
+                    <DataGridTextColumn Header="3" Binding="{Binding Entity.SavedComponents[5].Name}" />
+                    <DataGridTextColumn Header="СК" Binding="{Binding Entity.SavedScalations[2].Value}" />
+                    <DataGridTextColumn Header="4" Binding="{Binding Entity.SavedComponents[6].Name}" />
+                    <DataGridTextColumn Header="СК" Binding="{Binding Entity.SavedScalations[3].Value}" />
+                    <DataGridTextColumn Header="5" Binding="{Binding Entity.SavedComponents[7].Name}" />
+                    <DataGridTextColumn Header="СК" Binding="{Binding Entity.SavedScalations[4].Value}" />
+                    <DataGridTextColumn Header="6" Binding="{Binding Entity.SavedComponents[8].Name}" />
+                    <DataGridTextColumn Header="СК" Binding="{Binding Entity.SavedScalations[5].Value}" />
+                    <DataGridTextColumn Header="†" Binding="{Binding Entity.CountedExt}" />
+                    <DataGridTextColumn Header="‡" Binding="{Binding Entity.CountedInt}" />
+                    <DataGridTextColumn Header="Ћ" Binding="{Binding Entity.CountedMP}" />
+                    <DataGridTextColumn Header="Время" Binding="{Binding Entity.TimeString}" />
+                    <DataGridTextColumn Header="TЋ" Binding="{Binding Entity.TimeValue}" />
+                    <DataGridTextColumn Header="Эффект" Binding="{Binding Entity.SavedEffect}" />
                 </DataGrid.Columns>
             </DataGrid>
         </ScrollViewer>

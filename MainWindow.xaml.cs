@@ -33,6 +33,11 @@ namespace Magic_Redone
             MainFrame.Navigate(savePage);
         }
 
+        private void btnReset_Click(object sender, RoutedEventArgs e)
+        {
+            Back.Reset(this);
+        }
+
         private void btnSave_Click(object sender, RoutedEventArgs e)
         {
             Back.SpellSave(this);

@@ -90,7 +90,11 @@ namespace Magic_Redone
                     new Construct { Id = 62, Kind = 3, Name = "Мышца", ValueExt = -0.1m, ValueInt = -0.1m, ValueMP = 1m, Description = "Заклинание сужается/расширяется. Стандартно - 1гекс/секунду" },
                     new Construct { Id = 63, Kind = 3, Name = "Спокойствие", ValueExt = 0m, ValueInt = 0m, ValueMP = 1m, Description = "Проецирует спокойствие на объект. Снимает дебафф шока" },
                     new Construct { Id = 64, Kind = 3, Name = "Поиск", ValueExt = 0m, ValueInt = 0m, ValueMP = 1m, Description = "Задаёт поиск по определённому критерию" },
-                    new Construct { Id = 65, Kind = 3, Name = "Область", ValueExt = -0.95m, ValueInt = 0m, ValueMP = 3m, Description = "Снижает стоимость расширения области заклинания до 1Ћ/10 м/м²" }
+                    new Construct { Id = 65, Kind = 3, Name = "Область", ValueExt = -0.95m, ValueInt = 0m, ValueMP = 3m, Description = "Снижает стоимость расширения области заклинания до 1Ћ/10 м/м²" },
+                    new Construct { Id = 200, Kind = 0, Name = " ", ValueExt = 1m, ValueInt = 1m, ValueMP = 1m, Description = "Пустота" },
+                    new Construct { Id = 201, Kind = 1, Name = " ", ValueExt = 1m, ValueInt = 1m, ValueMP = 1m, Description = "Пустота" },
+                    new Construct { Id = 202, Kind = 2, Name = " ", ValueExt = 1m, ValueInt = 1m, ValueMP = 1m, Description = "Пустота" },
+                    new Construct { Id = 203, Kind = 3, Name = " ", ValueExt = 0m, ValueInt = 0m, ValueMP = 0m, Description = "Пустота" }
                 );
 
             modelBuilder.Entity<Effect>().HasData(

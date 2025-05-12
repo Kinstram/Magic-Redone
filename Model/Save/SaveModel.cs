@@ -1,56 +1,29 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Windows;
 
 namespace Magic_Redone
 {
     public class SaveModel
     {
-        public async void Deletion(Window owner)
+        public static async Task DeleteButton_Click(object sender, RoutedEventArgs e)
         {
-            var inputDialog = new InputDialogWindow("Введите имя сохранения для удаления:");
-            inputDialog.Owner = owner; // Устанавливаем владельца
-            if (inputDialog.ShowDialog() == true)
-            {
-                string nameToDelete = inputDialog.Answer;
+            var idList = IdGetter();
 
-                try
-                {
-                    using (var context = new SaveContext())
-                    {
-                        bool exists = await context.Saves
-                            .AnyAsync(s => s.SaveName == nameToDelete);
+            await using var context = new SaveContext();
+            await context.Saves
+                .Where(e => idList.Contains(e.Id))
+                .ExecuteDeleteAsync();
 
-                        if (!exists)
-                        {
-                            MessageBox.Show($"Сохранение с именем '{nameToDelete}' не найдено.", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
-                            return;
-                        }
+            Debug.WriteLine("Удалено");
+        }
 
-                        var entityToDelete = await context.Saves
-                            .FirstOrDefaultAsync(s => s.SaveName == nameToDelete);
-
-                        if (entityToDelete != null)
-                        {
-                            context.Saves.Remove(entityToDelete);
-                            await context.SaveChangesAsync();
-
-                            // Обновляем данные в ViewModel
-                            SaveViewModel.Instance.LoadSavesAsync();
-
-                            MessageBox.Show($"Сохранение '{nameToDelete}' успешно удалено.", "Успех", MessageBoxButton.OK, MessageBoxImage.Information);
-                        }
-                    }
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show($"Ошибка при удалении: {ex.Message}", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
-                }
-            }
+        internal static List<int> IdGetter()
+        {
+            List<int> idList = new();
+            idList = SaveViewModel.Instance.Saves.Where(c => c.IsSelected == true).Select(c => c.Entity.Id).ToList();
+            return idList;
         }
     }
 }

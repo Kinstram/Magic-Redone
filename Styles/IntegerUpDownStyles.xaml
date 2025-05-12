@@ -11,7 +11,7 @@
         <Setter Property="HorizontalAlignment" Value="Left"/>
         <Setter Property="VerticalAlignment" Value="Center"/>
         <Setter Property="Minimum" Value="0"/>
-        <Setter Property="Maximum" Value="5"/>
+        <Setter Property="Maximum" Value="3"/>
         <Setter Property="ToolTip" Value="Скаляция"/>
     </Style>
 

@@ -1,11 +1,10 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Runtime.CompilerServices;
-using System.Windows.Data;
 using System.Windows;
+using System.Windows.Data;
 
 namespace Magic_Redone
 {
@@ -14,8 +13,19 @@ namespace Magic_Redone
         private static SaveViewModel _instance;
         public static SaveViewModel Instance => _instance ??= new SaveViewModel();
 
-        private ObservableCollection<SaveEntity> _saves;
-        public ObservableCollection<SaveEntity> Saves
+        private bool _isSelected;
+        public bool IsSelected
+        {
+            get => _isSelected;
+            set
+            {
+                _isSelected = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private ObservableCollection<SaveEntityVM> _saves;
+        public ObservableCollection<SaveEntityVM> Saves
         {
             get => _saves;
             set
@@ -36,22 +46,18 @@ namespace Magic_Redone
             }
         }
 
-        private SaveViewModel()
-        {
-            LoadSavesAsync();
-        }
-
-        public async void LoadSavesAsync()
+        public async Task LoadSavesAsync()
         {
             using (var context = new SaveContext())
             {
                 List<SaveEntity> saves = await context.Saves
                     .Include(s => s.SavedComponents)
                     .Include(s => s.SavedScalations.OrderBy(sc => sc.Id))
-                    .AsNoTracking()
                     .ToListAsync();
 
-                Saves = new ObservableCollection<SaveEntity>(saves);
+                Saves = new ObservableCollection<SaveEntityVM>(
+                    saves.Select(s => new SaveEntityVM { Entity = s })
+                );
                 SavesView = CollectionViewSource.GetDefaultView(Saves);
             }
         }

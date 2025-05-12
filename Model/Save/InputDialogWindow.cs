@@ -24,18 +24,15 @@ namespace Magic_Redone
             var stackPanel = new StackPanel { Margin = new Thickness(10) };
 
             var textBlock = new TextBlock { Text = question, Margin = new Thickness(0, 0, 0, 10) };
-            var textBox = new TextBox { Height = 23 };
             var button = new Button { Content = "OK", Width = 70, HorizontalAlignment = HorizontalAlignment.Right };
 
             button.Click += (_, __) =>
             {
-                Answer = textBox.Text;
                 DialogResult = true;
                 Close();
             };
 
             stackPanel.Children.Add(textBlock);
-            stackPanel.Children.Add(textBox);
             stackPanel.Children.Add(button);
 
             Content = stackPanel;

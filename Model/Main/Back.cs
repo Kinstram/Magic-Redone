@@ -1,9 +1,13 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
+using System.Diagnostics.Metrics;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Media.Effects;
 
 namespace Magic_Redone
 {
@@ -94,7 +98,6 @@ namespace Magic_Redone
             {
                 Construct component = Getter.SelectedComponents[i];
                 var array = Getter.SelectedComponents;
-                Debug.WriteLine(Getter.SelectedComponents[i].Name);
 
                 if (component.Name == "Связь")
                 {
@@ -112,29 +115,15 @@ namespace Magic_Redone
                         boundingsScalations.Add(i + 1);
                     }
 
-                    if (validBoundings.Count > 1)
-                    {
-                        Debug.WriteLine(array[validBoundings[0] - 1].Name);
-                        Debug.WriteLine(array[validBoundings[1] + 1].Name);
-                        Debug.WriteLine(validBoundings[0]);
-                        Debug.WriteLine(validBoundings[1] + 2);
-                    }
-                    if (validBoundings.Count > 1 && (validBoundings[0] == (validBoundings[1] - 2)) && (array[validBoundings[0] - 1].Name == array[validBoundings[1] + 1].Name))
+                    if (validBoundings.Count > 1 && (validBoundings[0] == (validBoundings[1] - 2)))
                     {
                         scalationModifier = 2;
                     }
                     else scalationModifier = 1;
-                    Debug.WriteLine("scalationModifier - " + scalationModifier);
                 }
             }
 
             boundingsScalations = boundingsScalations.Distinct().ToList();
-            if (boundingsScalations.Count > 0)
-            {
-                Debug.WriteLine("---");
-                Debug.WriteLine("0 - " + boundingsScalations[0]);
-                if (boundingsScalations.Count > 1) Debug.WriteLine("1 - " + boundingsScalations[1]);
-            }
             foreach (int n in boundingsScalations)
             {
                 scalationsDouble[n] += scalationModifier;
@@ -151,8 +140,6 @@ namespace Magic_Redone
                     component.ValueExt = data.ValueExt;
                     component.ValueInt = data.ValueInt;
                     component.ValueMP = data.ValueMP;
-                    Debug.WriteLine("Смена основы");
-                    Debug.WriteLine(component.ValueMP);
                 }
 
                 if (effectDict.TryGetValue((component.Name, scalationLevel), out Effect effectData))
@@ -163,13 +150,12 @@ namespace Magic_Redone
                         Type = effect.Type,
                         Quantity = effectData.Quantity != 0 ? effectData.Quantity : effect.Quantity,
                         DiceSides = effectData.DiceSides != 0 ? effectData.DiceSides : effect.DiceSides,
-                        EffectDesc = !string.IsNullOrWhiteSpace(effectData.EffectDesc) ? effectData.EffectDesc : effect.EffectDesc,
+                        EffectDesc = string.IsNullOrWhiteSpace(effectData.EffectDesc) ? effectData.EffectDesc : effect.EffectDesc,
                         ConstructId = effect.ConstructId
                     };
-                    Debug.WriteLine("Смена эффекта");
-                    Debug.WriteLine(component.TiedEffect.DiceSides);
                 }
             }
+
             Getter.OnPropertyChanged(nameof(Getter.SelectedComponents));
         }
 
@@ -289,7 +275,6 @@ namespace Magic_Redone
             main.txtSave.Clear();
             main.txtSave.Text = "Введите название сохранения";
         } // Запись данных и их сохранение в SaveContext
-
         internal static void EffectGrouper(Getter Getter)
         {
             // Получение выбранных эффектов
@@ -309,15 +294,14 @@ namespace Magic_Redone
             .ToList();
 
             // Запись всех эффектов в одну строку для дальнейшей передачи в FormatEffectLine
-            string effectToString = string.Join("\n", effects.Where(e => e != null).Select(e => e.ToString()));
+            string effectToString = string.Join("  \n", effects.Where(e => e != null).Select(e => e.ToString())).Trim();
             Getter.EffectLine = FormatEffectLine(effectToString);
         } // Группировка и запись эффектов в EffectLine для дальнейшей обработки и вывода в WPF
-
         internal static string FormatEffectLine(string formatingString)
         {
 
             // Разделяем строку на эффект и описание
-            int index = formatingString.IndexOf("\n");
+            int index = formatingString.IndexOf("  \n");
             if (index == -1) return formatingString;
 
             string effectLine = formatingString.Substring(0, index);
@@ -326,51 +310,90 @@ namespace Magic_Redone
             // Ищем кубы ТОЛЬКО в части с эффектом
             MatchCollection diceMatches = Regex.Matches(effectLine, @"\d+d\d+");
             if (diceMatches.Count == 0) return formatingString;
-
-            // Извлекаем модификаторы
             Match damageTypeMatch = Regex.Match(effectLine, @"\b(cut|burn|cr|ex)\b");
-            string damageType = damageTypeMatch.Success ? damageTypeMatch.Value : "cr"; // cr по умолчанию
-            bool hasExpl = description.Contains("ex");
-            bool hasPen = Regex.IsMatch(description, @"\(\d\)");
 
-            // Обрабатываем кубы
-            List<string> mainDice = new();
-            List<string> explDice = new();
-
-            foreach (Match match in diceMatches)
+            if (damageTypeMatch.Success)
             {
-                string[] parts = match.Value.Split('d');
-                int qty = int.Parse(parts[0]);
-                int dice = int.Parse(parts[1]);
+                // Извлекаем модификаторы
+                string damageType = damageTypeMatch.Success ? damageTypeMatch.Value : "cr"; // cr по умолчанию
+                bool hasExpl = description.Contains("ex");
+                bool hasPen = Regex.IsMatch(description, @"\(\d\)");
 
-                mainDice.Add(match.Value);
+                // Обрабатываем кубы
+                List<string> mainDice = new();
+                List<string> explDice = new();
 
+                foreach (Match match in diceMatches)
+                {
+                    string[] parts = match.Value.Split('d');
+                    int qty = int.Parse(parts[0]);
+                    int dice = int.Parse(parts[1]);
+
+                    mainDice.Add(match.Value);
+
+                    if (hasExpl)
+                    {
+                        int explQty = qty / 2 > 0 ? qty / 2 : 1;
+                        explDice.Add($"{explQty}d{dice}");
+                    }
+                }
+
+                // Собираем результат
+                StringBuilder result = new StringBuilder(string.Join(" + ", mainDice));
+
+                if (hasPen)
+                {
+                    string pen = Regex.Match(description, @"\(\d\)").Value;
+                    result.Append($" {pen}");
+                    description = Regex.Replace(description, @"\(\d\)", "");
+                }
+                result.Append($" {(hasExpl ? "ex" : damageType)}");
                 if (hasExpl)
                 {
-                    int explQty = qty / 2 > 0 ? qty / 2 : 1;
-                    explDice.Add($"{explQty}d{dice}");
+                    result.Append($" [{string.Join(" + ", explDice)}]");
                 }
+
+                result.Append(" урона"); // исправить, ведь есть не только урон
+                result.Append($"\n{description}");
+                return result.ToString();
             }
-
-            // Собираем результат
-            StringBuilder result = new StringBuilder(string.Join(" + ", mainDice));
-
-            if (hasPen)
+            else
             {
-                string pen = Regex.Match(description, @"\(\d\)").Value;
-                result.Append($" {pen}");
-                description = Regex.Replace(description, @"\(\d\)", "");
+                return formatingString;
             }
-            result.Append($" {(hasExpl ? "ex" : damageType)}");
-            if (hasExpl)
-            {
-                result.Append($" [{string.Join(" + ", explDice)}]");
-            }
+        }
 
-            result.Append(" урона");
-            result.Append($"\t {description}");
-            return result.ToString().Trim();
+        internal static void Reset(MainWindow main)
+        {
+            Getter Getter = (Getter)main.DataContext;
+
+            Getter.SelectedElement = Getter.Collections.Elements[0];
+            Getter.SelectedForm = Getter.Collections.Forms[0];
+            Getter.SelectedMethod = Getter.Collections.Methods[0];
+
+            Getter.SelectedComponent1 = Getter.Collections.Components[0];
+            Getter.SelectedComponent2 = Getter.Collections.Components[0];
+            Getter.SelectedComponent3 = Getter.Collections.Components[0];
+            Getter.SelectedComponent4 = Getter.Collections.Components[0];
+            Getter.SelectedComponent5 = Getter.Collections.Components[0];
+            Getter.SelectedComponent6 = Getter.Collections.Components[0];
+
+            main.ComponentsListBox1.Text = "";
+            main.ComponentsListBox2.Text = "";
+            main.ComponentsListBox3.Text = "";
+            main.ComponentsListBox4.Text = "";
+            main.ComponentsListBox5.Text = "";
+            main.ComponentsListBox6.Text = "";
+
+            Getter.SelectedScalation1 = 0;
+            Getter.SelectedScalation2 = 0;
+            Getter.SelectedScalation3 = 0;
+            Getter.SelectedScalation4 = 0;
+            Getter.SelectedScalation5 = 0;
+            Getter.SelectedScalation6 = 0;
+
+            Getter.SelectedTime = Getter.Collections.Time[0];
+            Debug.WriteLine(Getter.SelectedTime);
         }
     }
 }
-
