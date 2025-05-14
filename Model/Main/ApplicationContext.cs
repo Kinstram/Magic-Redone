@@ -50,7 +50,7 @@ namespace Magic_Redone
                     new Construct { Id = 23, Kind = 2, Name = "Куб", ValueExt = 1m, ValueInt = 1m, ValueMP = 1.4m, Description = "Куб" },
                     new Construct { Id = 24, Kind = 2, Name = "Труба", ValueExt = 1m, ValueInt = 1m, ValueMP = 1.2m, Description = "Прямоугольник, грани которого образуют круглую трубу" },
                     new Construct { Id = 25, Kind = 2, Name = "Дождь", ValueExt = 0.8m, ValueInt = 1m, ValueMP = 2m, Description = "Радиус = Ћ*2 метров (считается именно Ћ этого компонента). Аналогично дождю падает с неба." },
-                    new Construct { Id = 26, Kind = 2, Name = "Вихрь", ValueExt = 1m, ValueInt = 0.8m, ValueMP = 2m, Description = "To Do" },
+                    new Construct { Id = 26, Kind = 2, Name = "Вихрь", ValueExt = 1m, ValueInt = 0.8m, ValueMP = 2m, Description = "Распространяет эффект заклинания в виде вихря, что расширяется из изначальной позиции со скоростью 2 гекс/секунда. Максимальная область - 6 гексов. Скалируется"  },
 
                     new Construct { Id = 27, Kind = 3, Name = "Жало", ValueExt = 0m, ValueInt = -0.1m, ValueMP = 0.5m, Description = "Компонент скалируется в два раза и далее. Например: 1d6 - ‡ = -0.2, Ћ = 1; 1d8 - ‡ = -0.4, Ћ = 2" },
                     new Construct { Id = 28, Kind = 3, Name = "Сокрытие", ValueExt = 0m, ValueInt = 0m, ValueMP = 4m, Description = "Прячет заклинание в одном из спектров восприятия (зрение /слух /обоняние/ осязание/ ощущение магии/другое)" },

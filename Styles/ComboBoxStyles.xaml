@@ -1,35 +1,42 @@
-﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit">
+﻿<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit">
 
-    <Style x:Key="ComboBoxTrio" TargetType="ComboBox" BasedOn="{StaticResource MaterialDesignComboBox}">
-        <Setter Property="IsEditable" Value="True"/>
-        <Setter Property="StaysOpenOnEdit" Value="True"/>
-        <Setter Property="MinWidth" Value="100"/>
-        <Setter Property="MinHeight" Value="25"/>
-        <Setter Property="MaxWidth" Value="200"/>
-        <Setter Property="MaxHeight" Value="30"/>
-        <Setter Property="HorizontalAlignment" Value="Center"/>
-        <Setter Property="HorizontalContentAlignment" Value="Center"/>
+    <Style
+        x:Key="ComboBoxTrio"
+        BasedOn="{StaticResource MaterialDesignComboBox}"
+        TargetType="ComboBox">
+        <Setter Property="IsEditable" Value="True" />
+        <Setter Property="StaysOpenOnEdit" Value="True" />
+        <Setter Property="MinWidth" Value="100" />
+        <Setter Property="MinHeight" Value="25" />
+        <Setter Property="MaxWidth" Value="200" />
+        <Setter Property="MaxHeight" Value="30" />
+        <Setter Property="HorizontalAlignment" Value="Center" />
+        <Setter Property="HorizontalContentAlignment" Value="Center" />
         <Setter Property="ItemContainerStyle">
             <Setter.Value>
                 <Style TargetType="ComboBoxItem">
-                    <Setter Property="ToolTip" Value="{Binding Description}"/>
+                    <Setter Property="ToolTip" Value="{Binding Description}" />
                 </Style>
             </Setter.Value>
         </Setter>
     </Style>
 
-    <Style x:Key="ComboBoxElement" TargetType="ComboBox" BasedOn="{StaticResource MaterialDesignComboBox}">
-        <Setter Property="HorizontalAlignment" Value="Right"/>
-        <!--For some reason isn't inherited automatically-->
-        <Setter Property="MinWidth" Value="100"/>
-        <Setter Property="IsEditable" Value="True"/>
-        <Setter Property="ToolTip" Value="Компонент"/>
+    <Style
+        x:Key="ComboBoxElement"
+        BasedOn="{StaticResource MaterialDesignComboBox}"
+        TargetType="ComboBox">
+        <Setter Property="HorizontalAlignment" Value="Right" />
+        <!--  For some reason isn't inherited automatically  -->
+        <Setter Property="MinWidth" Value="100" />
+        <Setter Property="IsEditable" Value="True" />
+        <Setter Property="ToolTip" Value="Компонент" />
         <Setter Property="ItemContainerStyle">
             <Setter.Value>
                 <Style TargetType="ComboBoxItem">
-                    <Setter Property="ToolTip" Value="{Binding Description}"/>
+                    <Setter Property="ToolTip" Value="{Binding Description}" />
                 </Style>
             </Setter.Value>
         </Setter>

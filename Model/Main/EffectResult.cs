@@ -44,7 +44,7 @@ namespace Magic_Redone
 
             // Преобразование описаний в единую строку
             string descString = desc.Any()
-                ? string.Join("", desc)
+                ? string.Join(" ", desc)
                 : "";
 
             return $"{diceString} {descString}";
