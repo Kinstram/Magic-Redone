@@ -1,291 +1,507 @@
-﻿<Window x:Class="Magic_Redone.MainWindow"
-        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:navigationWindow="clr-namespace:System.Windows.Controls;assembly=PresentationFramework"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:Magic_Redone"
-        xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
-        mc:Ignorable="d"
-        Title="Magic Redone" Height="866" Width="1466"
-        Style="{StaticResource MaterialDesignWindow}">
+﻿<Window
+    x:Class="Magic_Redone.MainWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:Magic_Redone"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:navigationWindow="clr-namespace:System.Windows.Controls;assembly=PresentationFramework"
+    xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+    Title="Magic Redone"
+    Width="1466"
+    Height="866"
+    Style="{StaticResource MaterialDesignWindow}"
+    mc:Ignorable="d">
+
+    <Window.Resources>
+        <local:MultiValueVisibilityConverter x:Key="MultiValueVisibilityConverter" />
+    </Window.Resources>
+
     <Grid>
-        <Grid Margin="5" x:Name="MainContent">
+        <Grid x:Name="MainContent" Margin="5">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition/>
-                <ColumnDefinition/>
-                <ColumnDefinition/>
-                <ColumnDefinition/>
-                <ColumnDefinition/>
-                <ColumnDefinition/>
-                <ColumnDefinition/>
-                <ColumnDefinition/>
-                <ColumnDefinition/>
-                <ColumnDefinition Width="0.3*"/>
+                <ColumnDefinition />
+                <ColumnDefinition />
+                <ColumnDefinition />
+                <ColumnDefinition />
+                <ColumnDefinition />
+                <ColumnDefinition />
+                <ColumnDefinition />
+                <ColumnDefinition />
+                <ColumnDefinition />
+                <ColumnDefinition Width="0.3*" />
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="0.2*"/>
-                <RowDefinition Height="0.5*"/>
-                <RowDefinition Height="0.3*"/>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="0.2*" />
+                <RowDefinition Height="0.5*" />
+                <RowDefinition Height="0.3*" />
             </Grid.RowDefinitions>
 
-            
-            <StackPanel Grid.Row="0" Grid.ColumnSpan="10" Orientation="Horizontal" Margin="0 5">
-                <Button Content="Сохранения" MinWidth="100" MaxWidth="300" MinHeight="30" MaxHeight="80" Click="Button_Click"/>
-            </StackPanel>
 
-            <ComboBox x:Name="ElementsListBox" 
-                 ItemsSource="{Binding Collections.Elements}"
-                 DisplayMemberPath="Name" 
-                 SelectedItem="{Binding SelectedElement, Mode=TwoWay}"
-                 ToolTip="Стихия"
-                 Grid.Row="1"
-                 Grid.Column="0"
-                 Style="{StaticResource ComboBoxTrio}"/>
-
-            <ComboBox x:Name="MethodsListBox"
-                 ItemsSource="{Binding Collections.Methods}" 
-                 DisplayMemberPath="Name" 
-                 SelectedItem="{Binding SelectedMethod, Mode=TwoWay}"
-                 ToolTip="Метод создания"
-                      Grid.Row="1"
-                 Grid.Column="1"
-                 Style="{StaticResource ComboBoxTrio}"/>
-
-            <ComboBox x:Name="FormsListBox" 
-                 ItemsSource="{Binding Collections.Forms}" 
-                 DisplayMemberPath="Name" 
-                 SelectedItem="{Binding SelectedForm, Mode=TwoWay}"
-                 ToolTip="Форма"
-                      Grid.Row="1"
-                 Grid.Column="2"
-                 Style="{StaticResource ComboBoxTrio}"/>
-
-            <xctk:IntegerUpDown x:Name="Scalation1"
-                Value="{Binding SelectedScalation1, Mode=TwoWay}"
-                Grid.Column="4"
-                Grid.Row="1"
-                Style="{StaticResource ScalationMain}"/>
-
-            <ComboBox x:Name="ComponentsListBox1" 
-                ItemsSource="{Binding Collections.Components}" 
-                DisplayMemberPath="Name" 
-                SelectedItem="{Binding SelectedComponent1, Mode=TwoWay}" 
-                Grid.Column="3"
-                      Grid.Row="1"
-                Style="{StaticResource ComboBoxElement}"/>
-
-            <xctk:IntegerUpDown x:Name="Scalation2"  
-                Value="{Binding SelectedScalation2, Mode=TwoWay}"
-                Grid.Column="5"
-                Grid.Row="1"
-                Style="{StaticResource ScalationMain}"/>
-
-            <ComboBox x:Name="ComponentsListBox2" 
-                ItemsSource="{Binding Collections.Components}" 
-                DisplayMemberPath="Name" 
-                SelectedItem="{Binding SelectedComponent2, Mode=TwoWay}" 
-                Grid.Column="4"
-                      Grid.Row="1"
-                Style="{StaticResource ComboBoxElement}"/>
-
-            <xctk:IntegerUpDown x:Name="Scalation3" 
-                Value="{Binding SelectedScalation3, Mode=TwoWay}"
-                Grid.Column="6"
-                Grid.Row="1"
-                Style="{StaticResource ScalationMain}"/>
-
-            <ComboBox x:Name="ComponentsListBox3" 
-                ItemsSource="{Binding Collections.Components}" 
-                DisplayMemberPath="Name" 
-                SelectedItem="{Binding SelectedComponent3, Mode=TwoWay}" 
-                d:ItemsSource="{d:SampleData ItemCount=5}"
-                Grid.Column="5"
-                      Grid.Row="1"
-                Style="{StaticResource ComboBoxElement}"/>
-
-            <xctk:IntegerUpDown x:Name="Scalation4"
-                Value="{Binding SelectedScalation4, Mode=TwoWay}"
-                Grid.Column="7"
-                Grid.Row="1"
-                Style="{StaticResource ScalationMain}"/>
-
-            <ComboBox x:Name="ComponentsListBox4" 
-                ItemsSource="{Binding Collections.Components}" 
-                DisplayMemberPath="Name" 
-                SelectedItem="{Binding SelectedComponent4, Mode=TwoWay}" 
-                d:ItemsSource="{d:SampleData ItemCount=5}"
-                Grid.Column="6"
-                      Grid.Row="1"
-                Style="{StaticResource ComboBoxElement}"/>
-
-            <xctk:IntegerUpDown x:Name="Scalation5"   
-                Value="{Binding SelectedScalation5, Mode=TwoWay}"
-                Grid.Column="8"
-                Grid.Row="1"
-                Style="{StaticResource ScalationMain}"/>
-
-            <ComboBox x:Name="ComponentsListBox5" 
-                ItemsSource="{Binding Collections.Components}" 
-                DisplayMemberPath="Name" 
-                SelectedItem="{Binding SelectedComponent5, Mode=TwoWay}" 
-                d:ItemsSource="{d:SampleData ItemCount=5}"
-                Grid.Column="7"
-                      Grid.Row="1"
-                Style="{StaticResource ComboBoxElement}"/>
-
-            <xctk:IntegerUpDown x:Name="Scalation6"   
-                Value="{Binding SelectedScalation6, Mode=TwoWay}"
-                Grid.Column="9"
-                Grid.Row="1"
-                Style="{StaticResource ScalationMain}"/>
-
-            <ComboBox x:Name="ComponentsListBox6" 
-                ItemsSource="{Binding Collections.Components}" 
-                DisplayMemberPath="Name" 
-                SelectedItem="{Binding SelectedComponent6, Mode=TwoWay}" 
-                d:ItemsSource="{d:SampleData ItemCount=5}"
-                Grid.Column="8"
-                      Grid.Row="1"
-                Style="{StaticResource ComboBoxElement}"/>
-
-            <Button Content="Сброс" Click="btnReset_Click"
-                    MinWidth="100" MaxWidth="300" MinHeight="30" MaxHeight="80"
-                    Grid.Row="2" Grid.Column="8"
-                    VerticalAlignment="Top" Margin="0 30"
+            <DockPanel
+                Grid.Row="0"
+                Grid.ColumnSpan="10"
+                Margin="0,0,0,0"
+                LastChildFill="False">
+                <Button
+                    MinWidth="100"
+                    MinHeight="30"
+                    MaxWidth="300"
+                    MaxHeight="80"
+                    Click="Button_Click"
+                    Content="Сохранения" />
+                <Button
+                    MinWidth="100"
+                    MinHeight="30"
+                    MaxWidth="300"
+                    MaxHeight="80"
+                    Margin="0,30"
+                    Click="btnReset_Click"
+                    Content="Сброс"
+                    DockPanel.Dock="Right"
                     ToolTip="Сбросить текущее заклинание" />
+            </DockPanel>
 
-            <Border Grid.Column="2" Grid.Row="1" Grid.RowSpan="2" BorderBrush="#FFA0A0A0" BorderThickness="0,0,1,0"/>
+            <ComboBox
+                x:Name="ElementsListBox"
+                Grid.Row="1"
+                Grid.Column="0"
+                DisplayMemberPath="Name"
+                ItemsSource="{Binding Collections.Elements}"
+                SelectedItem="{Binding SelectedElement, Mode=TwoWay}"
+                Style="{StaticResource ComboBoxTrio}"
+                ToolTip="Стихия" />
 
-            <Border Grid.Column="0" Grid.Row="2" Style="{StaticResource FancyTextPanelBorder}">
+            <ComboBox
+                x:Name="MethodsListBox"
+                Grid.Row="1"
+                Grid.Column="1"
+                DisplayMemberPath="Name"
+                ItemsSource="{Binding Collections.Methods}"
+                SelectedItem="{Binding SelectedMethod, Mode=TwoWay}"
+                Style="{StaticResource ComboBoxTrio}"
+                ToolTip="Метод создания" />
+
+            <ComboBox
+                x:Name="FormsListBox"
+                Grid.Row="1"
+                Grid.Column="2"
+                DisplayMemberPath="Name"
+                ItemsSource="{Binding Collections.Forms}"
+                SelectedItem="{Binding SelectedForm, Mode=TwoWay}"
+                Style="{StaticResource ComboBoxTrio}"
+                ToolTip="Форма" />
+
+            <ComboBox
+                x:Name="ComponentsListBox1"
+                Grid.Row="1"
+                Grid.Column="3"
+                DisplayMemberPath="Name"
+                ItemsSource="{Binding Collections.Components}"
+                SelectedItem="{Binding SelectedComponent1, Mode=TwoWay}"
+                Style="{StaticResource ComboBoxElement}" />
+
+            <ComboBox
+                x:Name="ComponentsListBox2"
+                Grid.Row="1"
+                Grid.Column="4"
+                DisplayMemberPath="Name"
+                ItemsSource="{Binding Collections.Components}"
+                SelectedItem="{Binding SelectedComponent2, Mode=TwoWay}"
+                Style="{StaticResource ComboBoxElement}" />
+
+            <ComboBox
+                x:Name="ComponentsListBox3"
+                Grid.Row="1"
+                Grid.Column="5"
+                d:ItemsSource="{d:SampleData ItemCount=5}"
+                DisplayMemberPath="Name"
+                ItemsSource="{Binding Collections.Components}"
+                SelectedItem="{Binding SelectedComponent3, Mode=TwoWay}"
+                Style="{StaticResource ComboBoxElement}" />
+
+            <ComboBox
+                x:Name="ComponentsListBox4"
+                Grid.Row="1"
+                Grid.Column="6"
+                d:ItemsSource="{d:SampleData ItemCount=5}"
+                DisplayMemberPath="Name"
+                ItemsSource="{Binding Collections.Components}"
+                SelectedItem="{Binding SelectedComponent4, Mode=TwoWay}"
+                Style="{StaticResource ComboBoxElement}" />
+
+            <ComboBox
+                x:Name="ComponentsListBox5"
+                Grid.Row="1"
+                Grid.Column="7"
+                d:ItemsSource="{d:SampleData ItemCount=5}"
+                DisplayMemberPath="Name"
+                ItemsSource="{Binding Collections.Components}"
+                SelectedItem="{Binding SelectedComponent5, Mode=TwoWay}"
+                Style="{StaticResource ComboBoxElement}" />
+
+            <ComboBox
+                x:Name="ComponentsListBox6"
+                Grid.Row="1"
+                Grid.Column="8"
+                d:ItemsSource="{d:SampleData ItemCount=5}"
+                DisplayMemberPath="Name"
+                ItemsSource="{Binding Collections.Components}"
+                SelectedItem="{Binding SelectedComponent6, Mode=TwoWay}"
+                Style="{StaticResource ComboBoxElement}" />
+
+            <xctk:IntegerUpDown
+                x:Name="Scalation1"
+                Grid.Row="1"
+                Grid.Column="4"
+                Style="{StaticResource ScalationMain}"
+                Value="{Binding SelectedScalation1, Mode=TwoWay}" />
+
+            <xctk:IntegerUpDown
+                x:Name="Scalation2"
+                Grid.Row="1"
+                Grid.Column="5"
+                Style="{StaticResource ScalationMain}"
+                Value="{Binding SelectedScalation2, Mode=TwoWay}" />
+
+            <xctk:IntegerUpDown
+                x:Name="Scalation3"
+                Grid.Row="1"
+                Grid.Column="6"
+                Style="{StaticResource ScalationMain}"
+                Value="{Binding SelectedScalation3, Mode=TwoWay}" />
+            <xctk:IntegerUpDown
+                x:Name="Scalation4"
+                Grid.Row="1"
+                Grid.Column="7"
+                Style="{StaticResource ScalationMain}"
+                Value="{Binding SelectedScalation4, Mode=TwoWay}" />
+
+            <xctk:IntegerUpDown
+                x:Name="Scalation5"
+                Grid.Row="1"
+                Grid.Column="8"
+                Style="{StaticResource ScalationMain}"
+                Value="{Binding SelectedScalation5, Mode=TwoWay}" />
+
+            <xctk:IntegerUpDown
+                x:Name="Scalation6"
+                Grid.Row="1"
+                Grid.Column="9"
+                Style="{StaticResource ScalationMain}"
+                Value="{Binding SelectedScalation6, Mode=TwoWay}" />
+
+            <xctk:IntegerUpDown
+                x:Name="MethodArea"
+                Grid.Row="2"
+                Grid.Column="1"
+                Margin="5"
+                VerticalAlignment="Top"
+                Style="{StaticResource AreaCostMain}"
+                Text="{Binding AreaCostMethod, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                Visibility="{Binding SelectedMethod.Name, Converter={StaticResource MultiValueVisibilityConverter}, ConverterParameter='Дождь'}" />
+            <xctk:IntegerUpDown
+                x:Name="FormArea"
+                Grid.Row="2"
+                Grid.Column="2"
+                Margin="5"
+                VerticalAlignment="Top"
+                Style="{StaticResource AreaCostMain}"
+                Text="{Binding AreaCostForm, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                Visibility="{Binding SelectedForm.Name, Converter={StaticResource MultiValueVisibilityConverter}, ConverterParameter='Дождь'}" />
+            <xctk:IntegerUpDown
+                x:Name="AreaComponent1"
+                Grid.Row="2"
+                Grid.Column="3"
+                Margin="5"
+                VerticalAlignment="Top"
+                Style="{StaticResource AreaCostMain}"
+                Text="{Binding AreaCostComponent1, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                Visibility="{Binding SelectedComponent1.Name, Converter={StaticResource MultiValueVisibilityConverter}, ConverterParameter='Дождь'}" />
+            <xctk:IntegerUpDown
+                x:Name="AreaComponent2"
+                Grid.Row="2"
+                Grid.Column="4"
+                Margin="5"
+                VerticalAlignment="Top"
+                Style="{StaticResource AreaCostMain}"
+                Text="{Binding AreaCostComponent2, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                Visibility="{Binding SelectedComponent2.Name, Converter={StaticResource MultiValueVisibilityConverter}, ConverterParameter='Дождь'}" />
+            <xctk:IntegerUpDown
+                x:Name="AreaComponent3"
+                Grid.Row="2"
+                Grid.Column="5"
+                Margin="5"
+                VerticalAlignment="Top"
+                Style="{StaticResource AreaCostMain}"
+                Text="{Binding AreaCostComponent3, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                Visibility="{Binding SelectedComponent3.Name, Converter={StaticResource MultiValueVisibilityConverter}, ConverterParameter='Дождь'}" />
+            <xctk:IntegerUpDown
+                x:Name="AreaComponent4"
+                Grid.Row="2"
+                Grid.Column="6"
+                Margin="5"
+                VerticalAlignment="Top"
+                Style="{StaticResource AreaCostMain}"
+                Text="{Binding AreaCostComponent4, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                Visibility="{Binding SelectedComponent4.Name, Converter={StaticResource MultiValueVisibilityConverter}, ConverterParameter='Дождь'}" />
+            <xctk:IntegerUpDown
+                x:Name="AreaComponent5"
+                Grid.Row="2"
+                Grid.Column="7"
+                Margin="5"
+                VerticalAlignment="Top"
+                Style="{StaticResource AreaCostMain}"
+                Text="{Binding AreaCostComponent5, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                Visibility="{Binding SelectedComponent5.Name, Converter={StaticResource MultiValueVisibilityConverter}, ConverterParameter='Дождь'}" />
+            <xctk:IntegerUpDown
+                x:Name="AreaComponent6"
+                Grid.Row="2"
+                Grid.Column="8"
+                Margin="5"
+                VerticalAlignment="Top"
+                Style="{StaticResource AreaCostMain}"
+                Text="{Binding AreaCostComponent6, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                Visibility="{Binding SelectedComponent6.Name, Converter={StaticResource MultiValueVisibilityConverter}, ConverterParameter='Дождь'}" />
+
+            <Border
+                Grid.Row="1"
+                Grid.RowSpan="2"
+                Grid.Column="2"
+                BorderBrush="#FFA0A0A0"
+                BorderThickness="0,0,1,0" />
+
+            <Border
+                Grid.Row="2"
+                Grid.Column="0"
+                Style="{StaticResource FancyTextPanelBorder}">
                 <StackPanel>
-                    <TextBlock Text="Выбранная стихия"/>
-                    <TextBlock Text="{Binding SelectedElement.ValueExt, StringFormat=† {0}}" FontSize="16"/>
-                    <TextBlock Text="{Binding SelectedElement.ValueInt, StringFormat=‡ {0}}" FontSize="16"/>
-                    <TextBlock Text="{Binding SelectedElement.ValueMP, StringFormat=Ћ {0}}" FontSize="16"/>
+                    <TextBlock Text="Выбранная стихия" />
+                    <TextBlock FontSize="16" Text="{Binding SelectedElement.ValueExt, StringFormat=† {0}}" />
+                    <TextBlock FontSize="16" Text="{Binding SelectedElement.ValueInt, StringFormat=‡ {0}}" />
+                    <TextBlock FontSize="16" Text="{Binding SelectedElement.ValueMP, StringFormat=Ћ {0}}" />
                 </StackPanel>
             </Border>
 
-            <Border Grid.Column="1" Grid.Row="2" Style="{StaticResource FancyTextPanelBorder}">
+            <Border
+                Grid.Row="2"
+                Grid.Column="1"
+                Style="{StaticResource FancyTextPanelBorder}">
                 <StackPanel>
                     <TextBlock Text="Выбранный способ" />
-                    <TextBlock Text="{Binding SelectedMethod.ValueExt, StringFormat=† {0}}" FontSize="16"/>
-                    <TextBlock Text="{Binding SelectedMethod.ValueInt, StringFormat=‡ {0}}" FontSize="16"/>
-                    <TextBlock Text="{Binding SelectedMethod.ValueMP, StringFormat=Ћ {0}}" FontSize="16"/>
+                    <TextBlock FontSize="16" Text="{Binding SelectedMethod.ValueExt, StringFormat=† {0}}" />
+                    <TextBlock FontSize="16" Text="{Binding SelectedMethod.ValueInt, StringFormat=‡ {0}}" />
+                    <TextBlock FontSize="16" Text="{Binding SelectedMethod.ValueMP, StringFormat=Ћ {0}}" />
                 </StackPanel>
             </Border>
 
 
-            <Border Grid.Column="2" Grid.Row="2" Style="{StaticResource FancyTextPanelBorder}">
+            <Border
+                Grid.Row="2"
+                Grid.Column="2"
+                Style="{StaticResource FancyTextPanelBorder}">
                 <StackPanel>
                     <TextBlock Text="Выбранная форма" />
-                    <TextBlock Text="{Binding SelectedForm.ValueExt, StringFormat=† {0}}" FontSize="16"/>
-                    <TextBlock Text="{Binding SelectedForm.ValueInt, StringFormat=‡ {0}}" FontSize="16"/>
-                    <TextBlock Text="{Binding SelectedForm.ValueMP, StringFormat=Ћ {0}}" FontSize="16"/>
+                    <TextBlock FontSize="16" Text="{Binding SelectedForm.ValueExt, StringFormat=† {0}}" />
+                    <TextBlock FontSize="16" Text="{Binding SelectedForm.ValueInt, StringFormat=‡ {0}}" />
+                    <TextBlock FontSize="16" Text="{Binding SelectedForm.ValueMP, StringFormat=Ћ {0}}" />
                 </StackPanel>
             </Border>
 
 
-            <Border Grid.Column="3" Grid.Row="2" Style="{StaticResource FancyTextPanelBorder}">
+            <Border
+                Grid.Row="2"
+                Grid.Column="3"
+                Style="{StaticResource FancyTextPanelBorder}">
                 <StackPanel>
                     <TextBlock Text="Первый компонент" />
-                    <TextBlock Text="{Binding SelectedComponents[0].ValueExt, StringFormat=† {0}}" FontSize="16"/>
-                    <TextBlock Text="{Binding SelectedComponents[0].ValueInt, StringFormat=‡ {0}}" FontSize="16"/>
-                    <TextBlock Text="{Binding SelectedComponents[0].ValueMP, StringFormat=Ћ {0}}" FontSize="16"/>
+                    <TextBlock FontSize="16" Text="{Binding SelectedComponents[0].ValueExt, StringFormat=† {0}}" />
+                    <TextBlock FontSize="16" Text="{Binding SelectedComponents[0].ValueInt, StringFormat=‡ {0}}" />
+                    <TextBlock FontSize="16" Text="{Binding SelectedComponents[0].ValueMP, StringFormat=Ћ {0}}" />
                 </StackPanel>
             </Border>
 
-            <Border Grid.Column="4" Grid.Row="2" Style="{StaticResource FancyTextPanelBorder}">
+            <Border
+                Grid.Row="2"
+                Grid.Column="4"
+                Style="{StaticResource FancyTextPanelBorder}">
                 <StackPanel>
                     <TextBlock Text="Второй компонент" />
-                    <TextBlock Text="{Binding SelectedComponents[1].ValueExt, StringFormat=† {0}}" FontSize="16"/>
-                    <TextBlock Text="{Binding SelectedComponents[1].ValueInt, StringFormat=‡ {0}}" FontSize="16"/>
-                    <TextBlock Text="{Binding SelectedComponents[1].ValueMP, StringFormat=Ћ {0}}" FontSize="16"/>
+                    <TextBlock FontSize="16" Text="{Binding SelectedComponents[1].ValueExt, StringFormat=† {0}}" />
+                    <TextBlock FontSize="16" Text="{Binding SelectedComponents[1].ValueInt, StringFormat=‡ {0}}" />
+                    <TextBlock FontSize="16" Text="{Binding SelectedComponents[1].ValueMP, StringFormat=Ћ {0}}" />
                 </StackPanel>
             </Border>
 
-            <Border Grid.Column="5" Grid.Row="2" Style="{StaticResource FancyTextPanelBorder}">
+            <Border
+                Grid.Row="2"
+                Grid.Column="5"
+                Style="{StaticResource FancyTextPanelBorder}">
                 <StackPanel>
                     <TextBlock Text="Третий компонент" />
-                    <TextBlock Text="{Binding SelectedComponents[2].ValueExt, StringFormat=† {0}}" FontSize="16"/>
-                    <TextBlock Text="{Binding SelectedComponents[2].ValueInt, StringFormat=‡ {0}}" FontSize="16"/>
-                    <TextBlock Text="{Binding SelectedComponents[2].ValueMP, StringFormat=Ћ {0}}" FontSize="16"/>
+                    <TextBlock FontSize="16" Text="{Binding SelectedComponents[2].ValueExt, StringFormat=† {0}}" />
+                    <TextBlock FontSize="16" Text="{Binding SelectedComponents[2].ValueInt, StringFormat=‡ {0}}" />
+                    <TextBlock FontSize="16" Text="{Binding SelectedComponents[2].ValueMP, StringFormat=Ћ {0}}" />
                 </StackPanel>
             </Border>
 
-            <Border Grid.Column="6" Grid.Row="2" Style="{StaticResource FancyTextPanelBorder}">
+            <Border
+                Grid.Row="2"
+                Grid.Column="6"
+                Style="{StaticResource FancyTextPanelBorder}">
                 <StackPanel>
                     <TextBlock Text="Четвёртый компонент" />
-                    <TextBlock Text="{Binding SelectedComponents[3].ValueExt, StringFormat=† {0}}" FontSize="16"/>
-                    <TextBlock Text="{Binding SelectedComponents[3].ValueInt, StringFormat=‡ {0}}" FontSize="16"/>
-                    <TextBlock Text="{Binding SelectedComponents[3].ValueMP, StringFormat=Ћ {0}}" FontSize="16"/>
+                    <TextBlock FontSize="16" Text="{Binding SelectedComponents[3].ValueExt, StringFormat=† {0}}" />
+                    <TextBlock FontSize="16" Text="{Binding SelectedComponents[3].ValueInt, StringFormat=‡ {0}}" />
+                    <TextBlock FontSize="16" Text="{Binding SelectedComponents[3].ValueMP, StringFormat=Ћ {0}}" />
                 </StackPanel>
             </Border>
 
-            <Border Grid.Column="7" Grid.Row="2" Style="{StaticResource FancyTextPanelBorder}">
+            <Border
+                Grid.Row="2"
+                Grid.Column="7"
+                Style="{StaticResource FancyTextPanelBorder}">
                 <StackPanel>
-                    <TextBlock Text="Пятый компонент"  />
-                    <TextBlock Text="{Binding SelectedComponents[4].ValueExt, StringFormat=† {0}}"  FontSize="16"/>
-                    <TextBlock Text="{Binding SelectedComponents[4].ValueInt, StringFormat=‡ {0}}"  FontSize="16"/>
-                    <TextBlock Text="{Binding SelectedComponents[4].ValueMP, StringFormat=Ћ {0}}"  FontSize="16"/>
+                    <TextBlock Text="Пятый компонент" />
+                    <TextBlock FontSize="16" Text="{Binding SelectedComponents[4].ValueExt, StringFormat=† {0}}" />
+                    <TextBlock FontSize="16" Text="{Binding SelectedComponents[4].ValueInt, StringFormat=‡ {0}}" />
+                    <TextBlock FontSize="16" Text="{Binding SelectedComponents[4].ValueMP, StringFormat=Ћ {0}}" />
                 </StackPanel>
             </Border>
 
-            <Border Grid.Column="8" Grid.Row="2" Style="{StaticResource FancyTextPanelBorder}">
+            <Border
+                Grid.Row="2"
+                Grid.Column="8"
+                Style="{StaticResource FancyTextPanelBorder}">
                 <StackPanel>
-                    <TextBlock Text="Шестой компонент"  />
-                    <TextBlock Text="{Binding SelectedComponents[5].ValueExt, StringFormat=† {0}}"  FontSize="16"/>
-                    <TextBlock Text="{Binding SelectedComponents[5].ValueInt, StringFormat=‡ {0}}"  FontSize="16"/>
-                    <TextBlock Text="{Binding SelectedComponents[5].ValueMP, StringFormat=Ћ {0}}"  FontSize="16"/>
+                    <TextBlock Text="Шестой компонент" />
+                    <TextBlock FontSize="16" Text="{Binding SelectedComponents[5].ValueExt, StringFormat=† {0}}" />
+                    <TextBlock FontSize="16" Text="{Binding SelectedComponents[5].ValueInt, StringFormat=‡ {0}}" />
+                    <TextBlock FontSize="16" Text="{Binding SelectedComponents[5].ValueMP, StringFormat=Ћ {0}}" />
                 </StackPanel>
             </Border>
 
-            <!-- Отображение результата -->
-            <Border Grid.Column="0" Grid.Row="3" Style="{StaticResource FancyTextPanelBorder}">
+            <!--  Отображение результата  -->
+            <Border
+                Grid.Row="3"
+                Grid.Column="0"
+                Style="{StaticResource FancyTextPanelBorder}">
                 <StackPanel>
                     <TextBlock Text="Результат" />
-                    <TextBlock Text="{Binding CountedExt, StringFormat=† {0}}" FontSize="16"/>
-                    <TextBlock Text="{Binding CountedInt, StringFormat=‡ {0}}" FontSize="16"/>
-                    <TextBlock Text="{Binding CountedMP, StringFormat=Ћ {0}}" FontSize="16"/>
+                    <TextBlock FontSize="16" Text="{Binding CountedExt, StringFormat=† {0}}" />
+                    <TextBlock FontSize="16" Text="{Binding CountedInt, StringFormat=‡ {0}}" />
+                    <TextBlock FontSize="16" Text="{Binding CountedMP, StringFormat=Ћ {0}}" />
                 </StackPanel>
             </Border>
 
-            <ComboBox x:Name="TimeChoose"
-                ItemsSource="{Binding Collections.Time}"     
-                SelectedItem="{Binding SelectedTime, Mode=TwoWay}"
-                Grid.Row="3" Grid.Column="1"
-                IsEditable="True"
-                StaysOpenOnEdit="True"
-                MinWidth="100" MinHeight="25" MaxWidth="200" MaxHeight="30"
-                Margin="0, 100, 0, 0"
+            <ComboBox
+                x:Name="TimeChoose"
+                Grid.Row="3"
+                Grid.Column="1"
+                MinWidth="100"
+                MinHeight="25"
+                MaxWidth="200"
+                MaxHeight="30"
+                Margin="0,20,0,0"
                 HorizontalAlignment="Center"
-                VerticalAlignment="Center">
-            </ComboBox>
+                VerticalAlignment="Top"
+                IsEditable="True"
+                ItemsSource="{Binding Collections.Time}"
+                SelectedItem="{Binding SelectedTime, Mode=TwoWay}"
+                StaysOpenOnEdit="True" />
 
-            <Border Grid.Column="2" Grid.Row="3" Grid.ColumnSpan="2" Style="{StaticResource FancyTextPanelBorder}">
-                <StackPanel MinWidth="150" MinHeight="40" HorizontalAlignment="Center" VerticalAlignment="Center" MaxWidth="400" MaxHeight="200">
-                    <TextBlock Text="{Binding EffectLine}"  FontSize="16" 
-                           HorizontalAlignment="Center" TextWrapping="Wrap" MinWidth="150" MinHeight="40" MaxWidth="390" MaxHeight="190"/>
+            <Border
+                Grid.Row="3"
+                Grid.Column="2"
+                Grid.ColumnSpan="2"
+                Style="{StaticResource FancyTextPanelBorder}">
+                <StackPanel
+                    MinWidth="150"
+                    MinHeight="40"
+                    MaxWidth="400"
+                    MaxHeight="200"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center">
+                    <TextBlock
+                        MinWidth="150"
+                        MinHeight="40"
+                        MaxWidth="390"
+                        MaxHeight="190"
+                        HorizontalAlignment="Center"
+                        FontSize="16"
+                        Text="{Binding EffectLine}"
+                        TextWrapping="Wrap" />
                 </StackPanel>
             </Border>
 
-            <Border Grid.Column="1" Grid.Row="3" Style="{StaticResource FancyTextPanelBorder}" Padding="2" Margin="0, 160, 0, 0" VerticalAlignment="Center">
-                <StackPanel MinWidth="100" MinHeight="25" MaxWidth="200" MaxHeight="30">
-                    <TextBlock Text="{Binding SelectedTimeValue, StringFormat=Ћ {0}}"  FontSize="16"/>
+            <Border
+                Grid.Row="3"
+                Grid.Column="1"
+                Margin="0,50,0,0"
+                Padding="2"
+                VerticalAlignment="Top"
+                Style="{StaticResource FancyTextPanelBorder}">
+                <StackPanel
+                    MinWidth="100"
+                    MinHeight="25"
+                    MaxWidth="200"
+                    MaxHeight="30">
+                    <TextBlock FontSize="16" Text="{Binding SelectedTimeValue, StringFormat=Ћ {0}}" />
                 </StackPanel>
             </Border>
 
-            <!-- Кнопка сохранения -->
-            <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="3" Grid.Column="7" Grid.ColumnSpan="3" >
-                <TextBox x:Name="txtSave" Height="30" Text="Введите название сохранения" MaxLength="255" MinWidth="176"/>
-                <Button x:Name="btnSave" Content="Сохранить" Height="30" Click="btnSave_Click"/>
+            <Border
+                Grid.Row="3"
+                Grid.Column="1"
+                Margin="0,0,0,10"
+                Style="{StaticResource FancyTextPanelBorder}">
+                <StackPanel VerticalAlignment="Bottom" Orientation="Vertical">
+                    <TextBlock Text="Размер" Margin="2,2,2,2"/>
+                    <xctk:IntegerUpDown Value="{ Binding AreaCostGeneral, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource AreaCostMain}"/>
+                </StackPanel>
+            </Border>
+
+
+            <!--  Кнопка сохранения  -->
+            <StackPanel
+                Grid.Row="3"
+                Grid.Column="7"
+                Grid.ColumnSpan="3"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                Orientation="Vertical">
+                <TextBox
+                    x:Name="txtSave"
+                    Height="30"
+                    MinWidth="176"
+                    MaxLength="255"
+                    Text="Введите название сохранения" />
+                <Button
+                    x:Name="btnSave"
+                    Height="30"
+                    Click="btnSave_Click"
+                    Content="Сохранить" />
             </StackPanel>
 
-            <TextBlock Text="v. 0.44" HorizontalAlignment="Right" VerticalAlignment="Bottom" Grid.Column="8" Grid.Row="3" Grid.ColumnSpan="2"
-                       Background="Transparent" FontSize="12" Foreground="Gray" Opacity="0.5" />
+            <TextBlock
+                Grid.Row="3"
+                Grid.Column="8"
+                Grid.ColumnSpan="2"
+                HorizontalAlignment="Right"
+                VerticalAlignment="Bottom"
+                Background="Transparent"
+                FontSize="12"
+                Foreground="Gray"
+                Opacity="0.5"
+                Text="v. 0.45" />
         </Grid>
-        
-        <Frame x:Name="MainFrame" Visibility="Collapsed" NavigationUIVisibility="Hidden" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
+
+        <Frame
+            x:Name="MainFrame"
+            HorizontalAlignment="Stretch"
+            VerticalAlignment="Stretch"
+            NavigationUIVisibility="Hidden"
+            Visibility="Collapsed" />
     </Grid>
 </Window>

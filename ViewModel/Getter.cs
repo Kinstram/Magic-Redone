@@ -23,6 +23,7 @@ namespace Magic_Redone
         // Инициализация коллекции, для записи SelectedElement, SelectedMethod, SelectedForm, для передачи в Back и дальнейший подсчёт итогов 
         public ObservableCollection<Construct> SelectedTrio { get; set; }
         public ObservableCollection<int> SelectedScalations { get; set; }
+        public List<int> selectedAreaMods = [0, 0, 0, 0, 0, 0, 0, 0, 0];
 
         public Getter()
         {
@@ -69,6 +70,118 @@ namespace Magic_Redone
         }
 
         #region Инициализация свойств для привязки в WPF
+        private int _areaCostGeneral;
+        public int AreaCostGeneral
+        {
+            get => _areaCostGeneral;
+            set
+            {
+                _areaCostGeneral = value;
+                selectedAreaMods[8] = value;
+                Back.ResultCount(this);
+                OnPropertyChanged();
+            }
+        }
+
+        private int _areaCostMethod;
+        public int AreaCostMethod
+        {
+            get => _areaCostMethod;
+            set
+            {
+                _areaCostMethod = value;
+                selectedAreaMods[0] = value;
+                Back.ResultCount(this);
+                OnPropertyChanged();
+            }
+        }
+
+        private int _areaCostForm;
+        public int AreaCostForm
+        {
+            get => _areaCostForm;
+            set
+            {
+                _areaCostForm = value;
+                selectedAreaMods[1] = value;
+                Back.ResultCount(this);
+                OnPropertyChanged();
+            }
+        }
+
+        private int _areaCostComponent1;
+        public int AreaCostComponent1
+        {
+            get => _areaCostComponent1;
+            set
+            {
+                _areaCostComponent1 = value;
+                selectedAreaMods[2] = value;
+                Back.ResultCount(this);
+                OnPropertyChanged();
+            }
+        }
+        private int _areaCostComponent2;
+        public int AreaCostComponent2
+        {
+            get => _areaCostComponent2;
+            set
+            {
+                _areaCostComponent2 = value;
+                selectedAreaMods[3] = value;
+                Back.ResultCount(this);
+                OnPropertyChanged();
+            }
+        }
+        private int _areaCostComponent3;
+        public int AreaCostComponent3
+        {
+            get => _areaCostComponent3;
+            set
+            {
+                _areaCostComponent3 = value;
+                selectedAreaMods[4] = value;
+                Back.ResultCount(this);
+                OnPropertyChanged();
+            }
+        }
+        private int _areaCostComponent4;
+        public int AreaCostComponent4
+        {
+            get => _areaCostComponent4;
+            set
+            {
+                _areaCostComponent4 = value;
+                selectedAreaMods[5] = value;
+                Back.ResultCount(this);
+                OnPropertyChanged();
+            }
+        }
+        private int _areaCostComponent5;
+        public int AreaCostComponent5
+        {
+            get => _areaCostComponent5;
+            set
+            {
+                _areaCostComponent5 = value;
+                selectedAreaMods[6] = value;
+                Back.ResultCount(this);
+                OnPropertyChanged();
+            }
+        }
+        private int _areaCostComponent6;
+        public int AreaCostComponent6
+        {
+            get => _areaCostComponent6 ;
+            set
+            {
+                _areaCostComponent6 = value;
+                selectedAreaMods[7] = value;
+                Back.ResultCount(this);
+                OnPropertyChanged();
+            }
+        }
+
         private Construct _selectedElement;
         public Construct SelectedElement
         {
