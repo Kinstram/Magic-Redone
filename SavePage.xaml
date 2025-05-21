@@ -37,13 +37,16 @@
         <ScrollViewer
             Grid.Row="1"
             HorizontalScrollBarVisibility="Auto"
+            PreviewMouseWheel="DataGrid_PreviewMouseWheel"
             VerticalScrollBarVisibility="Auto">
             <DataGrid
                 MaxWidth="{Binding ActualWidth, RelativeSource={RelativeSource AncestorType=ScrollViewer}}"
                 AutoGenerateColumns="False"
                 IsReadOnly="True"
                 ItemsControl.AlternationCount="1000"
-                ItemsSource="{Binding SavesView}">
+                ItemsSource="{Binding SavesView}"
+                ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                ScrollViewer.VerticalScrollBarVisibility="Disabled">
                 <!--  Колонки DataGrid остаются без изменений  -->
                 <DataGrid.Columns>
                     <DataGridTemplateColumn>
@@ -150,7 +153,7 @@
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
                     <DataGridTextColumn Binding="{Binding Entity.TimeString}" Header="Время" />
-                    <DataGridTextColumn Binding="{Binding Entity.TimeValue}" Header="TЋ" />
+                    <DataGridTextColumn Binding="{Binding Entity.TimeValue}" Header="T - Ћ" />
                 </DataGrid.Columns>
             </DataGrid>
         </ScrollViewer>

@@ -15,8 +15,6 @@ namespace Magic_Redone
             await context.Saves
                 .Where(e => idList.Contains(e.Id))
                 .ExecuteDeleteAsync();
-
-            Debug.WriteLine("Удалено");
         }
 
         internal static List<int> IdGetter()

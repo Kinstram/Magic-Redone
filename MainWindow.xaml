@@ -413,29 +413,22 @@
 
             <Border
                 Grid.Row="3"
-                Grid.Column="2"
-                Grid.ColumnSpan="2"
+                Grid.Column="3"
+                Grid.ColumnSpan="4"
                 Style="{StaticResource FancyTextPanelBorder}">
                 <StackPanel
-                    MinWidth="150"
-                    MinHeight="40"
-                    MaxWidth="400"
-                    MaxHeight="200"
                     HorizontalAlignment="Center"
                     VerticalAlignment="Center">
                     <TextBlock
-                        MinWidth="150"
-                        MinHeight="40"
-                        MaxWidth="390"
-                        MaxHeight="190"
                         HorizontalAlignment="Center"
                         FontSize="16"
                         Text="{Binding EffectLine}"
-                        TextWrapping="Wrap" />
+                        TextWrapping="Wrap"/>
                 </StackPanel>
             </Border>
 
             <Border
+                x:Name="TimeModifier"
                 Grid.Row="3"
                 Grid.Column="1"
                 Margin="0,50,0,0"
@@ -451,14 +444,22 @@
                 </StackPanel>
             </Border>
 
+            <WrapPanel Orientation="Horizontal" Grid.Row="1" Grid.Column="0">
+                <TextBlock Margin="2,2,2,2" Text="Ранг" FontSize="16" />
+                <xctk:IntegerUpDown Style="{StaticResource ScalationMain}" Value="{Binding SelectedLvl, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+                                    VerticalAlignment="Top" Margin="10,2"
+                                    Minimum="1" Maximum="6"/>
+            </WrapPanel>
+
+
             <Border
                 Grid.Row="3"
                 Grid.Column="1"
                 Margin="0,0,0,10"
                 Style="{StaticResource FancyTextPanelBorder}">
                 <StackPanel VerticalAlignment="Bottom" Orientation="Vertical">
-                    <TextBlock Text="Размер" Margin="2,2,2,2"/>
-                    <xctk:IntegerUpDown Value="{ Binding AreaCostGeneral, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource AreaCostMain}"/>
+                    <TextBlock Margin="2,2,2,2" Text="Размер" />
+                    <xctk:IntegerUpDown Style="{StaticResource AreaCostMain}" Value="{Binding AreaCostGeneral, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                 </StackPanel>
             </Border>
 
@@ -494,7 +495,7 @@
                 FontSize="12"
                 Foreground="Gray"
                 Opacity="0.5"
-                Text="v. 0.45" />
+                Text="v. 0.46" />
         </Grid>
 
         <Frame

@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
+using System.Windows.Media;
 
 
 namespace Magic_Redone
@@ -35,6 +37,25 @@ namespace Magic_Redone
         private void OnPageLoaded(object sender, RoutedEventArgs e)
         {
             saveViewModel.LoadSavesAsync();
+        }
+
+        private void DataGrid_PreviewMouseWheel(object sender, MouseWheelEventArgs e)
+        {
+            var scrollViewer = FindParentScrollViewer((DependencyObject)sender);
+            if (scrollViewer != null)
+            {
+                scrollViewer.ScrollToVerticalOffset(scrollViewer.VerticalOffset - e.Delta);
+                e.Handled = true;
+            }
+        }
+
+        private ScrollViewer FindParentScrollViewer(DependencyObject child)
+        {
+            while (child != null && !(child is ScrollViewer))
+            {
+                child = VisualTreeHelper.GetParent(child);
+            }
+            return child as ScrollViewer;
         }
     }
 }

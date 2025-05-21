@@ -1,6 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System.Collections.ObjectModel;
-using System.Diagnostics;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Windows;
@@ -39,7 +38,6 @@ namespace Magic_Redone
         public static void ResultCount(Getter getter) // Подсчёт Ext, Int, MP и т.п. выбранных в интерфейсе компонентов
         {
             Scalation(getter); // Проверка на скаляции
-            EffectGrouper(getter); // Вывод эффектов
 
             // Инициализация и обнуление переменных для подсчёта Element, Method и Form. Сделано отдельно, чтобы не множить на 0 при пустых компонентах
             decimal CountedTrioExt = 1m;
@@ -79,6 +77,11 @@ namespace Magic_Redone
             getter.CountedMP = Math.Round(getter.CountedMP, 2);
 
             getter.SelectedTimeValue = Math.Round((getter.CountedMP - (CountedTrioMP + CountedComponentsMP + AreaMPCount(getter))), 2); // Подсчёт стоимости модификатора времени
+        }
+        public static void ResultOutput(Getter getter)
+        {
+            ResultCount(getter);
+            EffectGrouper(getter); // Вывод эффектов
         }
 
         internal static void Scalation(Getter getter) // Скаляция и время
@@ -292,7 +295,8 @@ namespace Magic_Redone
 
             // Запись всех эффектов в одну строку для дальнейшей передачи в FormatEffectLine
             string effectToString = string.Join("  \n", effects.Where(e => e != null).Select(e => e.ToString())).Trim();
-            effectToString += "\nРазмер: " + Back.AreaCount(getter).ToString();
+            effectToString += "\nРазмер: " + AreaCount(getter).ToString();
+            effectToString += "\nВремя создания: " + TimeCastCount(getter).ToString();
             getter.EffectLine = FormatEffectLine(effectToString);
         } // Группировка и запись эффектов в EffectLine для дальнейшей обработки и вывода в WPF
         internal static string FormatEffectLine(string formatingString)
@@ -400,7 +404,7 @@ namespace Magic_Redone
             Getter.AreaCostComponent6 = 0;
 
             Getter.SelectedTime = Getter.Collections.Time[0];
-            Debug.WriteLine(Getter.SelectedTime);
+            Getter.SelectedLvl = 1;
         }
         internal static int AreaMPCount(Getter getter)
         {
@@ -425,8 +429,34 @@ namespace Magic_Redone
             finalCount = getter.AreaCostMethod > 0 ? getter.AreaCostMethod : (getter.AreaCostForm > 0 ? getter.AreaCostForm : 0);
             finalCount *= 2;
             finalCount += getter.AreaCostGeneral;
-            Debug.WriteLine(finalCount);
             return finalCount;
+        }
+        internal static decimal TimeCastCount(Getter getter)
+        {
+            decimal result = 0m;
+            decimal differ = 0m;
+            int count = 0;
+            List<Construct> inputData = getter.SelectedComponents.Where(c => !string.IsNullOrWhiteSpace(c.Name)).ToList();
+            if (inputData.Any()) count = inputData.Count;
+            differ = getter.SelectedLvl - count;
+
+            if (differ >= 2m)
+            {
+                result = 1m;
+            }
+            else if (differ == 1m)
+            {
+                result = 1m + (count * 0.15m);
+            }
+            else if (differ == 0m)
+            {
+                result = 1m + (count * 0.3m);
+            }
+            else result = -1;
+
+            if (getter.CountedInt < 1m) result += getter.CountedInt;
+
+            return result;
         }
     }
 }

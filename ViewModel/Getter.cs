@@ -43,6 +43,7 @@ namespace Magic_Redone
             }//запись пустых ячеек в коллекции
 
             SelectedTime = "1 Секунда";
+            SelectedLvl = 1;
         }
         public static Construct DefaultConstruct()
         {
@@ -78,7 +79,7 @@ namespace Magic_Redone
             {
                 _areaCostGeneral = value;
                 selectedAreaMods[8] = value;
-                Back.ResultCount(this);
+                Back.ResultOutput(this);
                 OnPropertyChanged();
             }
         }
@@ -91,7 +92,7 @@ namespace Magic_Redone
             {
                 _areaCostMethod = value;
                 selectedAreaMods[0] = value;
-                Back.ResultCount(this);
+                Back.ResultOutput(this);
                 OnPropertyChanged();
             }
         }
@@ -104,7 +105,7 @@ namespace Magic_Redone
             {
                 _areaCostForm = value;
                 selectedAreaMods[1] = value;
-                Back.ResultCount(this);
+                Back.ResultOutput(this);
                 OnPropertyChanged();
             }
         }
@@ -117,7 +118,7 @@ namespace Magic_Redone
             {
                 _areaCostComponent1 = value;
                 selectedAreaMods[2] = value;
-                Back.ResultCount(this);
+                Back.ResultOutput(this);
                 OnPropertyChanged();
             }
         }
@@ -129,7 +130,7 @@ namespace Magic_Redone
             {
                 _areaCostComponent2 = value;
                 selectedAreaMods[3] = value;
-                Back.ResultCount(this);
+                Back.ResultOutput(this);
                 OnPropertyChanged();
             }
         }
@@ -141,7 +142,7 @@ namespace Magic_Redone
             {
                 _areaCostComponent3 = value;
                 selectedAreaMods[4] = value;
-                Back.ResultCount(this);
+                Back.ResultOutput(this);
                 OnPropertyChanged();
             }
         }
@@ -153,7 +154,7 @@ namespace Magic_Redone
             {
                 _areaCostComponent4 = value;
                 selectedAreaMods[5] = value;
-                Back.ResultCount(this);
+                Back.ResultOutput(this);
                 OnPropertyChanged();
             }
         }
@@ -165,7 +166,7 @@ namespace Magic_Redone
             {
                 _areaCostComponent5 = value;
                 selectedAreaMods[6] = value;
-                Back.ResultCount(this);
+                Back.ResultOutput(this);
                 OnPropertyChanged();
             }
         }
@@ -177,7 +178,7 @@ namespace Magic_Redone
             {
                 _areaCostComponent6 = value;
                 selectedAreaMods[7] = value;
-                Back.ResultCount(this);
+                Back.ResultOutput(this);
                 OnPropertyChanged();
             }
         }
@@ -190,7 +191,7 @@ namespace Magic_Redone
             {
                 _selectedElement = value;
                 SelectedTrio[0] = SelectedElement;
-                Back.ResultCount(this);
+                Back.ResultOutput(this);
                 OnPropertyChanged();
             }
         } //выбранная стихия
@@ -203,7 +204,7 @@ namespace Magic_Redone
             {
                 _selectedMethod = value;
                 SelectedTrio[1] = SelectedMethod;
-                Back.ResultCount(this);
+                Back.ResultOutput(this);
                 OnPropertyChanged();
             }
         } //выбранный метод
@@ -217,7 +218,7 @@ namespace Magic_Redone
             {
                 _selectedForm = value;
                 SelectedTrio[2] = SelectedForm;
-                Back.ResultCount(this);
+                Back.ResultOutput(this);
                 OnPropertyChanged();
             }
         } //выбранная форма
@@ -230,7 +231,7 @@ namespace Magic_Redone
             {
                 _selectedComponent1 = CreateConstructCopy(value);
                 SelectedComponents[0] = SelectedComponent1; //передача в коллекцию, дальнейший подсчёт в Back
-                Back.ResultCount(this);
+                Back.ResultOutput(this);
                 OnPropertyChanged();
             }
         }
@@ -243,7 +244,7 @@ namespace Magic_Redone
             {
                 _selectedComponent2 = CreateConstructCopy(value);
                 SelectedComponents[1] = SelectedComponent2;
-                Back.ResultCount(this);
+                Back.ResultOutput(this);
                 OnPropertyChanged();
             }
         }
@@ -256,7 +257,7 @@ namespace Magic_Redone
             {
                 _selectedComponent3 = CreateConstructCopy(value);
                 SelectedComponents[2] = SelectedComponent3;
-                Back.ResultCount(this);
+                Back.ResultOutput(this);
                 OnPropertyChanged();
             }
         }
@@ -269,7 +270,7 @@ namespace Magic_Redone
             {
                 _selectedComponent4 = CreateConstructCopy(value);
                 SelectedComponents[3] = SelectedComponent4;
-                Back.ResultCount(this);
+                Back.ResultOutput(this);
                 OnPropertyChanged();
             }
         }
@@ -282,7 +283,7 @@ namespace Magic_Redone
             {
                 _selectedComponent5 = CreateConstructCopy(value);
                 SelectedComponents[4] = SelectedComponent5;
-                Back.ResultCount(this);
+                Back.ResultOutput(this);
                 OnPropertyChanged();
             }
         }
@@ -295,7 +296,7 @@ namespace Magic_Redone
             {
                 _selectedComponent6 = CreateConstructCopy(value);
                 SelectedComponents[5] = SelectedComponent6;
-                Back.ResultCount(this);
+                Back.ResultOutput(this);
                 OnPropertyChanged();
             }
         }
@@ -308,7 +309,7 @@ namespace Magic_Redone
             {
                 _selectedScalation1 = value;
                 SelectedScalations[0] = value;
-                Back.ResultCount(this);
+                Back.ResultOutput(this);
                 OnPropertyChanged();
                 OnPropertyChanged(nameof(SelectedComponents));
             }
@@ -322,7 +323,7 @@ namespace Magic_Redone
             {
                 _selectedScalation2 = value;
                 SelectedScalations[1] = value;
-                Back.ResultCount(this);
+                Back.ResultOutput(this);
                 OnPropertyChanged();
                 OnPropertyChanged(nameof(SelectedComponents));
             }
@@ -336,7 +337,7 @@ namespace Magic_Redone
             {
                 _selectedScalation3 = value;
                 SelectedScalations[2] = SelectedScalation3;
-                Back.ResultCount(this);
+                Back.ResultOutput(this);
                 OnPropertyChanged();
                 OnPropertyChanged(nameof(SelectedComponents));
             }
@@ -350,7 +351,7 @@ namespace Magic_Redone
             {
                 _selectedScalation4 = value;
                 SelectedScalations[3] = SelectedScalation4;
-                Back.ResultCount(this);
+                Back.ResultOutput(this);
                 OnPropertyChanged();
                 OnPropertyChanged(nameof(SelectedComponents));
             }
@@ -364,7 +365,7 @@ namespace Magic_Redone
             {
                 _selectedScalation5 = value;
                 SelectedScalations[4] = SelectedScalation5;
-                Back.ResultCount(this);
+                Back.ResultOutput(this);
                 OnPropertyChanged();
                 OnPropertyChanged(nameof(SelectedComponents));
             }
@@ -378,7 +379,7 @@ namespace Magic_Redone
             {
                 _selectedScalation6 = value;
                 SelectedScalations[5] = SelectedScalation6;
-                Back.ResultCount(this);
+                Back.ResultOutput(this);
                 OnPropertyChanged();
                 OnPropertyChanged(nameof(SelectedComponents));
             }
@@ -391,7 +392,7 @@ namespace Magic_Redone
             set
             {
                 _selectedTime = value;
-                Back.ResultCount(this);
+                Back.ResultOutput(this);
                 OnPropertyChanged();
                 OnPropertyChanged(nameof(CountedMP));
                 
@@ -406,6 +407,19 @@ namespace Magic_Redone
             {
                 _selectedTimeValue = value;
                 OnPropertyChanged();
+            }
+        }
+
+        private int _selectedLvl;
+        public int SelectedLvl
+        {
+            get => _selectedLvl;
+            set
+            {
+                _selectedLvl = value;
+                Back.ResultOutput(this);
+                OnPropertyChanged();
+
             }
         }
 
