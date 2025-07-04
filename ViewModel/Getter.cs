@@ -6,7 +6,6 @@ using System.Windows;
 
 namespace Magic_Redone
 {
-    //приём из интерфейса
     public class Getter : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
@@ -70,7 +69,7 @@ namespace Magic_Redone
             };
         }
 
-        #region Инициализация свойств для привязки в WPF
+        #region Свойства для привязки в WPF
         private int _areaCostGeneral;
         public int AreaCostGeneral
         {

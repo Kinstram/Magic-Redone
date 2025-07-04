@@ -34,9 +34,9 @@ namespace Magic_Redone
             }
         }
 
-        private void OnPageLoaded(object sender, RoutedEventArgs e)
+        private async void OnPageLoaded(object sender, RoutedEventArgs e)
         {
-            saveViewModel.LoadSavesAsync();
+           await saveViewModel.LoadSavesAsync();
         }
 
         private void DataGrid_PreviewMouseWheel(object sender, MouseWheelEventArgs e)
