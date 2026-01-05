@@ -7,9 +7,9 @@ using System.Windows;
 
 namespace Magic_Redone
 {
-    public class Back
+    public static class Back
     {
-        internal static async void LoadElements(Collections collections) // Загрузка и распределение данных из бд в коллекции для возможности их выбора в интерфейсе и передачи на обработку в Getter
+        internal static async Task LoadElements(Collections collections) // Загрузка и распределение данных из бд в коллекции для возможности их выбора в интерфейсе и передачи на обработку в Getter
         {
             using (ApplicationContext context = new())
             {
@@ -29,7 +29,7 @@ namespace Magic_Redone
                 List<Construct> componentsLoad = await context.Constructs.AsNoTracking().Where(c => c.Kind == requiredKind).OrderBy(p => p.Name).Include(x => x.TiedEffect).ToListAsync();
                 collections.Components = new ObservableCollection<Construct>(componentsLoad);
 
-                List<Effect> effectsLoad = await context.EffectList.AsNoTracking().OrderBy(p => p.ConstructId).ToListAsync();
+                //List<Effect> effectsLoad = await context.EffectList.AsNoTracking().OrderBy(p => p.ConstructId).ToListAsync();
             }
 
             collections.Time = ["1 Секунда", "15 Минут", "1 Час", "12 Часов", "1 Сутки", "1 Неделя", "1 Месяц", "6 Месяцев", "1 Год"];
@@ -419,12 +419,6 @@ namespace Magic_Redone
         }
         internal static int AreaCount(Getter getter)
         {
-            /*int rainChk = AreaMPCount(getter) - getter.AreaCostGeneric; //ha-ha
-            int result = 0;
-
-            rainChk *= 2;
-
-            return rainChk;*/
             int finalCount = 0;
             finalCount = getter.AreaCostMethod > 0 ? getter.AreaCostMethod : (getter.AreaCostForm > 0 ? getter.AreaCostForm : 0);
             finalCount *= 2;

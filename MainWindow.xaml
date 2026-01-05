@@ -15,7 +15,13 @@
 
     <Window.Resources>
         <local:MultiValueVisibilityConverter x:Key="MultiValueVisibilityConverter" />
+        <local:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter" />
     </Window.Resources>
+    
+    <Window.InputBindings>
+        <KeyBinding Key="F1"
+                    Command="{Binding ToggleHelpCommand}" />
+    </Window.InputBindings>
 
     <Grid>
         <Grid x:Name="MainContent" Margin="5">
@@ -519,5 +525,14 @@
             VerticalAlignment="Stretch"
             NavigationUIVisibility="Hidden"
             Visibility="Collapsed" />
+
+        <Border Background="#80000000" 
+    Visibility="{Binding IsHelpVisible,
+                             Converter={StaticResource BoolToVisibilityConverter}}"
+        Grid.RowSpan="99" Grid.ColumnSpan="99">
+            <Grid>
+                <Image Source="/Hint.png" Opacity="0.9" Stretch="Uniform" />
+            </Grid>
+        </Border>
     </Grid>
 </Window>

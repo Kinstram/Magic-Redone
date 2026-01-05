@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Magic_Redone.Simple
 {
-    public class SimplePageModel
+    public static class SimplePageModel
     {
         public static void UpdateResult(SimplePageVM vM)
         {

@@ -22,6 +22,15 @@ namespace Magic_Redone.Simple
             Size = 1;
         }
 
+        public static decimal GetValue(Dictionary<string, decimal> dict, string key)
+        {
+            if (key != null && dict.TryGetValue(key, out decimal value))
+            {
+                return value;
+            }
+            else return 1m;
+        }
+
         #region Свойства для привязки в WPF
         public ObservableCollection<string> TimeExistColl { get; set; } = ModCollections.TimeExistOptions;
         public ObservableCollection<string> TimeCastColl { get; set; } = ModCollections.TimeCastOptions;
@@ -47,6 +56,7 @@ namespace Magic_Redone.Simple
             set
             {
                 _method = value;
+                MethodCost = GetValue(ModDicts.MethodDict, value); // TODO: Сделать так же для скаляций
                 SimplePageModel.UpdateResult(this);
                 OnPropertyChanged();
             }
@@ -59,6 +69,7 @@ namespace Magic_Redone.Simple
             set
             {
                 _form = value;
+                FormCost = GetValue(ModDicts.FormDict, value);
                 SimplePageModel.UpdateResult(this);
                 OnPropertyChanged();
             }
@@ -71,6 +82,7 @@ namespace Magic_Redone.Simple
             set
             {
                 _size = value;
+                SizeCost = value;
                 SimplePageModel.UpdateResult(this);
                 OnPropertyChanged();
             }
@@ -83,6 +95,7 @@ namespace Magic_Redone.Simple
             set
             {
                 _timeExist = value;
+                TimeExistCost = GetValue(ModDicts.TimeExistDict, value);
                 SimplePageModel.UpdateResult(this);
                 OnPropertyChanged();
             }
@@ -95,12 +108,13 @@ namespace Magic_Redone.Simple
             set
             {
                 _timeCast = value;
+                TimeCastCost = GetValue(ModDicts.TimeCastDict, value);
                 SimplePageModel.UpdateResult(this);
                 OnPropertyChanged();
             }
         }
 
-        private decimal _result;
+        private decimal _result; // Промежуточный итог подсчёта (время, форма и т.д.)
         public decimal Result
         {
             get => _result;
@@ -113,7 +127,7 @@ namespace Magic_Redone.Simple
             }
         }
 
-        private decimal _total;
+        private decimal _total; // Итог с учётом подсчёта начальных очков
         public decimal Total
         {
             get => _total;
@@ -122,6 +136,67 @@ namespace Magic_Redone.Simple
                 _total = value;
                 OnPropertyChanged();
                 Debug.WriteLine(Total);
+            }
+        }
+
+        private decimal _methodCost;
+
+        public decimal MethodCost
+        {
+            get => _methodCost;
+            set
+            {
+                _methodCost = value;
+                OnPropertyChanged();
+                Debug.WriteLine("Method Cost " + MethodCost);
+            }
+        }
+
+        private decimal _formCost;
+
+        public decimal FormCost
+        {
+            get => _formCost;
+            set
+            {
+                _formCost = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private decimal _sizeCost;
+
+        public decimal SizeCost
+        {
+            get => _sizeCost;
+            set
+            {
+                _sizeCost = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private decimal _timeExistCost;
+
+        public decimal TimeExistCost
+        {
+            get => _timeExistCost;
+            set
+            {
+                _timeExistCost = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private decimal _timeCastCost;
+
+        public decimal TimeCastCost
+        {
+            get => _timeCastCost;
+            set
+            {
+                _timeCastCost = value;
+                OnPropertyChanged();
             }
         }
         #endregion

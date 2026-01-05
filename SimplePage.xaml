@@ -164,93 +164,97 @@
         </Border>
 
         <Border
-            Grid.Row="1"
-            Grid.Column="4"
-            Margin="5,0"
-            HorizontalAlignment="Left"
-            VerticalAlignment="Bottom"
-            Style="{StaticResource FancyTextPanelBorder}">
+    Grid.Row="1"
+    Grid.Column="0"
+    Margin="5,0"
+    HorizontalAlignment="Left"
+    VerticalAlignment="Bottom"
+    Style="{StaticResource FancyTextPanelBorder}">
             <StackPanel Orientation="Vertical">
                 <TextBlock
-                    Margin="2"
-                    Foreground="White"
-                    Text="Время создания" />
+            Margin="2"
+            Foreground="White"
+            Text="Способ" />
                 <TextBlock
-                    Margin="0,10,0,0"
-                    Foreground="White"
-                    Text="" />
+            Margin="0,10,0,0"
+            Foreground="White"
+            Text="{Binding MethodCost}" />
             </StackPanel>
         </Border>
+
         <Border
-            Grid.Row="1"
-            Grid.Column="3"
-            Margin="5,0"
-            HorizontalAlignment="Left"
-            VerticalAlignment="Bottom"
-            Style="{StaticResource FancyTextPanelBorder}">
+    Grid.Row="1"
+    Grid.Column="1"
+    Margin="5,0"
+    HorizontalAlignment="Left"
+    VerticalAlignment="Bottom"
+    Style="{StaticResource FancyTextPanelBorder}">
             <StackPanel Orientation="Vertical">
                 <TextBlock
-                    Margin="2"
-                    Foreground="White"
-                    Text="Время" />
+            Margin="2"
+            Foreground="White"
+            Text="Форма" />
                 <TextBlock
-                    Margin="0,10,0,0"
-                    Foreground="White"
-                    Text="" />
+            Margin="0,10,0,0"
+            Foreground="White"
+            Text="{Binding FormCost}" />
             </StackPanel>
         </Border>
+
         <Border
-            Grid.Row="1"
-            Grid.Column="2"
-            Margin="5,0"
-            HorizontalAlignment="Left"
-            VerticalAlignment="Bottom"
-            Style="{StaticResource FancyTextPanelBorder}">
+    Grid.Row="1"
+    Grid.Column="2"
+    Margin="5,0"
+    HorizontalAlignment="Left"
+    VerticalAlignment="Bottom"
+    Style="{StaticResource FancyTextPanelBorder}">
             <StackPanel Orientation="Vertical">
                 <TextBlock
-                    Margin="2"
-                    Foreground="White"
-                    Text="Размер" />
+            Margin="2"
+            Foreground="White"
+            Text="Размер" />
                 <TextBlock
-                    Margin="0,10,0,0"
-                    Foreground="White"
-                    Text="" />
+            Margin="0,10,0,0"
+            Foreground="White"
+            Text="{Binding SizeCost}" />
             </StackPanel>
         </Border>
+
         <Border
-            Grid.Row="1"
-            Grid.Column="1"
-            Margin="5,0"
-            HorizontalAlignment="Left"
-            VerticalAlignment="Bottom"
-            Style="{StaticResource FancyTextPanelBorder}">
+    Grid.Row="1"
+    Grid.Column="3"
+    Margin="5,0"
+    HorizontalAlignment="Left"
+    VerticalAlignment="Bottom"
+    Style="{StaticResource FancyTextPanelBorder}">
             <StackPanel Orientation="Vertical">
                 <TextBlock
-                    Margin="2"
-                    Foreground="White"
-                    Text="Форма" />
+            Margin="2"
+            Foreground="White"
+            Text="Время" />
                 <TextBlock
-                    Margin="0,10,0,0"
-                    Foreground="White"
-                    Text="" />
+            Margin="0,10,0,0"
+            Foreground="White"
+            Text="{Binding TimeExistCost}" />
             </StackPanel>
         </Border>
+
         <Border
-            Grid.Row="1"
-            Grid.Column="0"
-            Margin="5,0"
-            HorizontalAlignment="Left"
-            VerticalAlignment="Bottom"
-            Style="{StaticResource FancyTextPanelBorder}">
+    Grid.Row="1"
+    Grid.Column="4"
+    Margin="5,0"
+    HorizontalAlignment="Left"
+    VerticalAlignment="Bottom"
+    Style="{StaticResource FancyTextPanelBorder}">
             <StackPanel Orientation="Vertical">
                 <TextBlock
-                    Margin="2"
-                    Foreground="White"
-                    Text="Способ" />
+            Margin="2"
+            Foreground="White"
+            Text="Время создания" />
                 <TextBlock
-                    Margin="0,10,0,0"
-                    Foreground="White"
-                    Text="" />
+            Margin="0,10,0,0"
+            Foreground="White"
+            Text="{Binding TimeCastCost}" />
             </StackPanel>
         </Border>
 

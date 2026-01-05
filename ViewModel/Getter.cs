@@ -3,6 +3,7 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using System.Windows;
+using System.Windows.Input;
 
 namespace Magic_Redone
 {
@@ -24,9 +25,27 @@ namespace Magic_Redone
         public ObservableCollection<int> SelectedScalations { get; set; }
         public List<int> selectedAreaMods = [0, 0, 0, 0, 0, 0, 0, 0, 0];
 
+        private bool _isHelpVisible;
+
+        // Свойство для биндинга видимости
+        public bool IsHelpVisible
+        {
+            get => _isHelpVisible;
+            set
+            {
+                _isHelpVisible = value;
+                OnPropertyChanged();
+            }
+        }
+
+        // Команда для F1
+        public ICommand ToggleHelpCommand { get; }
+
         public Getter()
         {
-            Back.LoadElements(Collections);
+            ToggleHelpCommand = new RelayCommand(_ => IsHelpVisible = !IsHelpVisible);
+
+            Task task = Back.LoadElements(Collections);
             SelectedComponents = new ObservableCollection<Construct>();
             SelectedScalations = new ObservableCollection<int>();
             SelectedScalations = [0, 0, 0, 0, 0, 0];
@@ -43,6 +62,7 @@ namespace Magic_Redone
 
             SelectedTime = "1 Секунда";
             SelectedLvl = 1;
+            task.Wait();
         }
         public static Construct DefaultConstruct()
         {

@@ -1,4 +1,5 @@
 ﻿using System.Windows;
+using System.Windows.Input;
 
 
 namespace Magic_Redone
@@ -8,6 +9,7 @@ namespace Magic_Redone
         public MainWindow()
         {
             InitializeComponent();
+
             this.DataContext = new Getter();
 
             txtSave.GotFocus += TxtSave_GotFocus;
