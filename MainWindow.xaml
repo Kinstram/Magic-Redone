@@ -516,7 +516,7 @@
                 FontSize="12"
                 Foreground="Gray"
                 Opacity="0.5"
-                Text="v. 0.46" />
+                Text="v. 0.5" />
         </Grid>
 
         <Frame
